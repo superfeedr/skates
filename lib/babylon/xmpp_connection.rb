@@ -126,7 +126,6 @@ module Babylon
     ##
     # Adds characters to the current element (being parsed)
     def characters(string)
-      puts "Got #{string}. Adding to #{@elem}."
       if @elem == @last_text_elem
         @last_text_data.content += string
       else
