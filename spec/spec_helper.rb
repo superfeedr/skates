@@ -11,7 +11,7 @@ require File.dirname(__FILE__) + "/../lib/babylon" unless defined? Babylon
 
 # #
 # Deactivate the logging
-Babylon.logger.level = Log4r::DEBUG
+Babylon.logger.level = Log4r::FATAL
 
 BABYLON_ENV = "test" unless defined? BABYLON_ENV
 

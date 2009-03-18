@@ -1,13 +1,50 @@
-require "echoe"
+require 'rubygems'
+require 'rake'
 
-Echoe.new("babylon") do |g|
-  g.author = ["Julien Genestoux", "Astro"]
-  g.email = "babylon@notifixio.us"
-  g.url = "http://github.com/julien51/babylon/"
-  g.summary = "Babylon is a framework to create EventMachine based XMPP External Components in Ruby."
-  g.runtime_dependencies = [
-    "eventmachine",
-    "log4r",
-    "nokogiri"
-  ]
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gem|
+    gem.name = "babylon"
+    gem.summary = %Q{Babylon is a framework to create EventMachine based XMPP External Components in Ruby.}
+    gem.email = "julien.genestoux@gmail.com"
+    gem.homepage = "http://github.com/julien51/babylon"
+    gem.authors = ["julien Genestoux"]
+    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri"]
+    gem.executables = "babylon"
+    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
+
+require 'rake/rdoctask'
+Rake::RDocTask.new do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = 'babylon'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/*_test.rb'
+  test.verbose = false
+end
+
+begin
+  require 'rcov/rcovtask'
+  Rcov::RcovTask.new do |test|
+    test.libs << 'test'
+    test.pattern = 'test/**/*_test.rb'
+    test.verbose = true
+  end
+rescue LoadError
+  task :rcov do
+    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+  end
+end
+
+
+task :default => :test

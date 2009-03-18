@@ -14,7 +14,6 @@ Manifest
 Rakefile
 README.rdoc
 spec/bin/babylon_spec.rb
-spec/config.yaml
 spec/lib/babylon/base/controller_spec.rb
 spec/lib/babylon/base/view_spec.rb
 spec/lib/babylon/client_connection_spec.rb
@@ -32,8 +31,8 @@ templates/babylon/app/models/README.rdoc
 templates/babylon/app/views/README.rdoc
 templates/babylon/config/boot.rb
 templates/babylon/config/config.yaml
+templates/babylon/config/dependencies.rb
 templates/babylon/config/initializers/README.rdoc
 templates/babylon/config/routes.rb
 templates/babylon/script/component
 templates/babylon/script/generate
-tests/client_test.rb
