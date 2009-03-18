@@ -2,9 +2,10 @@ $:.unshift(File.dirname(__FILE__)) unless
 $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 require 'eventmachine'
-require "log4r"
+require 'log4r'
 require 'nokogiri'
-require "yaml"
+require 'yaml'
+require 'fileutils'
 
 require 'babylon/xmpp_connection'
 require 'babylon/component_connection'

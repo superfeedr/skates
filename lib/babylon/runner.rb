@@ -25,6 +25,14 @@ module Babylon
           eval File.read("config/routes.rb")
         end
         
+        # Caching views in production mode.
+        if env == "production"
+          $cached_views = {}
+          Dir.glob('app/views/*/*').each do |f|
+            $cached_views[f] = File.read(f)
+          end
+        end
+        
         config_file = File.open('config/config.yaml')
         
         Babylon.config = YAML.load(config_file)[env]
