@@ -25,30 +25,29 @@ describe Babylon::Base::View do
   describe ".evaluate" do
     before(:each) do
       @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
-      xml = <<-eoxml
-       self.message(:to => "you", :from => "me", :type => :chat) do
-         self.body("salut") 
+      @xml_string = <<-eoxml
+       xml.message(:to => "you", :from => "me", :type => :chat) do |message|
+         message.body("salut") 
        end
       eoxml
-      @builder = Nokogiri::XML::Builder.new do
-        instance_eval(xml)
-      end
-      @xml = xml
-      File.stub!(:read).and_return(xml)
+      File.stub!(:read).and_return(@xml_string)
     end
     
     it "should create a new Nokogiri Builder" do
-      Nokogiri::XML::Builder.should_receive(:new).and_return(@builder)
+      xml = Nokogiri::XML::Builder.new
+      Nokogiri::XML::Builder.should_receive(:new).and_return(xml)
       @view.evaluate
     end
     
     it "should read the template file" do
-      File.stub!(:read).and_return(@xml)
+      File.stub!(:read).and_return(@xml_string)
       @view.evaluate
     end
     
     it "should return a Nokogiri Nodeset corresponding to the childrend of the doc's root" do
-      @view.evaluate.should.to_s == @builder.doc.children.to_s
+      xml = Nokogiri::XML::Builder.new
+      instance_eval(@xml_string)
+      @view.evaluate.should.to_s == xml.doc.children.to_s
     end
     
   end

@@ -10,6 +10,9 @@ module Babylon
     # Finally it starts the EventMachine and connect the ComponentConnection
     # You can pass an additional block that will be called upon launching, when the eventmachine has been started.
     def self.run(env)
+      
+      Babylon.environment = env
+      
       # Starting the EventMachine
       EventMachine.epoll
       EventMachine.run do
@@ -25,17 +28,16 @@ module Babylon
           eval File.read("config/routes.rb")
         end
         
-        # Caching views in production mode.
-        if env == "production"
-          $cached_views = {}
-          Dir.glob('app/views/*/*').each do |f|
-            $cached_views[f] = File.read(f)
-          end
-        end
-        
         config_file = File.open('config/config.yaml')
         
-        Babylon.config = YAML.load(config_file)[env]
+        
+        # Caching views in production mode.
+        if Babylon.environment == "production"
+          Babylon.cache_views
+        end
+        
+        
+        Babylon.config = YAML.load(config_file)[Babylon.environment]
         
         params, on_connected = Babylon.config.merge({:on_stanza => Babylon::CentralRouter.method(:route)}), Babylon::CentralRouter.method(:connected)
         

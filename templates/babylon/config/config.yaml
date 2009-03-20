@@ -1,5 +1,5 @@
 # This contains the global configuration of your component.
-# BABYLON_ENV:
+# environment:
 #    jid: your.component.jid
 #    password: your.component.password
 #    host: host on which the XMPP server is running
