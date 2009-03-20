@@ -26,16 +26,20 @@ describe Babylon::Base::View do
     before(:each) do
       @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
-       xml.message(:to => "you", :from => "me", :type => :chat) do |message|
-         message.body("salut") 
+       message(:to => "you", :from => "me", :type => :chat) do
+         body("salut") 
        end
       eoxml
+      @builder = Nokogiri::XML::Builder.new do
+        instance_eval('message(:to => "you", :from => "me", :type => :chat) do
+           body("salut") 
+         end')
+      end
       File.stub!(:read).and_return(@xml_string)
     end
     
     it "should create a new Nokogiri Builder" do
-      xml = Nokogiri::XML::Builder.new
-      Nokogiri::XML::Builder.should_receive(:new).and_return(xml)
+      Nokogiri::XML::Builder.should_receive(:new).and_return(@builder)
       @view.evaluate
     end
     
@@ -44,10 +48,8 @@ describe Babylon::Base::View do
       @view.evaluate
     end
     
-    it "should return a Nokogiri Nodeset corresponding to the childrend of the doc's root" do
-      xml = Nokogiri::XML::Builder.new
-      instance_eval(@xml_string)
-      @view.evaluate.should.to_s == xml.doc.children.to_s
+    it "should return a Nokogiri Nodeset corresponding to the children of the doc's root" do
+      @view.evaluate.should.to_s == @builder.doc.children.to_s
     end
     
   end
