@@ -4,6 +4,11 @@ module Babylon
   # Connection Exception
   class NotConnected < Exception; end
 
+  ## 
+  # xml-not-well-formed Exception
+  class XmlNotWellFormed < Exception; end
+  
+
   ##
   # This class is in charge of handling the network connection to the XMPP server.
   class XmppConnection < EventMachine::Connection
@@ -35,6 +40,8 @@ module Babylon
     # Instantiate the Handler (called internally by EventMachine) and attaches a new XmppParser
     def initialize(params)
       super()
+      @last_stanza_received = nil
+      @last_stanza_sent = nil
       @jid = params["jid"]
       @password = params["password"]
       @host = params["host"]
@@ -47,9 +54,21 @@ module Babylon
     ##
     # Called when a full stanza has been received and returns it to the central router to be sent to the corresponding controller.
     def receive_stanza(stanza)
+      @last_stanza_received = stanza
       Babylon.logger.debug("PARSED : #{stanza.to_xml}")
       # If not handled by subclass (for authentication)
-      @stanza_callback.call(stanza) if @stanza_callback
+      case stanza.name
+      when stanza.name == "stream:error"
+        if stanza.at("xml-not-well-formed")
+          # <stream:error><xml-not-well-formed xmlns:xmlns="urn:ietf:params:xml:ns:xmpp-streams"/></stream:error>
+          raise XmlNotWellFormed
+        end
+        # In any case, we need to close the connection.
+        close_connection        
+      else
+        @stanza_callback.call(stanza) if @stanza_callback
+      end
+      
     end
     
     ## 
@@ -73,6 +92,7 @@ module Babylon
     ##
     # Sends a node on the "line".
     def send_node(node)
+      @last_stanza_sent = xml
       node["from"] = jid if !node.attributes["from"] && node.attributes["to"]
       send_string(node.to_xml)
     end
