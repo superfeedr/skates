@@ -126,13 +126,8 @@ module Babylon
     ##
     # Adds characters to the current element (being parsed)
     def characters(string)
-      if @elem == @last_text_elem
-        @last_text_data.content += string
-      else
-        @last_text_elem = @elem
-        @last_text_data = Nokogiri::XML::Text.new(string, @doc)
-        @elem.add_child(@last_text_data)
-      end
+      @last_text_elem ||= @elem
+      @last_text = @last_text ? @last_text+string : string
     end
 
     ##
@@ -159,6 +154,11 @@ module Babylon
     ##
     # Terminates the current element and calls the callback
     def end_element(name)
+      if @last_text_elem
+        @elem.add_child(Nokogiri::XML::Text.new(@last_text, @doc))
+        @last_text_elem = nil
+        @last_text = nil
+      end
       if @elem
         if @elem.parent == @root
           @callback.call(@elem) 
