@@ -28,6 +28,7 @@ module Babylon
     def unbind()
       Babylon.logger.debug("DISCONNECTED") # Very low level Logging
       EventMachine::stop_event_loop
+      raise NotConnected
     end
 
     ## 
