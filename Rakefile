@@ -47,5 +47,6 @@ rescue LoadError
   end
 end
 
+task :install => :build
 
 task :default => :test

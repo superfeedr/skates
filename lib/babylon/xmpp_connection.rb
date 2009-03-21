@@ -58,13 +58,14 @@ module Babylon
       Babylon.logger.debug("PARSED : #{stanza.to_xml}")
       # If not handled by subclass (for authentication)
       case stanza.name
-      when stanza.name == "stream:error"
+      when "stream:error"
         if stanza.at("xml-not-well-formed")
+          Babylon.logger.error("DISCONNECTED DUE TO MALFORMED STANZA : \n#{@last_stanza_sent}")
           # <stream:error><xml-not-well-formed xmlns:xmlns="urn:ietf:params:xml:ns:xmpp-streams"/></stream:error>
           raise XmlNotWellFormed
         end
         # In any case, we need to close the connection.
-        close_connection        
+        close_connection
       else
         @stanza_callback.call(stanza) if @stanza_callback
       end
@@ -92,7 +93,7 @@ module Babylon
     ##
     # Sends a node on the "line".
     def send_node(node)
-      @last_stanza_sent = xml
+      @last_stanza_sent = node
       node["from"] = jid if !node.attributes["from"] && node.attributes["to"]
       send_string(node.to_xml)
     end
