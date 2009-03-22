@@ -117,26 +117,35 @@ module Babylon
   # This is the XML SAX Parser that accepts "pushed" content
   class XmppParser < Nokogiri::XML::SAX::Document
     
+    attr_accessor :elem, :doc
+    
     ##
     # Initialize the parser and adds the callback that will be called upon stanza completion
     def initialize(&callback)
       @callback = callback
       super()
-      @parser = Nokogiri::XML::SAX::PushParser.new(self)
-      @doc = nil
-      @elem = nil
+      reset
     end
     
     ## 
     # Resets the Pushed SAX Parser.
     def reset
-      @parser = Nokogiri::XML::SAX::PushParser.new(self)
+      @parser   = Nokogiri::XML::SAX::PushParser.new(self)
+      @doc      = Nokogiri::XML::Document.new
+      @elem     = nil
     end
     
     ##
     # Pushes the received data to the parser. The parser will then callback the document's methods (start_tag, end_tag... etc)
     def push(data)
       @parser << data
+    end
+    
+    ##
+    # Called when the document contains a CData block
+    def cdata_block(string)
+      cdata = Nokogiri::XML::CDATA.new(@doc, string)
+      @elem.add_child(cdata)
     end
 
     ## 
@@ -149,7 +158,7 @@ module Babylon
     # Adds characters to the current element (being parsed)
     def characters(string)
       @last_text_elem ||= @elem
-      @last_text = @last_text ? @last_text+string : string
+      @last_text = @last_text ? @last_text + string : string
     end
 
     ##
