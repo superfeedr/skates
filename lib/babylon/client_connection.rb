@@ -1,5 +1,5 @@
 module Babylon
-  
+
   ##
   # ClientConnection is in charge of the XMPP connection for a Regular XMPP Client.
   # So far, SASL Plain authenticationonly is supported
@@ -8,7 +8,7 @@ module Babylon
     require 'digest/sha1'
     require 'base64'
     require 'resolv'
-    
+
 
     attr_reader :binding_iq_id, :session_iq_id
 
@@ -18,13 +18,13 @@ module Babylon
       super(params)
       @state = :wait_for_stream
     end
-    
+
     ##
     # Connects the ClientConnection based on SRV records for the jid's domain, if no host or port has been specified.
     # In any case, we give priority to the specified host and port.
     def self.connect(params, &block)
       return super(params, &block) if params["host"] && params["port"]
-      
+
       begin
         begin
           srv = []
@@ -79,18 +79,18 @@ module Babylon
       case @state
       when :connected
         super # Can be dispatched
-      
+
       when :wait_for_stream
         if stanza.name == "stream:stream" && stanza.attributes['id']
           @state = :wait_for_auth_mechanisms unless @success
           @state = :wait_for_bind if @success
         end
-        
+
       when :wait_for_auth_mechanisms
         if stanza.name == "stream:features"
           if stanza.at("starttls") # we shall start tls
             starttls = Nokogiri::XML::Node.new("starttls", @outstream)
-            starttls["xmlns"] = stanza.at("starttls").namespaces.first.last
+            starttls["xmlns"] = "urn:ietf:params:xml:ns:xmpp-tls"
             send(starttls)
             @state = :wait_for_proceed
           elsif stanza.at("mechanisms") # tls is ok
@@ -98,14 +98,14 @@ module Babylon
               # auth_text = "#{jid.strip}\x00#{jid.node}\x00#{password}"
               auth = Nokogiri::XML::Node.new("auth", @outstream)
               auth['mechanism'] = "PLAIN"
-              auth['xmlns'] = stanza.at("mechanisms").namespaces.first.last
+              auth['xmlns'] = "urn:ietf:params:xml:ns:xmpp-sasl"
               auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
               send(auth)
               @state = :wait_for_success
             end
           end
         end
-      
+
       when :wait_for_success
         if stanza.name == "success" # Yay! Success
           @success = true
@@ -120,7 +120,7 @@ module Babylon
         else
           # Hum Failure...
         end
-      
+
       when :wait_for_bind
         if stanza.name == "stream:features"
           if stanza.at("bind")
@@ -142,7 +142,7 @@ module Babylon
             @state = :wait_for_confirmed_binding
           end
         end
-      
+
       when :wait_for_confirmed_binding
         if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @binding_iq_id
           if stanza.at("jid") 
@@ -159,7 +159,7 @@ module Babylon
         iq = @outstream.add_child(builder.doc.root)
         send(iq)
         @state = :wait_for_confirmed_session
-        
+
       when :wait_for_confirmed_session
         if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @session_iq_id && stanza.at("session")
           # And now, send a presence!
@@ -168,21 +168,23 @@ module Babylon
           @connection_callback.call(self) if @connection_callback
           @state = :connected
         end
-        
+
       when :wait_for_proceed
         start_tls() # starting TLS
         @state = :wait_for_stream
         @parser.reset
         send @outstream.root.to_xml.split('<paste_content_here/>').first
       end
-
+    rescue
+      Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
     end
-
-    ##
-    # Namespace of the client
-    def stream_namespace
-      "jabber:client"
-    end
-
   end
+
+  ##
+  # Namespace of the client
+  def stream_namespace
+    "jabber:client"
+  end
+
+end
 end
