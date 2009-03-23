@@ -76,115 +76,116 @@ module Babylon
     # Called upon stanza reception
     # Marked as connected when the client has been SASLed, authenticated, biund to a resource and when the session has been created
     def receive_stanza(stanza)
-      case @state
-      when :connected
-        super # Can be dispatched
+      begin
+        case @state
+        when :connected
+          super # Can be dispatched
 
-      when :wait_for_stream
-        if stanza.name == "stream:stream" && stanza.attributes['id']
-          @state = :wait_for_auth_mechanisms unless @success
-          @state = :wait_for_bind if @success
-        end
+        when :wait_for_stream
+          if stanza.name == "stream:stream" && stanza.attributes['id']
+            @state = :wait_for_auth_mechanisms unless @success
+            @state = :wait_for_bind if @success
+          end
 
-      when :wait_for_auth_mechanisms
-        if stanza.name == "stream:features"
-          if stanza.at("starttls") # we shall start tls
-            starttls = Nokogiri::XML::Node.new("starttls", @outstream)
-            starttls["xmlns"] = "urn:ietf:params:xml:ns:xmpp-tls"
-            send(starttls)
-            @state = :wait_for_proceed
-          elsif stanza.at("mechanisms") # tls is ok
-            if stanza.at("mechanisms/[contains(mechanism,'PLAIN')]")
-              # auth_text = "#{jid.strip}\x00#{jid.node}\x00#{password}"
-              auth = Nokogiri::XML::Node.new("auth", @outstream)
-              auth['mechanism'] = "PLAIN"
-              auth['xmlns'] = "urn:ietf:params:xml:ns:xmpp-sasl"
-              auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
-              send(auth)
-              @state = :wait_for_success
+        when :wait_for_auth_mechanisms
+          if stanza.name == "stream:features"
+            if stanza.at("starttls") # we shall start tls
+              starttls = Nokogiri::XML::Node.new("starttls", @outstream)
+              starttls["xmlns"] = "urn:ietf:params:xml:ns:xmpp-tls"
+              send(starttls)
+              @state = :wait_for_proceed
+            elsif stanza.at("mechanisms") # tls is ok
+              if stanza.at("mechanisms/[contains(mechanism,'PLAIN')]")
+                # auth_text = "#{jid.strip}\x00#{jid.node}\x00#{password}"
+                auth = Nokogiri::XML::Node.new("auth", @outstream)
+                auth['mechanism'] = "PLAIN"
+                auth['xmlns'] = "urn:ietf:params:xml:ns:xmpp-sasl"
+                auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
+                send(auth)
+                @state = :wait_for_success
+              end
             end
           end
-        end
 
-      when :wait_for_success
-        if stanza.name == "success" # Yay! Success
-          @success = true
-          @state = :wait_for_stream
-          @parser.reset
-          send @outstream.root.to_xml.split('<paste_content_here/>').first
-        elsif stanza.name == "failure"
-          if stanza.at("bad-auth") || stanza.at("not-authorized")
-            raise AuthenticationError
+        when :wait_for_success
+          if stanza.name == "success" # Yay! Success
+            @success = true
+            @state = :wait_for_stream
+            @parser.reset
+            send @outstream.root.to_xml.split('<paste_content_here/>').first
+          elsif stanza.name == "failure"
+            if stanza.at("bad-auth") || stanza.at("not-authorized")
+              raise AuthenticationError
+            else
+            end
           else
+            # Hum Failure...
           end
-        else
-          # Hum Failure...
-        end
 
-      when :wait_for_bind
-        if stanza.name == "stream:features"
-          if stanza.at("bind")
-            # Let's build the binding_iq
-            @binding_iq_id = Integer(rand(10000))
-            builder = Nokogiri::XML::Builder.new do
-              iq(:type => "set", :id => @context.binding_iq_id) do
-                bind(:xmlns => "urn:ietf:params:xml:ns:xmpp-bind")  do                
-                  if @context.jid.split("/").size == 2 
-                    resource(@context.jid.split("/").last)
-                  else
-                    resource("babylon_client_#{@context.binding_iq_id}")
+        when :wait_for_bind
+          if stanza.name == "stream:features"
+            if stanza.at("bind")
+              # Let's build the binding_iq
+              @binding_iq_id = Integer(rand(10000))
+              builder = Nokogiri::XML::Builder.new do
+                iq(:type => "set", :id => @context.binding_iq_id) do
+                  bind(:xmlns => "urn:ietf:params:xml:ns:xmpp-bind")  do                
+                    if @context.jid.split("/").size == 2 
+                      resource(@context.jid.split("/").last)
+                    else
+                      resource("babylon_client_#{@context.binding_iq_id}")
+                    end
                   end
                 end
               end
+              iq = @outstream.add_child(builder.doc.root)
+              send(iq)
+              @state = :wait_for_confirmed_binding
             end
-            iq = @outstream.add_child(builder.doc.root)
-            send(iq)
-            @state = :wait_for_confirmed_binding
           end
-        end
 
-      when :wait_for_confirmed_binding
-        if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @binding_iq_id
-          if stanza.at("jid") 
-            jid= stanza.at("jid").text
+        when :wait_for_confirmed_binding
+          if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @binding_iq_id
+            if stanza.at("jid") 
+              jid= stanza.at("jid").text
+            end
           end
-        end
-        # And now, we must initiate the session
-        @session_iq_id = Integer(rand(10000))
-        builder = Nokogiri::XML::Builder.new do
-          iq(:type => "set", :id => @context.session_iq_id) do
-            session(:xmlns => "urn:ietf:params:xml:ns:xmpp-session")
+          # And now, we must initiate the session
+          @session_iq_id = Integer(rand(10000))
+          builder = Nokogiri::XML::Builder.new do
+            iq(:type => "set", :id => @context.session_iq_id) do
+              session(:xmlns => "urn:ietf:params:xml:ns:xmpp-session")
+            end
           end
-        end
-        iq = @outstream.add_child(builder.doc.root)
-        send(iq)
-        @state = :wait_for_confirmed_session
+          iq = @outstream.add_child(builder.doc.root)
+          send(iq)
+          @state = :wait_for_confirmed_session
 
-      when :wait_for_confirmed_session
-        if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @session_iq_id && stanza.at("session")
-          # And now, send a presence!
-          presence = Nokogiri::XML::Node.new("presence", @outstream)
-          send(presence)
-          @connection_callback.call(self) if @connection_callback
-          @state = :connected
-        end
+        when :wait_for_confirmed_session
+          if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @session_iq_id && stanza.at("session")
+            # And now, send a presence!
+            presence = Nokogiri::XML::Node.new("presence", @outstream)
+            send(presence)
+            @connection_callback.call(self) if @connection_callback
+            @state = :connected
+          end
 
-      when :wait_for_proceed
-        start_tls() # starting TLS
-        @state = :wait_for_stream
-        @parser.reset
-        send @outstream.root.to_xml.split('<paste_content_here/>').first
+        when :wait_for_proceed
+          start_tls() # starting TLS
+          @state = :wait_for_stream
+          @parser.reset
+          send @outstream.root.to_xml.split('<paste_content_here/>').first
+        end
+      rescue
+        Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
       end
-    rescue
-      Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
     end
-  end
 
-  ##
-  # Namespace of the client
-  def stream_namespace
-    "jabber:client"
-  end
+    ##
+    # Namespace of the client
+    def stream_namespace
+      "jabber:client"
+    end
 
-end
+  end
 end
