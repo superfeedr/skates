@@ -20,7 +20,7 @@ module Babylon
     # This can very well be overwritten by subclasses.
     def self.connect(params, &block)
       Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]}") # Very low level Logging
-      EventMachine.connect(params["host"], params["port"], self, params.merge({:on_connection => block}))
+      EventMachine.connect(params["host"], params["port"], self, params.merge({"on_connection" => block}))
     end
     
     def connection_completed
@@ -39,37 +39,33 @@ module Babylon
     # Instantiate the Handler (called internally by EventMachine) and attaches a new XmppParser
     def initialize(params)
       super()
-      @last_stanza_received = nil
-      @last_stanza_sent = nil
       @jid = params["jid"]
       @password = params["password"]
       @host = params["host"]
       @port = params["port"]
-      @stanza_callback = params[:on_stanza]
-      @connection_callback = params[:on_connection]
+      @stanza_callback = params["on_stanza"]
+      @connection_callback = params["on_connection"]
       @parser = XmppParser.new(&method(:receive_stanza))
     end
 
     ##
     # Called when a full stanza has been received and returns it to the central router to be sent to the corresponding controller.
     def receive_stanza(stanza)
-      @last_stanza_received = stanza
       Babylon.logger.debug("PARSED : #{stanza.to_xml}")
       # If not handled by subclass (for authentication)
       case stanza.name
       when "stream:error"
-        if stanza.at("xml-not-well-formed")
-          Babylon.logger.error("DISCONNECTED DUE TO MALFORMED STANZA : \n#{@last_stanza_sent}")
+        if !stanza.children.empty? and stanza.children.first.name == "xml-not-well-formed"
           # <stream:error><xml-not-well-formed xmlns:xmlns="urn:ietf:params:xml:ns:xmpp-streams"/></stream:error>
+          Babylon.logger.error("DISCONNECTED DUE TO MALFORMED STANZA")
           raise XmlNotWellFormed
         end
         # In any case, we need to close the connection.
         close_connection
       else
         @stanza_callback.call(stanza) if @stanza_callback
-      end
-      
-    end
+      end 
+    end 
     
     ## 
     # Sends the Nokogiri::XML data (after converting to string) on the stream. It also appends the right "from" to be the component's JId if none has been mentionned. Eventually it displays this data for debugging purposes.
@@ -92,8 +88,7 @@ module Babylon
     ##
     # Sends a node on the "line".
     def send_node(node)
-      @last_stanza_sent = node
-      node["from"] = jid if !node.attributes["from"] && node.attributes["to"]
+      node["from"] ||= jid if node["to"]
       send_string(node.to_xml)
     end
     

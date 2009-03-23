@@ -39,7 +39,7 @@ module Babylon
         
         Babylon.config = YAML.load(config_file)[Babylon.environment]
         
-        params, on_connected = Babylon.config.merge({:on_stanza => Babylon::CentralRouter.method(:route)}), Babylon::CentralRouter.method(:connected)
+        params, on_connected = Babylon.config.merge({"on_stanza" => Babylon::CentralRouter.method(:route)}), Babylon::CentralRouter.method(:connected)
         
         case Babylon.config["application_type"]
           when "client"

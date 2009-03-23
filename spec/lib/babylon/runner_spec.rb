@@ -31,7 +31,7 @@ describe Babylon::Runner do
         # Mimick Initializers
       }
       EventMachine.stub!(:run).and_yield
-      @client_connection_params = @config["test"].merge({:on_stanza => Babylon::CentralRouter.method(:route)})
+      @client_connection_params = @config["test"].merge({"on_stanza" => Babylon::CentralRouter.method(:route)})
       Babylon::ClientConnection.stub!(:connect).with(@client_connection_params).and_return(client_mock)
       Babylon::ComponentConnection.stub!(:connect).with(@client_connection_params).and_return(component_mock)
     end

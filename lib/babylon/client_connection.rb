@@ -9,7 +9,6 @@ module Babylon
     require 'base64'
     require 'resolv'
 
-
     attr_reader :binding_iq_id, :session_iq_id
 
     ##
