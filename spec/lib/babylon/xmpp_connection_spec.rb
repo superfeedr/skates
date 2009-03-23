@@ -4,12 +4,13 @@ describe Babylon::XmppParser do
 
   before(:each) do
     @last_stanza = ""
-    @proc = Proc.new {
+    @stanzas = []
+    @proc = Proc.new { |stanza|
       # Do someting open ennding element
+      @stanzas << stanza
     }
     @parser = Babylon::XmppParser.new(&@proc)
-    @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
-    @parser.elem = @parser.top
+    @parser.elem = @parser.top = nil
   end
 
   describe ".reset" do
@@ -53,6 +54,10 @@ describe Babylon::XmppParser do
   end
 
   describe ".characters" do
+    before(:each) do
+      @parser.elem = @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
+    end
+    
     it "should add the characters to the current element" do
       chars = "hello my name is julien"
       @parser.characters(chars)
@@ -128,6 +133,7 @@ describe Babylon::XmppParser do
     
     describe "with an element whose parent is not the stream directly" do
       before(:each) do
+        @parser.elem = @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
         @name = "message"
         @attributes = ["to", "you", "from", "me"]
       end
@@ -153,13 +159,12 @@ describe Babylon::XmppParser do
 
   describe ".end_element" do
     
-    describe "if the current element is the top element" do      
+    describe "if the current element is the top element" do   
+      before(:each) do
+        @parser.elem = @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
+      end
       it "should call the callback with the current element" do
         @proc.should_receive(:call).with(@parser.elem)
-        @parser.end_element("element")
-      end
-      it "should unlink @elem" do
-        @parser.elem.should_receive(:unlink)
         @parser.end_element("element")
       end
       it "should delete the @elem and @top" do
@@ -170,7 +175,9 @@ describe Babylon::XmppParser do
     end
     
     describe "if the current element is not the top element" do
+      
       before(:each) do
+        @parser.elem = @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
         @child = Nokogiri::XML::Element.new("child", @parser.doc)
         @parser.elem.add_child(@child)
         @parser.elem = @child
@@ -225,10 +232,54 @@ describe Babylon::XmppParser do
   end
 
   describe ".cdata_block" do
+    before(:each) do
+      @parser.elem = @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
+    end
     it "should create a CData block in the current element when called directly" do
       @parser.cdata_block("salut my friend!")
       @parser.elem.to_xml.should == "<element><![CDATA[salut my friend!]]></element>"
     end
+  end
+
+  describe "a communication with an XMPP Client" do
+    
+    it "should parse the right information" do
+      string = "<stream:stream
+          xmlns:stream='http://etherx.jabber.org/streams'
+          xmlns='jabber:component:accept'
+          from='plays.shakespeare.lit'
+          id='3BF96D32'>
+      <handshake/>    <message from='juliet@example.com'
+                        to='romeo@example.net'
+                        xml:lang='en'>
+          <body>Art thou not Romeo, and a Montague?</body>
+        </message>"
+      pieces = rand(string.size/30)
+      # So we have to pick 'pieces' number between 0 and string.size
+      indices = []
+      pieces.times do |i|
+        indices[i] = rand(string.size)
+      end
+      # Now let's sort indices
+      indices.sort!
+      substrings = []
+      prev_index = 0
+      indices.each do |index|
+        substrings << string[prev_index, (index-prev_index)]
+        prev_index = index
+      end
+      substrings << string[prev_index, string.size]
+      #Just to make sure we split the string the right way!
+      substrings.join("").should == string
+      
+      substrings.each do |s|
+        @parser.push(s)
+      end
+      
+      @stanzas.join("").should == "<stream:stream xmlns:xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns:xmlns=\"jabber:component:accept\" from=\"plays.shakespeare.lit\" id=\"3BF96D32\"/><handshake/><message from=\"juliet@example.com\" to=\"romeo@example.net\" xml:lang=\"en\">\n          <body>Art thou not Romeo, and a Montague?</body>\n        </message>"
+
+    end
+    
   end
 
 end

@@ -155,7 +155,7 @@ module Babylon
     ##
     # Adds characters to the current element (being parsed)
     def characters(string)
-      @elem.add_child(Nokogiri::XML::Text.new(string, @doc))
+      @elem.add_child(Nokogiri::XML::Text.new(string, @doc)) if @elem
     end
 
     ##
@@ -186,8 +186,6 @@ module Babylon
       if @elem
         if @elem == @top
           @callback.call(@elem) 
-          # And we also need to remove @elem from its tree
-          @elem.unlink 
           # And the current elem is the next sibling or the root
           @elem = @top = nil
         else
