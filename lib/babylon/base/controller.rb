@@ -35,11 +35,16 @@ module Babylon
         return if @rendered # Avoid double rendering
         
         if options.nil? # default rendering
-          return render(:file => default_template_name)
+          render(:file => default_template_name)
         elsif options[:file]
-          render_for_file(view_path(options[:file])) 
+          file = options[:file]
+          if file.include?('/')
+            render_for_file("app/views/#{file}.xml.builder")
+          else
+            render_for_file(view_path(file)) 
+          end
         elsif action_name = options[:action]
-          return render(:file => default_template_name(action_name.to_s))
+          render(:file => default_template_name(action_name.to_s))
         end
         
         # And finally, we set up rendered to be true 
