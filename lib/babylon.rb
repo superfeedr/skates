@@ -8,6 +8,7 @@ require 'yaml'
 require 'fileutils'
 
 require 'babylon/xmpp_connection'
+require 'babylon/xmpp_parser'
 require 'babylon/component_connection'
 require 'babylon/client_connection'
 require 'babylon/router'

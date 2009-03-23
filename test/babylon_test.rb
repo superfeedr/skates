@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class BabylonTest < Test::Unit::TestCase
+  # Tests are done through Rspec... but feel free to add any Unit tests you think might be helpful to understand and fix code more easily
   should "probably rename this file and start testing for real" do
-    flunk "hey buddy, you should probably rename this file and start testing for real"
   end
 end
