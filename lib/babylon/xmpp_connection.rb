@@ -8,7 +8,6 @@ module Babylon
   # xml-not-well-formed Exception
   class XmlNotWellFormed < Exception; end
   
-
   ##
   # This class is in charge of handling the network connection to the XMPP server.
   class XmppConnection < EventMachine::Connection
@@ -117,7 +116,7 @@ module Babylon
   # This is the XML SAX Parser that accepts "pushed" content
   class XmppParser < Nokogiri::XML::SAX::Document
     
-    attr_accessor :elem, :doc
+    attr_accessor :elem, :doc, :parser, :top
     
     ##
     # Initialize the parser and adds the callback that will be called upon stanza completion
@@ -131,7 +130,7 @@ module Babylon
     # Resets the Pushed SAX Parser.
     def reset
       @parser   = Nokogiri::XML::SAX::PushParser.new(self)
-      @doc      = Nokogiri::XML::Document.new
+      start_document
       @elem     = nil
     end
     
@@ -144,8 +143,7 @@ module Babylon
     ##
     # Called when the document contains a CData block
     def cdata_block(string)
-      cdata = Nokogiri::XML::CDATA.new(@doc, string)
-      @elem.add_child(cdata)
+      @elem.add_child(Nokogiri::XML::CDATA.new(@doc, string))
     end
 
     ## 
@@ -157,8 +155,7 @@ module Babylon
     ##
     # Adds characters to the current element (being parsed)
     def characters(string)
-      @last_text_elem ||= @elem
-      @last_text = @last_text ? @last_text + string : string
+      @elem.add_child(Nokogiri::XML::Text.new(string, @doc))
     end
 
     ##
@@ -168,38 +165,36 @@ module Babylon
     def start_element(qname, attributes = [])
       e = Nokogiri::XML::Element.new(qname, @doc)
       add_namespaces_and_attributes_to_node(attributes, e)
-
-      # Adding the newly created element to the @elem that is being parsed, or, if no element is being parsed, then we set the @root and the @elem to be this newly created element.
-      @elem = @elem ? @elem.add_child(e) : (@root = e)
       
-      if @elem.name == "stream:stream"
+      if e.name == "stream:stream"
         # Should be called only for stream:stream.
-        # We re-initialize the document and set its root to be the doc.
+        # We re-initialize the document and set its root to be the newly created element.
+        start_document
+        @doc.root = e
         # Also, we activate the callback since this element  will never end.
-        @doc = Nokogiri::XML::Document.new
-        @doc.root = @root = @elem
-        @callback.call(@elem)
+        @callback.call(e)
+      else
+        # Adding the newly created element to the @elem that is being parsed, or, if no element is being parsed, then we set the @top and the @elem to be this newly created element.
+        # Room is the "highest" element to (it's parent is the <stream> element)
+        @elem = @elem ? @elem.add_child(e) : (@top = e)
       end
     end
 
     ##
     # Terminates the current element and calls the callback
     def end_element(name)
-      if @last_text_elem
-        @elem.add_child(Nokogiri::XML::Text.new(@last_text, @doc))
-        @last_text_elem = nil
-        @last_text = nil
-      end
       if @elem
-        if @elem.parent == @root
+        if @elem == @top
           @callback.call(@elem) 
           # And we also need to remove @elem from its tree
           @elem.unlink 
           # And the current elem is the next sibling or the root
-          @elem = @root 
+          @elem = @top = nil
         else
           @elem = @elem.parent 
         end
+      else
+        # Not sure what to do since it seems we're not processing any element at this time, so how can one end?
       end
     end
     
