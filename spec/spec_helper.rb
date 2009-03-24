@@ -22,5 +22,22 @@ module BabylonSpecHelper
   def babylon_config
     @config ||= YAML.load(File.read(File.join(File.dirname(__FILE__), "config.yaml")))
   end
+end
+
+# Stub for EventMachineConnection
+module EventMachine
   
+  def EventMachine.stop_event_loop
+    # Do nothing
+  end
+  
+  def EventMachine.connect(host, port, handler, params)
+    klass = if (handler and handler.is_a?(Class))
+      raise ArgumentError, 'must provide module or subclass of EventMachine::Connection' unless Connection > handler
+    handler
+    else
+      Class.new( Connection ) {handler and include handler}
+    end
+    c = klass.new nil, params
+  end
 end

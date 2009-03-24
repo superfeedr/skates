@@ -23,8 +23,8 @@ module Babylon
           paste_content_here #  The stream:stream element should be cut here ;)
         end
       end
-      @start_stream, @stop_stream = builder.to_xml.split('<paste_content_here/>')
-      send(@start_stream)
+      start, stop = builder.to_xml.split('<paste_content_here/>')
+      send(start)
     end
 
     ##
@@ -39,10 +39,7 @@ module Babylon
         if stanza.name == "stream:stream" && stanza.attributes['id']
           # This means the XMPP session started!
           # We must send the handshake now.
-          hash = Digest::SHA1::hexdigest(stanza.attributes['id'].content + @password)
-          handshake = Nokogiri::XML::Node.new("handshake", stanza.document)
-          handshake.content = hash
-          send(handshake)
+          send(handshake(stanza))
           @state = :wait_for_handshake
         else
           raise
@@ -66,6 +63,16 @@ module Babylon
     def stream_namespace
       'jabber:component:accept'
     end
+    
+    private
+    
+    def handshake(stanza)
+      hash = Digest::SHA1::hexdigest(stanza.attributes['id'].content + @password)
+      handshake = Nokogiri::XML::Node.new("handshake", stanza.document)
+      handshake.content = hash
+      handshake
+    end
+    
     
   end
 end

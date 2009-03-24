@@ -3,24 +3,6 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe Babylon::XmppConnection do
   
   before(:each) do
-    # Stub for EventMachineConnection
-    module EventMachine
-      
-      def EventMachine.stop_event_loop
-        # Do nothing
-      end
-      
-      def EventMachine.connect(host, port, handler, params)
-        klass = if (handler and handler.is_a?(Class))
-          raise ArgumentError, 'must provide module or subclass of EventMachine::Connection' unless Connection > handler
-        handler
-        else
-          Class.new( Connection ) {handler and include handler}
-        end
-        c = klass.new nil, params
-      end
-    end
-    
     @stanza_proc = Proc.new {
       # Do something when we receive a stanza
     }

@@ -9,6 +9,10 @@ module Babylon
   class XmlNotWellFormed < Exception; end
   
   ##
+  # Authentication Error (wrong password/jid combination). Used for Clients and Components
+  class AuthenticationError < Exception; end
+  
+  ##
   # This class is in charge of handling the network connection to the XMPP server.
   class XmppConnection < EventMachine::Connection
     

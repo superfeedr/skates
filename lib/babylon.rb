@@ -73,11 +73,6 @@ module Babylon
   def self.config
     @@config
   end
-
-  ##
-  # Authentication Error (wrong password/jid combination). Used for Clients and Components
-  class AuthenticationError < Exception 
-  end
-
+  
 end
 
