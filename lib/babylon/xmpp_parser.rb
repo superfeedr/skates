@@ -75,7 +75,7 @@ module Babylon
         if @elem == @top
           @callback.call(@elem) 
           # Remove the element from its content, since we're done with it!
-          @elem.unlink
+          @elem.unlink if @elem
           # And the current elem is the next sibling or the root
           @elem = @top = nil
         else

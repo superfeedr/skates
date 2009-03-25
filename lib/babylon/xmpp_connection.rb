@@ -7,17 +7,17 @@ module Babylon
   ## 
   # xml-not-well-formed Exception
   class XmlNotWellFormed < Exception; end
-  
+
   ##
   # Authentication Error (wrong password/jid combination). Used for Clients and Components
   class AuthenticationError < Exception; end
-  
+
   ##
   # This class is in charge of handling the network connection to the XMPP server.
   class XmppConnection < EventMachine::Connection
-    
+
     attr_accessor :jid, :host, :port
-    
+
     ##
     # Connects the XmppConnection to the right host with the right port. I
     # It passes itself (as handler) and the configuration
@@ -26,7 +26,7 @@ module Babylon
       Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]}") # Very low level Logging
       EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
     end
-    
+
     def connection_completed
       Babylon.logger.debug("CONNECTED") # Very low level Logging
     end
@@ -36,9 +36,9 @@ module Babylon
     def unbind()
       Babylon.logger.debug("DISCONNECTED") # Very low level Logging
       begin
-        @handler.on_disconnected(self) if @handler and @handler.respond_to?("on_disconnected")
+        @handler.on_disconnected() if @handler and @handler.respond_to?("on_disconnected")
       rescue
-        Babylon.logger.error("on_disconnected failed.")
+        Babylon.logger.error("on_disconnected failed : #{$!}\n#{$!.backtrace.join("\n")}")
       end
     end
 
@@ -72,16 +72,16 @@ module Babylon
         begin
           @handler.on_stanza(stanza) if @handler and @handler.respond_to?("on_stanza")
         rescue
-          Babylon.logger.error("on_disconnected failed.")
+          Babylon.logger.error("on_stanza failed : #{$!}\n#{$!.backtrace.join("\n")}")
         end
-        
       end 
     end 
-    
+
     ## 
     # Sends the Nokogiri::XML data (after converting to string) on the stream. It also appends the right "from" to be the component's JId if none has been mentionned. Eventually it displays this data for debugging purposes.
     # This method also adds a "from" attribute to all stanza if it was ommited (the full jid) only if a "to" attribute is present. if not, we assume that we're speaking to the server and the server doesn't need a "from" to identify where the message is coming from.
     def send(xml)
+
       if xml.is_a? Nokogiri::XML::NodeSet
         xml.each do |node|
           send_node(node)
@@ -102,19 +102,28 @@ module Babylon
       node["from"] ||= jid if node["to"]
       send_string(node.to_xml)
     end
-    
+
     ## 
     # Sends a string on the line
     def send_string(string)
-      Babylon.logger.debug("SENDING : #{string}")
-      send_data("#{string}") 
+      begin
+        Babylon.logger.debug("SENDING : #{string}")
+        send_data("#{string}") 
+      rescue
+        Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
+      end
+
     end
 
     ## 
     # receive_data is called when data is received. It is then passed to the parser. 
     def receive_data(data)
-      Babylon.logger.debug("RECEIVED : #{data}")
-      @parser.push(data)
+      begin
+        Babylon.logger.debug("RECEIVED : #{data}")
+        @parser.push(data)
+      rescue
+        Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
+      end
     end
   end
 
