@@ -51,19 +51,19 @@ module Babylon
     
     ## 
     # Will be called by the connection class once it is connected to the server.
-    def on_connected(connection)
+    def self.on_connected(connection)
       Babylon::CentralRouter.method(:connected)
     end
     
     ##
     # Will be called by the connection class upon disconnection.
-    def on_disconnected()
+    def self.on_disconnected()
       EventMachine.stop_event_loop
     end
     
     ##
     # Will be called by the connection class when it receives and parses a stanza.
-    def on_stanza(stanza)
+    def self.on_stanza(stanza)
       Babylon::CentralRouter.method(:route)
     end
     
