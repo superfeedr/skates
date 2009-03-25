@@ -35,7 +35,11 @@ module Babylon
     # Called when the connection is terminated and stops the event loop
     def unbind()
       Babylon.logger.debug("DISCONNECTED") # Very low level Logging
-      @handler.on_disconnected(self) if @handler
+      begin
+        @handler.on_disconnected(self) if @handler and @handler.respond_to?("on_disconnected")
+      rescue
+        Babylon.logger.error("on_disconnected failed.")
+      end
     end
 
     ## 
@@ -65,7 +69,12 @@ module Babylon
         # In any case, we need to close the connection.
         close_connection
       else
-        @handler.on_stanza(stanza) if @handler
+        begin
+          @handler.on_stanza(stanza) if @handler and @handler.respond_to?("on_stanza")
+        rescue
+          Babylon.logger.error("on_disconnected failed.")
+        end
+        
       end 
     end 
     

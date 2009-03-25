@@ -165,7 +165,11 @@ module Babylon
             # And now, send a presence!
             presence = Nokogiri::XML::Node.new("presence", @outstream)
             send(presence)
-            @handler.on_connected(self) if @handler
+            begin
+              @handler.on_connected(self) if @handler and @handler.respond_to?("on_connected")
+            rescue
+              Babylon.logger.error("on_connected failed.")
+            end
             @state = :connected
           end
 

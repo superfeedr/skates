@@ -47,7 +47,11 @@ module Babylon
 
       when :wait_for_handshake
         if stanza.name == "handshake"
-          @handler.on_connected(self) if @handler
+          begin
+            @handler.on_connected(self) if @handler and @handler.respond_to?("on_connected")
+          rescue
+            Babylon.logger.error("on_connected failed.")
+          end
           @state = :connected
         elsif stanza.name == "stream:error"
           raise AuthenticationError
