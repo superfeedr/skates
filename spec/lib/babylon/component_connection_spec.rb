@@ -20,6 +20,7 @@ describe Babylon::ComponentConnection do
   describe ".receive_stanza" do
 
     before(:each) do
+      @component.instance_variable_set("@connected", true)
       @doc = Nokogiri::XML::Document.new
       @stanza = Nokogiri::XML::Node.new("presence", @doc)
     end

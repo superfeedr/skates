@@ -73,6 +73,7 @@ describe Babylon::XmppConnection do
   describe ".send" do
     
     before(:each) do
+      @connection.instance_variable_set("@connected", true)
       @doc = Nokogiri::XML::Document.new
     end
     

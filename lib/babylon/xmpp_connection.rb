@@ -28,12 +28,14 @@ module Babylon
     end
 
     def connection_completed
+      @connected = true
       Babylon.logger.debug("CONNECTED") # Very low level Logging
     end
 
     ##
     # Called when the connection is terminated and stops the event loop
     def unbind()
+      @connected = false
       Babylon.logger.debug("DISCONNECTED") # Very low level Logging
       begin
         @handler.on_disconnected() if @handler and @handler.respond_to?("on_disconnected")
@@ -46,6 +48,7 @@ module Babylon
     # Instantiate the Handler (called internally by EventMachine) and attaches a new XmppParser
     def initialize(params)
       super()
+      @connected = false
       @jid = params["jid"]
       @password = params["password"]
       @host = params["host"]
@@ -81,7 +84,7 @@ module Babylon
     # Sends the Nokogiri::XML data (after converting to string) on the stream. It also appends the right "from" to be the component's JId if none has been mentionned. Eventually it displays this data for debugging purposes.
     # This method also adds a "from" attribute to all stanza if it was ommited (the full jid) only if a "to" attribute is present. if not, we assume that we're speaking to the server and the server doesn't need a "from" to identify where the message is coming from.
     def send(xml)
-
+      raise NotConnected unless @connected
       if xml.is_a? Nokogiri::XML::NodeSet
         xml.each do |node|
           send_node(node)
@@ -112,7 +115,6 @@ module Babylon
       rescue
         Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
       end
-
     end
 
     ## 
