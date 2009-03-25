@@ -12,7 +12,7 @@ describe Babylon::Router::DSL do
     end }.should raise_error(/controller/)
   end
 
-  it "raises an exception if the route lacksan action" do
+  it "raises an exception if the route lacks an action" do
     lambda { Babylon::CentralRouter.draw do
       xpath("/test").to(:controller => "foo")
     end }.should raise_error(/action/)
@@ -27,6 +27,15 @@ describe Babylon::Router::DSL do
   it "creates a route with the specified xpath, controller and action" do
     Babylon::CentralRouter.draw do
       xpath("//test"
+      ).to(:controller => "controller", :action => "action")
+    end
+    routes = Babylon::CentralRouter.instance_variable_get("@routes")
+    routes.length.should == 1
+  end
+  
+  it "creates a route with the specified css, controller and action" do
+    Babylon::CentralRouter.draw do
+      css("message"
       ).to(:controller => "controller", :action => "action")
     end
     routes = Babylon::CentralRouter.instance_variable_get("@routes")

@@ -40,15 +40,6 @@ module Babylon
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
     def route(stanza)
-      puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-      puts stanza.class
-      puts "=="
-      puts stanza.document
-      puts "=="
-      puts stanza.document.root
-      puts "=="
-      puts stanza.inspect
-      puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
       return false if !@@connection
       @routes ||= []
       @routes.each { |route|
@@ -110,7 +101,8 @@ module Babylon
       raise("No controller given for route") unless params["controller"]
       raise("No action given for route") unless params["action"]
       @priority   = params["priority"] || 0
-      @xpath      = params["xpath"]
+      @xpath      = params["xpath"] if params["xpath"]
+      @css        = params["css"] if params["css"]
       @controller = Kernel.const_get("#{params["controller"].capitalize}Controller")
       @action     = params["action"]
     end
@@ -118,7 +110,11 @@ module Babylon
     ##
     # Checks that the route matches the stanzas and calls the the action on the controller
     def accepts?(stanza)
-      stanza.xpath(@xpath, XpathHelper.new).first ? self : false
+      if @xpath
+        stanza.xpath(@xpath, XpathHelper.new).first ? self : false
+      elsif @css
+        stanza.css(@css).first ? self : false
+      end
     end
     
   end

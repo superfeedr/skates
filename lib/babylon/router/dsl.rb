@@ -14,6 +14,12 @@ module Babylon
         @routes << {"xpath" => path}
         self
       end
+      
+      # Match a css.
+      def css(path)
+        @routes << {"css" => path}
+        self
+      end
 
       # Set the priority of the last created route.
       def priority(n)
