@@ -49,7 +49,7 @@ module Babylon
             end
           }
         rescue NameError
-          Babylon.logger.debug "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n #{$!} : #{$!.inspect}"
+          Babylon.logger.debug "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
         end
       end
     end
