@@ -58,13 +58,13 @@ module Babylon
         # Should be called only for stream:stream.
         # We re-initialize the document and set its root to be the newly created element.
         start_document
-        @doc.root = e
+        @doc.root = @root = e
         # Also, we activate the callback since this element  will never end.
         @callback.call(e)
       else
         # Adding the newly created element to the @elem that is being parsed, or, if no element is being parsed, then we set the @top and the @elem to be this newly created element.
         # @top is the "highest" element to (it's parent is the <stream> element)
-        @elem = @elem ? @elem.add_child(e) : (@top = @doc.root.add_child(e))
+        @elem = @elem ? @elem.add_child(e) : (@top = @root.add_child(e))
       end
     end
 
