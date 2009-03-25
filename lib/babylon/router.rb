@@ -40,6 +40,15 @@ module Babylon
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
     def route(stanza)
+      puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+      puts stanza.class
+      puts "=="
+      puts stanza.document
+      puts "=="
+      puts stanza.document.root
+      puts "=="
+      puts stanza.inspect
+      puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
       return false if !@@connection
       @routes ||= []
       @routes.each { |route|

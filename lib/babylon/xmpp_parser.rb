@@ -63,8 +63,8 @@ module Babylon
         @callback.call(e)
       else
         # Adding the newly created element to the @elem that is being parsed, or, if no element is being parsed, then we set the @top and the @elem to be this newly created element.
-        # Room is the "highest" element to (it's parent is the <stream> element)
-        @elem = @elem ? @elem.add_child(e) : (@top = e)
+        # @top is the "highest" element to (it's parent is the <stream> element)
+        @elem = @elem ? @elem.add_child(e) : (@top = @doc.root.add_child(e))
       end
     end
 
@@ -74,6 +74,8 @@ module Babylon
       if @elem
         if @elem == @top
           @callback.call(@elem) 
+          # Remove the element from its content, since we're done with it!
+          @elem.unlink
           # And the current elem is the next sibling or the root
           @elem = @top = nil
         else
@@ -92,7 +94,7 @@ module Babylon
       (attrs.size / 2).times do |i|
         name, value = attrs[2 * i], attrs[2 * i + 1]
         if name =~ /xmlns/
-          node.add_namespace(name, value)
+          node.add_namespace(name.gsub("xmlns:", "").gsub("xmlns", ""), value)
         else
           node.set_attribute name, value
         end
