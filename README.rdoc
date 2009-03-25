@@ -8,13 +8,9 @@ This framework can use both an XMPP Component (XEP-0114) and an XMPP Client. How
 
 == FEATURES/PROBLEMS:
 
-* This hasn't been tested. 
-
 == ROADMAP :
 
 - Instead of passing the stanzas as Nokogiri:XML:Node elements we should find a way to pass an "agnostic" ruby data-structure, so that app developers don't have to learn/know/understand Nokogiri
-- HELPERS : 
-    * strip jids (...) 
 - Improve the Client Connection to support other authentication than PLAIN SASL
 
 == SYNOPSIS:
@@ -83,11 +79,21 @@ Compared to Rails, we are using accessors (and not @variables assigned in the co
     
     script/component
 
+
+If you just want to make use of the connection classes (Client or Component), you can just call the following :
+
+Babylon::ClientConnection.connect(params, handler) 
+or,
+Babylon::ComponentConnection.connect(params, handler) 
+
+where params is a hash for all the necessary information to connect, and handler is an object that will receive the callbacks. Right now 3 callbacks are supported:
+
+on_connected, on_disconnected and on_stanza
+
+
 == ADDITIONAL INFORMATION
 
-This code hasn't been tested at all! (yes, i know it's bad, but I couldn't have rspec working with eventmachine) Feel free to pull, branch, improve {code|specs|tests|docs} and we will merge it!
-
-If you used a version before 0.0.6, please change your routes to use the new router DSL. (See template for more help). It shouldn't be long... sorry for that.
+This code hasn't been 100% tested. Feel free to pull, branch, improve {code|specs|tests|docs} and we will merge it!
 
 == REQUIREMENTS:
 

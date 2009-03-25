@@ -21,8 +21,8 @@ module Babylon
     ##
     # Connects the ClientConnection based on SRV records for the jid's domain, if no host or port has been specified.
     # In any case, we give priority to the specified host and port.
-    def self.connect(params, &block)
-      return super(params, &block) if params["host"] && params["port"]
+    def self.connect(params, handler = nil)
+      return super(params, handler) if params["host"] && params["port"]
 
       begin
         begin
@@ -41,7 +41,7 @@ module Babylon
             begin
               params["host"] = record.target.to_s
               params["port"] = Integer(record.port)
-              super(params, &block)
+              super(params, handler)
               # Success
               break
             rescue SocketError, Errno::ECONNREFUSED
@@ -165,7 +165,7 @@ module Babylon
             # And now, send a presence!
             presence = Nokogiri::XML::Node.new("presence", @outstream)
             send(presence)
-            @connection_callback.call(self) if @connection_callback
+            @handler.on_connected(self) if @handler
             @state = :connected
           end
 

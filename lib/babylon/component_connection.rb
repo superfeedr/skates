@@ -47,7 +47,7 @@ module Babylon
 
       when :wait_for_handshake
         if stanza.name == "handshake"
-          @connection_callback.call(self) if @connection_callback
+          @handler.on_connected(self) if @handler
           @state = :connected
         elsif stanza.name == "stream:error"
           raise AuthenticationError

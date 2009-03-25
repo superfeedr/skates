@@ -22,9 +22,9 @@ module Babylon
     # Connects the XmppConnection to the right host with the right port. I
     # It passes itself (as handler) and the configuration
     # This can very well be overwritten by subclasses.
-    def self.connect(params, &block)
+    def self.connect(params, handler)
       Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]}") # Very low level Logging
-      EventMachine.connect(params["host"], params["port"], self, params.merge({"on_connection" => block}))
+      EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
     end
     
     def connection_completed
@@ -35,8 +35,7 @@ module Babylon
     # Called when the connection is terminated and stops the event loop
     def unbind()
       Babylon.logger.debug("DISCONNECTED") # Very low level Logging
-      EventMachine::stop_event_loop
-      raise NotConnected
+      @handler.on_disconnected(self) if @handler
     end
 
     ## 
@@ -47,8 +46,7 @@ module Babylon
       @password = params["password"]
       @host = params["host"]
       @port = params["port"]
-      @stanza_callback = params["on_stanza"]
-      @connection_callback = params["on_connection"]
+      @handler = params["handler"]
       @parser = XmppParser.new(&method(:receive_stanza))
     end
 
@@ -67,7 +65,7 @@ module Babylon
         # In any case, we need to close the connection.
         close_connection
       else
-        @stanza_callback.call(stanza) if @stanza_callback
+        @handler.on_stanza(stanza) if @handler
       end 
     end 
     

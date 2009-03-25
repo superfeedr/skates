@@ -2,14 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Babylon::XmppConnection do
   
+  include BabylonSpecHelper
+  
   before(:each) do
-    @stanza_proc = Proc.new {
-      # Do something when we receive a stanza
-    }
-    @connection_proc = Proc.new {
-      # Do something when we're connected
-    }
-    @connection = Babylon::XmppConnection.connect({"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com", "on_stanza" => @stanza_proc, "on_connection" => @connection_proc})
+    @connection = Babylon::XmppConnection.connect({"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com"}, handler_mock)
     @connection.stub!(:send_data).and_return(true)
   end
   
@@ -21,10 +17,10 @@ describe Babylon::XmppConnection do
   end
   
   describe ".unbind" do
-    it "should write a log message, stop_event_loop and raise an error" do
-      EventMachine.should_receive(:stop_event_loop)
+    it "should write a log message, and call on_disconnected" do
       Babylon.logger.should_receive(:debug).with("DISCONNECTED")
-      lambda {@connection.unbind}.should raise_error(Babylon::NotConnected)
+      handler_mock.should_receive(:on_disconnected)
+      @connection.unbind
     end
   end
   
@@ -67,7 +63,7 @@ describe Babylon::XmppConnection do
     describe "with a stanza that is not an error" do
       it "should call the on_stanza block" do
         stanza = Nokogiri::XML::Node.new("message", @doc)
-        @stanza_proc.should_receive(:call).with(stanza)
+        handler_mock.should_receive(:on_stanza).with(stanza)
         @connection.receive_stanza(stanza)
       end
     end

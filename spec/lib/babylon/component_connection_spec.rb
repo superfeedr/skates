@@ -5,14 +5,8 @@ describe Babylon::ComponentConnection do
   include BabylonSpecHelper
 
   before(:each) do
-    @stanza_proc = Proc.new {
-      # Do something when we receive a stanza
-    }
-    @connection_proc = Proc.new {
-      # Do something when we're connected
-    }
-    @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com", "on_stanza" => @stanza_proc}
-    @component = Babylon::ComponentConnection.connect(@params, &@connection_proc) 
+    @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com"}
+    @component = Babylon::ComponentConnection.connect(@params, handler_mock) 
     @component.stub!(:send_data).and_return(true) 
   end
 
@@ -88,7 +82,7 @@ describe Babylon::ComponentConnection do
         end
 
         it "should call the connection callback" do
-          @connection_proc.should_receive(:call).with(@component)
+          handler_mock.should_receive(:on_connected).with(@component)
           @component.receive_stanza(@handshake)
         end
       end

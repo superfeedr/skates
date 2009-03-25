@@ -30,27 +30,40 @@ module Babylon
         
         config_file = File.open('config/config.yaml')
         
-        
         # Caching views in production mode.
         if Babylon.environment == "production"
           Babylon.cache_views
         end
         
+        Babylon.config = YAML.load(config_file)[Babylon.environment] 
         
-        Babylon.config = YAML.load(config_file)[Babylon.environment]
-        
-        params, on_connected = Babylon.config.merge({"on_stanza" => Babylon::CentralRouter.method(:route)}), Babylon::CentralRouter.method(:connected)
-        
-        case Babylon.config["application_type"]
+        case Babylon.config["application_type"] 
           when "client"
-            Babylon::ClientConnection.connect(params, &on_connected)
+            Babylon::ClientConnection.connect(Babylon.config, self) 
           else # By default, we assume it's a component
-            Babylon::ComponentConnection.connect(params, &on_connected)
+            Babylon::ComponentConnection.connect(Babylon.config, self) 
         end
         
         # And finally, let's allow the application to do all it wants to do after we started the EventMachine!
         yield if block_given?
       end
+    end
+    
+    ## 
+    # Will be called by the connection class once it is connected to the server.
+    def on_connected(connection)
+      Babylon::CentralRouter.method(:connected)
+    end
+    
+    ##
+    # Will be called by the connection class upon disconnection.
+    def on_disconnected()
+    end
+    
+    ##
+    # Will be called by the connection class when it receives and parses a stanza.
+    def on_stanza(stanza)
+      Babylon::CentralRouter.method(:route)
     end
     
   end

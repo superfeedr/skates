@@ -21,7 +21,7 @@ describe Babylon::Runner do
         mock(Babylon::ComponentConnection)
       end
     end
-    
+
     before(:each) do
       @stub_config_file = File.open("config/config.yaml")
       @config = YAML.load(@stub_config_file)
@@ -31,9 +31,9 @@ describe Babylon::Runner do
         # Mimick Initializers
       }
       EventMachine.stub!(:run).and_yield
-      @client_connection_params = @config["test"].merge({"on_stanza" => Babylon::CentralRouter.method(:route)})
-      Babylon::ClientConnection.stub!(:connect).with(@client_connection_params).and_return(client_mock)
-      Babylon::ComponentConnection.stub!(:connect).with(@client_connection_params).and_return(component_mock)
+      @client_connection_params = @config["test"]
+      Babylon::ClientConnection.stub!(:connect).with(@client_connection_params, Babylon::Runner).and_return(client_mock)
+      Babylon::ComponentConnection.stub!(:connect).with(@client_connection_params, Babylon::Runner).and_return(component_mock)
     end
     
     it "should load the configuration" do
@@ -58,12 +58,12 @@ describe Babylon::Runner do
     
     it "should connect the client connection if specified by the config" do
       @config["test"]["application_type"] = "client"
-      Babylon::ClientConnection.should_receive(:connect).with(@client_connection_params.merge({"application_type" => "client"})).and_return(client_mock)
+      Babylon::ClientConnection.should_receive(:connect).with(@client_connection_params.merge({"application_type" => "client"}), Babylon::Runner).and_return(client_mock)
       Babylon::Runner.run("test")
     end
     
     it "should connect the component connection if no application_type specified by the config" do
-      Babylon::ComponentConnection.should_receive(:connect).with(@client_connection_params).and_return(component_mock)
+      Babylon::ComponentConnection.should_receive(:connect).with(@client_connection_params, Babylon::Runner).and_return(component_mock)
       Babylon::Runner.run("test")
     end
     
@@ -72,12 +72,6 @@ describe Babylon::Runner do
     it "should require all controllers"
     
     it "should require all routes"
-    
-    it "should call the callback (it usually contains the initializers)" do
-      called = false
-      Babylon::Runner.run("test") { called = true }
-      called.should == true
-    end
     
   end
   
