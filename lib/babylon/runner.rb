@@ -58,6 +58,7 @@ module Babylon
     ##
     # Will be called by the connection class upon disconnection.
     def on_disconnected()
+      EventMachine.stop_event_loop
     end
     
     ##
