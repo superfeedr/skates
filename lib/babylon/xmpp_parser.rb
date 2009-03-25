@@ -64,6 +64,12 @@ module Babylon
       else
         # Adding the newly created element to the @elem that is being parsed, or, if no element is being parsed, then we set the @top and the @elem to be this newly created element.
         # @top is the "highest" element to (it's parent is the <stream> element)
+        puts "%%%%%%%%%%%%%%%%%%%"
+        puts @doc
+        puts "=="
+        puts @doc.root
+        puts "=="
+        puts e
         @elem = @elem ? @elem.add_child(e) : (@top = @doc.root.add_child(e))
       end
     end
