@@ -78,6 +78,7 @@ describe Babylon::XmppParser do
     
     before(:each) do
       @parser.doc.root = Nokogiri::XML::Element.new("stream:stream", @parser.doc)
+      @parser.instance_variable_set("@root", @parser.doc.root)
     end
     
     it "should create a new element with the right attributes, whose name is the name of the start tag and assign it to @elem" do
@@ -132,7 +133,7 @@ describe Babylon::XmppParser do
       
       it "should add @elem as a child of the doc's root" do
         @parser.start_element(@name, @attributes)
-        @parser.elem.parent.should == @parser.doc.root
+        @parser.elem.parent.name.should == @parser.doc.root.name
       end
       
       it "should set the @top to be equal to this @elem" do
