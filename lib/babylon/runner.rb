@@ -52,7 +52,7 @@ module Babylon
     ## 
     # Will be called by the connection class once it is connected to the server.
     def self.on_connected(connection)
-      Babylon::CentralRouter.method(:connected)
+      Babylon::CentralRouter.connected(connection)
     end
     
     ##
@@ -64,7 +64,7 @@ module Babylon
     ##
     # Will be called by the connection class when it receives and parses a stanza.
     def self.on_stanza(stanza)
-      Babylon::CentralRouter.method(:route)
+      Babylon::CentralRouter.route(stanza)
     end
     
   end
