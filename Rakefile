@@ -34,37 +34,11 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = false
 end
 
-# begin
-#   require 'rcov/rcovtask'
-#   Rcov::RcovTask.new do |test|
-#     test.libs << 'test'
-#     test.pattern = 'test/**/*_test.rb'
-#     test.verbose = true
-#   end
-# rescue LoadError
-#   task :rcov do
-#     abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-#   end
-# end
-
-begin
-  require 'spec/rake/spectask'
-  desc "Run all Spec"
-  Spec::Rake::SpecTask.new('spec') do |spec|
-    spec.spec_files = FileList['spec/**/*.rb']
-    spec.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "Rspec is not available. In order to run rspec, you must: sudo gem install rspec"
-  end
-end
-
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
-    test.libs << 'spec'
-    test.pattern = 'spec/**/*_spec.rb'
+    test.libs << 'test'
+    test.pattern = 'test/**/*_test.rb'
     test.verbose = true
   end
 rescue LoadError
@@ -72,6 +46,33 @@ rescue LoadError
     abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
   end
 end
+
+begin
+  require 'spec/rake/spectask'
+  desc "Run all Spec"
+  Spec::Rake::SpecTask.new('spec') do |spec|
+    spec.spec_files = FileList['spec/**/*.rb']
+    spec.verbose = true
+    spec.rcov = true
+    spec.rcov_opts = []
+  end
+rescue LoadError
+  task :spec do
+    abort "Rspec is not available. In order to run rspec, you must: sudo gem install rspec"
+  end
+end
+
+begin
+  require 'rcov/verifytask'
+  desc "Verfiy Rcov level"
+  RCov::VerifyTask.new('rcov:verify') do |spec|
+  end
+rescue LoadError
+  task :spec do
+    abort "Rspec is not available. In order to run rspec, you must: sudo gem install rspec"
+  end
+end
+
 
 
 task :install => :build
