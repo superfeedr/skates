@@ -1,23 +1,39 @@
-= babylon
+= Babylon
 
 == DESCRIPTION:
 
 Babylon is a framework to build XMPP Applications in Ruby. The framework uses EventMachine to handle network connections.
 
-This framework can use both an XMPP Component (XEP-0114) and an XMPP Client. However, we strongly discourage any production application using a regular client.
+This framework can use both an XMPP Component (XEP-0114) and an XMPP Client (and XMPP Servers should come soone). However, we strongly discourage any production application using a regular client.
 
 == FEATURES/PROBLEMS:
 
+Please report/request them at the Lighthouse : http://babylon.lighthouseapp.com/projects/27641-babylon/overview
+
 == ROADMAP :
 
-- Instead of passing the stanzas as Nokogiri:XML:Node elements we should find a way to pass an "agnostic" ruby data-structure, so that app developers don't have to learn/know/understand Nokogiri
+- Instead of passing the stanzas as Nokogiri:XML:Node elements we should find a way to pass an "agnostic" ruby data-structure, so that app developers don't have to learn/know/understand Nokogiri. (Maybe do something like SaxMachine?)
 - Improve the Client Connection to support other authentication than PLAIN SASL
+- Implement the ServerConnection for S2S
+- Implement "auto-responding" features for disco-info... etc
+- Use a better generator
+- Review doc
+- Write more spec
+- Write tests
+- Evangelize!
 
-== SYNOPSIS:
+You can help with at least one of these points, don't turn your back on Babylon!
+
+== DOCUMENTATION :
+
+You can find it on our Rubyforge page : http://babylon.rubyforge.org/
+Please note that the documentation is -and will always be- incomplete... so if you have any problems with something that is not clear enough to you, feel free to send us questions and do not hesitate to fork the project to add your own documentation. We will be more than happy to help you help us!
+
+== SYNOPSIS :
 
 You can build applications directly with Babylon, or you can use the Babylon::ClientConnection and Babylon::ComponentConnection to create simple apps, but you will then have to handle stanza routing and creation yourself. You can also use these classes in external gems.
 
-To create an Application with Babylon: 
+=== To create an Application with Babylon: 
 
 1. Install the gem
 2. The app contains a generator that will "build" a scaffold for your application. 
@@ -79,8 +95,7 @@ Compared to Rails, we are using accessors (and not @variables assigned in the co
     
     script/component
 
-
-If you just want to make use of the connection classes (Client or Component), you can just call the following :
+=== To use the Connection Classes only (Client or Component), you can just call the following :
 
 Babylon::ClientConnection.connect(params, handler) 
 or,
@@ -88,22 +103,17 @@ Babylon::ComponentConnection.connect(params, handler)
 
 where params is a hash for all the necessary information to connect, and handler is an object that will receive the callbacks. Right now 3 callbacks are supported:
 
-on_connected, on_disconnected and on_stanza
+on_connected(connection), on_disconnected and on_stanza(stanza)
 
+== ADDITIONAL INFORMATION : 
 
-== ADDITIONAL INFORMATION
+Feel free to pull, branch, improve and commit the {code|specs|tests|docs} : we will merge it if it's a step ahead!
 
-This code hasn't been 100% tested. Feel free to pull, branch, improve {code|specs|tests|docs} and we will merge it!
+Babylon's edge versions are located at Github : http://github.com/julien51/babylon/tree/master
 
-== REQUIREMENTS:
+== REQUIREMENTS :
 
-Gems : Eventmachine, nokogiri, YAML
-
-Our goal is to limit the number of dependencies. Nokogiri seems to be only XML Library on Ruby that has a Push SAX Parser, that is why we are using it. It also seems pretty 'fast'. However, we think it is bad to "force" the framework users to receive Nokogiri objects (too much coupling), so we're looking for a Ruby datastcuture that would have an easy mapping with XML. Any thoughts?
-
-== INSTALL:
-
-- sudo gem install babylon
+Gems : Eventmachine, nokogiri, YAML, log4r
 
 == LICENSE:
 

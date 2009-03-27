@@ -84,7 +84,7 @@ module Babylon
   end
 
   ##
-  # Main router where all dispatchers shall register.
+  # Main router for a Babylon Application.
   module CentralRouter
     extend Router
   end
