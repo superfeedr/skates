@@ -12,6 +12,7 @@ begin
     gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri"]
     gem.executables = "babylon"
     gem.files = ["bin/babylon", "lib/babylon.rb", "lib/babylon/base/controller.rb", "lib/babylon/base/view.rb", "lib/babylon/client_connection.rb", "lib/babylon/component_connection.rb", "lib/babylon/router/dsl.rb", "lib/babylon/router.rb", "lib/babylon/runner.rb", "lib/babylon/xmpp_connection.rb", "lib/babylon/xmpp_parser.rb", "lib/babylon/xpath_helper.rb", "LICENSE", "Rakefile", "README.rdoc", "templates/babylon/app/controllers/README.rdoc", "templates/babylon/app/models/README.rdoc", "templates/babylon/app/views/README.rdoc", "templates/babylon/config/boot.rb", "templates/babylon/config/config.yaml", "templates/babylon/config/dependencies.rb", "templates/babylon/config/routes.rb", "templates/babylon/config/initializers/README.rdoc"]
+    gem.rubyforge_project = 'babylon' # This line would be new
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
@@ -53,8 +54,10 @@ begin
   Spec::Rake::SpecTask.new('spec') do |spec|
     spec.spec_files = FileList['spec/**/*.rb']
     spec.verbose = true
+    spec.warning = true
     spec.rcov = true
     spec.rcov_opts = []
+    spec.rcov_opts = ['--exclude', 'spec']
   end
 rescue LoadError
   task :spec do
@@ -63,16 +66,44 @@ rescue LoadError
 end
 
 begin
-  require 'rcov/verifytask'
-  desc "Verfiy Rcov level"
-  RCov::VerifyTask.new('rcov:verify') do |spec|
+  require 'spec/rake/verify_rcov'
+
+  RCov::VerifyTask.new(:verify_rcov => 'spec') do |t|
+    t.threshold = 100.0
+    t.index_html = 'coverage/index.html'
   end
 rescue LoadError
   task :spec do
-    abort "Rspec is not available. In order to run rspec, you must: sudo gem install rspec"
+    abort "Rcov is not available. In order to run rcov, you must: sudo gem install rcov"
   end
 end
 
+# These are Rubyforge tasks
+begin
+  require 'rake/contrib/sshpublisher'
+  namespace :rubyforge do
+
+    desc "Release gem and RDoc documentation to RubyForge"
+    task :release => ["rubyforge:release:gem", "rubyforge:release:docs"]
+
+    namespace :release do
+      desc "Publish RDoc to RubyForge."
+      task :docs => [:rdoc] do
+        config = YAML.load(
+            File.read(File.expand_path('~/.rubyforge/user-config.yml'))
+        )
+
+        host = "#{config['username']}@rubyforge.org"
+        remote_dir = "/var/www/gforge-projects/babylon"
+        local_dir = 'rdoc'
+
+        Rake::SshDirPublisher.new(host, remote_dir, local_dir).upload
+      end
+    end
+  end
+rescue LoadError
+  puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
+end
 
 
 task :install => :build

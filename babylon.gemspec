@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["julien Genestoux"]
-  s.date = %q{2009-03-25}
+  s.date = %q{2009-03-26}
   s.default_executable = %q{babylon}
   s.email = %q{julien.genestoux@gmail.com}
   s.executables = ["babylon"]
@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri"]
+  s.rubyforge_project = %q{babylon}
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{Babylon is a framework to create EventMachine based XMPP External Components in Ruby.}
 
