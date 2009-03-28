@@ -21,7 +21,7 @@ require 'babylon/base/view'
 # It implements the MVC paradigm.
 # You can create your own application by running :
 #   $> babylon app_name
-# This will generate some folders and files for your application. Please see README for further instructions
+# This will generate some folders and files for your application. Please see README.rdoc for further instructions
 
 module Babylon
 
