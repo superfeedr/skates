@@ -2,6 +2,11 @@ require File.dirname(__FILE__)+"/router/dsl"
 
 module Babylon
   
+  
+  ## 
+  # Undefined stanza
+  class UndefinedStanza < Exception; end
+  
   ##
   # The router is in charge of sending the right stanzas to the right controllers based on user defined Routes.
   module Router
@@ -46,7 +51,12 @@ module Babylon
         if route.accepts?(stanza)
           # Here should happen the magic : call the controller
           Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}")
-          controller = route.controller.new({:stanza => stanza})
+          # Parsing the stanza
+          begin
+            controller = route.controller.new({:stanza => Kernel.const_get(route.action.capitalize).new(stanza)})
+          rescue NameError
+            raise UndefinedStanza
+          end
           controller.perform(route.action) do |response|
             # Response should be a Nokogiri::Nodeset
             @@connection.send(response)

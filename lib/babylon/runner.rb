@@ -20,6 +20,10 @@ module Babylon
         # Requiring all models
         Dir.glob('app/models/*.rb').each { |f| require f }
 
+
+        # Requiring all stanzas
+        Dir.glob('app/stanzas/*.rb').each { |f| require f }
+
         # Load the controllers
         Dir.glob('app/controllers/*_controller.rb').each {|f| require f }
 

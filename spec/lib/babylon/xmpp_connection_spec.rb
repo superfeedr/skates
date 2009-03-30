@@ -63,7 +63,7 @@ describe Babylon::XmppConnection do
     describe "with a stanza that is not an error" do
       it "should call the on_stanza block" do
         stanza = Nokogiri::XML::Node.new("message", @doc)
-        handler_mock.should_receive(:on_stanza).with(stanza)
+        handler_mock.should_receive(:on_stanza)
         @connection.receive_stanza(stanza)
       end
     end

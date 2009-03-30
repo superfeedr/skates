@@ -26,32 +26,32 @@ describe Babylon::Base::View do
     before(:each) do
       @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
-       message(:to => "you", :from => "me", :type => :chat) do
-         body("salut") 
+        message(:to => "you", :from => "me", :type => :chat) do
+          body("salut") 
        end
       eoxml
-      @builder = Nokogiri::XML::Builder.new do
-        instance_eval('message(:to => "you", :from => "me", :type => :chat) do
-           body("salut") 
-         end')
-      end
       File.stub!(:read).and_return(@xml_string)
     end
-    
-    it "should create a new Nokogiri Builder" do
-      Nokogiri::XML::Builder.should_receive(:new).and_return(@builder)
-      @view.evaluate
-    end
-    
+        
     it "should read the template file" do
       File.stub!(:read).and_return(@xml_string)
       @view.evaluate
     end
     
     it "should return a Nokogiri Nodeset corresponding to the children of the doc's root" do
-      @view.evaluate.should.to_s == @builder.doc.children.to_s
+      @view.evaluate.should.to_s == "<message type='chat' to='you' from='me'><body>salut</body></message>"
     end
     
+    it "should be able to access context's variables" do
+      @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @xml_string = <<-eoxml
+       message(:to => a, :from => b, :type => :chat) do
+         body(@context.c[:d]) 
+       end
+      eoxml
+      File.stub!(:read).and_return(@xml_string)
+      @view.evaluate.to_s.should == '<message type="chat" to="a" from="123"><body>d</body></message>'
+    end
   end
   
 end
