@@ -16,14 +16,12 @@ module Babylon
     
     class Stanza
       
-      attr_reader :xml      
       include SAXMachine
       
       def initialize(xml = nil)
         @xml = xml
         parse("#{xml}")
       end
-      
     end
   end
 end

@@ -10,12 +10,16 @@ This framework can use both an XMPP Component (XEP-0114) and an XMPP Client (and
 
 Please report/request them at the Lighthouse : http://babylon.lighthouseapp.com/projects/27641-babylon/overview
 
+The current version is a good candidate for version 0.1. We will probably not add any important features before that release, but we need some help with the tests and documentation.
+
 == ROADMAP :
 
 - Improve the Client Connection to support other authentication than PLAIN SASL
 - Implement the ServerConnection for S2S
 - Implement "auto-responding" features for disco-info... etc
 - Use a better generator (the next version of Nokogiri should fix that)
+- Implement "background" running when in production (and adjust log level)
+- Delete route priorities? And rely on the order only? (As Rails does)
 - Review doc
 - Write more spec
 - Write tests
@@ -26,7 +30,7 @@ You can help with at least one of these points, don't turn your back on Babylon!
 == DOCUMENTATION :
 
 You can find it on our Rubyforge page : http://babylon.rubyforge.org/
-Please note that the documentation is -and will always be- incomplete... so if you have any problems with something that is not clear enough to you, feel free to send us questions and do not hesitate to fork the project to add your own documentation. We will be more than happy to help you help us!
+Please note that the documentation is probably incomplete... so if you have any problems with something that is not clear enough to you, feel free to send us questions and do not hesitate to fork the project to add your own documentation. We will be more than happy to help you help us!
 
 == SYNOPSIS :
 
@@ -37,60 +41,29 @@ You can build applications directly with Babylon, or you can use the Babylon::Cl
 1. Install the gem
 2. The app contains a generator that will "build" a scaffold for your application. 
     
-    $> babylon myapp
+    $> babylon application <myapp>
 
 3. Use the generator or write your own controllers : 
 
-    $> script/generate messages echo:10:"//message[@type='chat']/body" subscribed:0:"//presence[@type='subscribe']"
+    $> babylon controller messages echo:10://message[@type='chat']/body,subscribed:0://presence[@type='subscribe']
 
-This will generate a "MessagesController" class with 2 methods : echo and subscribed. "echo" will be called when the component receives message stanzas of type 'chat',  while "subscribed" will be called for presence stanzas of type 'subscribe'. 10 and 0 are the priority : useful when a stanza matches 2 XPath.  Also, try to put high priorities to the "most frequent" stanzas to improve your component's performance. This will also generate 2 'views' used to build your stanzas. And finally, this will write 2 routes in the config/routes.rb 
+This will generate a "MessagesController" class with 2 methods : echo and subscribed. 
+ - "echo" will be called when the component receives message stanzas of type 'chat', 
+ - "subscribed" will be called for presence stanzas of type 'subscribe'. 
+10 and 0 are the priority : useful when a stanza matches 2 XPath.  
 
-4. Write your application's code and views :
+Each of these actions will be called with stanza objects. You have to define your own objects in stanzas/echo.rb and stanzas/subscribed.rb
+By defining them, you can choose which elements and attributes you want to have access to. These attributes will be populated upon instantiation of the Stanza objects.
 
-/app/controllers/message_controller.rb 
+This will also generate 2 'views' used to build your responses stanzas. 
 
-    class MessagesController < Babylon::Base::Controller
+And finally, this will write 2 routes in the config/routes.rb 
 
-      def echo
-        extract_to_and_from
-        body = @stanza.xpath("//message/body").first
-        @resp = body.text.reverse
-      end
+4. Customize your controllers, stanzas and views!
 
-      def subscribed
-        extract_to_and_from
-        @ack = "Thanks for following me!"
-      end
+5. Make sure that the XMPP settings are correct in config/config.yaml. !!! You need to have a Jabber Component, regular clients will NOT work!!!
 
-      protected
-
-      def extract_to_and_from
-        @from = @stanza.attributes["to"].text
-        @to = @stanza.attributes["from"].text
-      end
-
-    end
-    
-
-5. Implement the corresponding views (used to generate the messages). Babylon uses the same file conventions as Rails : a subdirectory for each controller, and one file per action :
-Compared to Rails, we are using accessors (and not @variables assigned in the controller). 
-
-/app/views/messages/echo.xml.builder 
-
-    self.message(:to => to, :from => from, :type => :chat) do
-        self.body(resp)
-    end
-
-/app/views/messages/subscribed.xml.builder
-
-    self.message(:to => to, :from => from, :type => :chat) do
-      self.body(ack) # Same as self.send(:body, body) 
-    end
-
-6. Make sure that the XMPP settings are correct in config/config.yaml. !!! You need to have a Jabber Component, regular clients will NOT work!!!
-
-
-7. And finally start the component :
+6. And finally start the component :
     
     script/component
 
@@ -112,7 +85,7 @@ Babylon's edge versions are located at Github : http://github.com/julien51/babyl
 
 == REQUIREMENTS :
 
-Gems : Eventmachine, nokogiri, YAML, log4r
+Gems : Eventmachine, nokogiri, YAML, log4r, sax-machine
 
 == LICENSE:
 
