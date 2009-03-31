@@ -8,6 +8,8 @@ module Babylon
       Babylon is a framework to generate XMPP Applications in Ruby."
     DESC
     
+    ##
+    # Generates a Babylon Application
     class ApplicationGenerator < Templater::Generator
       desc <<-DESC
         Generates the file architecture for a Babylon Application. To run, you MUST provide an application name"
@@ -28,6 +30,9 @@ module Babylon
       end
       empty_directory :views_directory do |d|
         d.destination = "#{application_name}/app/views"
+      end
+      empty_directory :views_directory do |d|
+        d.destination = "#{application_name}/app/stanzas"
       end
       empty_directory :models_directory do |d|
         d.destination = "#{application_name}/app/models"
@@ -60,13 +65,15 @@ module Babylon
       
     end
     
+    ##
+    # Generates a new controller, with the corresponding stanzas and routes.
     class ControllerGenerator < Templater::Generator
       desc <<-DESC
-        Generates a new controller for the current Application. It also adds the corresponding routes and actions, based on a Xpath and priority. \nSyntax: babylon controller <controller_name> [<action_name>:<priority>:<xpath>]"
+        Generates a new controller for the current Application. It also adds the corresponding routes and actions, based on a Xpath and priority. \nSyntax: babylon controller <controller_name> [<action_name>:<priority>:<xpath>],[...]"
       DESC
       
-      first_argument  :controller_name, :required => true,  :desc => "Name of the Controller."
-      second_argument :actions_arg,     :as => :array,      :default => [], :desc => "Actions implemented by this controller. Use the following syntax : name:priority:xpath"
+      first_argument  :controller_name, :required => true,   :desc => "Name of the Controller."
+      second_argument :actions_arg,      :required => true,  :as => :array,      :default => [], :desc => "Actions implemented by this controller. Use the following syntax : name:priority:xpath"
       
       def self.source_root
         File.join(File.dirname(__FILE__), '../../templates/babylon/app/controllers')
@@ -80,10 +87,38 @@ module Babylon
         "#{controller_name.capitalize}Controller"
       end
       
+      ##
+      # This is a hack since Templater doesn't offer any simple way to edit files right now...
+      def add_route_for_actions_in_controller(actions, controller)
+        sentinel = "Babylon::CentralRouter.draw do"
+        router_path = "config/routes.rb"
+        actions.each do |action|
+          to_inject = "xpath(\"#{action[2]}\").to(:controller => \"#{controller}\", :action => \"#{action[0]}\").priority(#{action[1]})"
+          if File.exist?(router_path)
+            content = File.read(router_path).gsub(/(#{Regexp.escape(sentinel)})/mi){|match| "#{match}\n\t#{to_inject}"}
+            File.open(router_path, 'wb') { |file| file.write(content) }
+          end
+        end
+      end
+      
       template :controller do |t|
-        puts actions_arg.inspect
         t.source = "#{source_root}/controller.rb"
         t.destination = "app/controllers/#{controller_name}_controller.rb"
+        self.add_route_for_actions_in_controller(controller_actions, controller_name)
+        # This is a hack since Templater doesn't offer any simple way to write several files from one...
+        FileUtils.mkdir("app/views/#{controller_name}") unless File.exists?("app/views/#{controller_name}")
+        controller_actions.each do |action|
+          FileUtils.cp("#{source_root}/../views/view.rb", "app/views/#{controller_name}/#{action[0]}.xml.builder")
+        end
+        
+        # And now, let's create the stanza files
+        controller_actions.each do |action|
+          FileUtils.cp("#{source_root}/../stanzas/stanza.rb", "app/stanzas/#{action[0]}.rb")
+          # We need to replace 
+          # "class Stanza < Babylon::Base::Stanza" with "class #{action[0]} < Babylon::Base::Stanza"
+          content = File.read("app/stanzas/#{action[0]}.rb").gsub("class Stanza < Babylon::Base::Stanza", "class #{action[0].capitalize} < Babylon::Base::Stanza")
+          File.open("app/stanzas/#{action[0]}.rb", 'wb') { |file| file.write(content) }
+        end
       end
     end
     

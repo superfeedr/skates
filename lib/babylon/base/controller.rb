@@ -73,8 +73,8 @@ module Babylon
       
       # Creates the view and "evaluates" it to build the XML for the stanza
       def render_for_file(file)
-        Babylon.logger.info("RENDERING : #{file}")
         @block.call(Babylon::Base::View.new(file, hashed_variables).evaluate) if @block
+        Babylon.logger.info("RENDERED : #{file}")
       end
     end
   end

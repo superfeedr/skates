@@ -9,16 +9,13 @@ begin
     gem.email = "julien.genestoux@gmail.com"
     gem.homepage = "http://github.com/julien51/babylon"
     gem.authors = ["julien Genestoux"]
-    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri"]
+    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine"]
     gem.executables = "babylon"
     gem.files = [ "bin/babylon", 
                   "lib/babylon.rb", 
                   "lib/babylon/base/controller.rb", 
                   "lib/babylon/base/view.rb", 
                   "lib/babylon/base/stanza.rb", 
-                  "lib/babylon/base/iq.rb", 
-                  "lib/babylon/base/message.rb", 
-                  "lib/babylon/base/presence.rb",
                   "lib/babylon/client_connection.rb", 
                   "lib/babylon/component_connection.rb", 
                   "lib/babylon/router/dsl.rb", 
@@ -32,6 +29,8 @@ begin
                   "Rakefile", 
                   "README.rdoc", 
                   "templates/babylon/app/controllers/controller.rb", 
+                  "templates/babylon/app/views/view.rb", 
+                  "templates/babylon/app/stanzas/stanza.rb", 
                   "templates/babylon/config/boot.rb", 
                   "templates/babylon/config/config.yaml", 
                   "templates/babylon/config/dependencies.rb", 

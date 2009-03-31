@@ -12,11 +12,10 @@ Please report/request them at the Lighthouse : http://babylon.lighthouseapp.com/
 
 == ROADMAP :
 
-- Instead of passing the stanzas as Nokogiri:XML:Node elements we should find a way to pass an "agnostic" ruby data-structure, so that app developers don't have to learn/know/understand Nokogiri. (Maybe do something like SaxMachine?)
 - Improve the Client Connection to support other authentication than PLAIN SASL
 - Implement the ServerConnection for S2S
 - Implement "auto-responding" features for disco-info... etc
-- Use a better generator
+- Use a better generator (the next version of Nokogiri should fix that)
 - Review doc
 - Write more spec
 - Write tests
@@ -42,15 +41,15 @@ You can build applications directly with Babylon, or you can use the Babylon::Cl
 
 3. Use the generator or write your own controllers : 
 
-    $> script/generate message echo:10:"//message[@type='chat']/body" subscribed:0:"//presence[@type='subscribe']"
+    $> script/generate messages echo:10:"//message[@type='chat']/body" subscribed:0:"//presence[@type='subscribe']"
 
-This will generate a "MessageController" class with 2 methods : echo and subscribed. "echo" will be called when the component receives message stanzas of type 'chat',  while "subscribed" will be called for presence stanzas of type 'subscribe'. 10 and 0 are the priority : useful when a stanza matches 2 XPath.  Also, try to put high priorities to the "most frequent" stanzas to improve your component's performance. This will also generate 2 'views' used to build your stanzas. And finally, this will write 2 routes in the config/routes.rb 
+This will generate a "MessagesController" class with 2 methods : echo and subscribed. "echo" will be called when the component receives message stanzas of type 'chat',  while "subscribed" will be called for presence stanzas of type 'subscribe'. 10 and 0 are the priority : useful when a stanza matches 2 XPath.  Also, try to put high priorities to the "most frequent" stanzas to improve your component's performance. This will also generate 2 'views' used to build your stanzas. And finally, this will write 2 routes in the config/routes.rb 
 
 4. Write your application's code and views :
 
 /app/controllers/message_controller.rb 
 
-    class MessageController < Babylon::Base::Controller
+    class MessagesController < Babylon::Base::Controller
 
       def echo
         extract_to_and_from
@@ -76,13 +75,13 @@ This will generate a "MessageController" class with 2 methods : echo and subscri
 5. Implement the corresponding views (used to generate the messages). Babylon uses the same file conventions as Rails : a subdirectory for each controller, and one file per action :
 Compared to Rails, we are using accessors (and not @variables assigned in the controller). 
 
-/app/views/message/echo.xml.builder 
+/app/views/messages/echo.xml.builder 
 
     self.message(:to => to, :from => from, :type => :chat) do
         self.body(resp)
     end
 
-/app/views/message/subscribed.xml.builder
+/app/views/messages/subscribed.xml.builder
 
     self.message(:to => to, :from => from, :type => :chat) do
       self.body(ack) # Same as self.send(:body, body) 
