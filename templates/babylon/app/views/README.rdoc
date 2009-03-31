@@ -7,6 +7,6 @@ This file are Xml Builder Files (see Nokogiri Documentation for any doubt).
 
 == Example
 
-    self.message(:to => to, :from => from, :type => :chat) do
-        self.body(body) // Same as self.send(:body, body) (
+    xml.message(:to => to, :from => from, :type => :chat) do
+        xml.body(body) // Same as self.send(:body, body) (
     end
