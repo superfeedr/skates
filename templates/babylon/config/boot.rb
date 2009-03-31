@@ -1,6 +1,6 @@
 require "rubygems"
 require "babylon"
-require File.dirname(__FILE__)+"/dependencies"
+require File.dirname(__FILE__) + "/dependencies"
 
 # Start the App
 Babylon::Runner::run(ARGV[0] || "development") do
