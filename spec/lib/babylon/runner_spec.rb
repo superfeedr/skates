@@ -26,6 +26,19 @@ describe Babylon::Runner do
       Babylon::CentralRouter.should_receive(:connected).with(connection)
       Babylon::Runner.on_connected(connection)
     end
+    
+    it "should call on_connected on the various observers" do
+      class MyObserver
+        def on_connected(connection)
+        end
+      end
+      my_observer = MyObserver.new
+      Babylon::Runner.add_connection_observer(my_observer)
+      connection = mock(Object)
+      my_observer.should_receive(:on_connected).with(connection)
+      Babylon::Runner.on_connected(connection)
+    end
+    
   end
 
   describe ".on_disconnected" do
@@ -33,6 +46,17 @@ describe Babylon::Runner do
       connection = mock(Object)
       EventMachine.should_receive(:stop_event_loop)
       Babylon::Runner.on_disconnected()
+    end
+    
+    it "should call on_disconnected on the various observers" do
+      class MyObserver
+        def on_disconnected
+        end
+      end
+      my_observer = MyObserver.new
+      Babylon::Runner.add_connection_observer(my_observer)
+      my_observer.should_receive(:on_disconnected)
+      Babylon::Runner.on_disconnected
     end
   end
 

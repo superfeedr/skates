@@ -48,20 +48,41 @@ module Babylon
         end
         
         # And finally, let's allow the application to do all it wants to do after we started the EventMachine!
-        yield if block_given?
+        yield(self) if block_given?
       end
+    end
+    
+    ##
+    # Returns the list of connection observers
+    def self.connection_observers()
+      @@observers ||= Array.new
+    end
+    
+    ##
+    # Adding a connection observer. These observer will receive on_connected and on_disconnected events.
+    def self.add_connection_observer(object)
+      @@observers ||= Array.new
+      @@observers.push(object)
     end
     
     ## 
     # Will be called by the connection class once it is connected to the server.
+    # It "plugs" the router and then calls on_connected on the various observers.
     def self.on_connected(connection)
       Babylon::CentralRouter.connected(connection)
+      connection_observers.each do |conn_obs|
+        conn_obs.on_connected(connection) if conn_obs.respond_to?("on_connected")
+      end
     end
     
     ##
     # Will be called by the connection class upon disconnection.
+    # It stops the event loop and then calls on_disconnected on the various observers.
     def self.on_disconnected()
       EventMachine.stop_event_loop
+      connection_observers.each do |conn_obs|
+        conn_obs.on_disconnected if conn_obs.respond_to?("on_disconnected")
+      end
     end
     
     ##
