@@ -24,7 +24,7 @@ module Babylon
         end
       end
       start, stop = builder.to_xml.split('<paste_content_here/>')
-      send(start)
+      send_xml(start)
     end
 
     ##
@@ -39,7 +39,7 @@ module Babylon
         if stanza.name == "stream:stream" && stanza.attributes['id']
           # This means the XMPP session started!
           # We must send the handshake now.
-          send(handshake(stanza))
+          send_xml(handshake(stanza))
           @state = :wait_for_handshake
         else
           raise

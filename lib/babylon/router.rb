@@ -59,7 +59,7 @@ module Babylon
           end
           controller.perform(route.action) do |response|
             # Response should be a Nokogiri::Nodeset
-            @@connection.send(response)
+            @@connection.send_xml(response)
           end
           return true
         end

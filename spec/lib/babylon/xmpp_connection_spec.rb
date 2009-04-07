@@ -70,7 +70,7 @@ describe Babylon::XmppConnection do
     
   end
   
-  describe ".send" do
+  describe ".send_xml" do
     
     before(:each) do
       @connection.instance_variable_set("@connected", true)
@@ -89,7 +89,7 @@ describe Babylon::XmppConnection do
         @connection.should_receive(:send_node).with(@iq)
         @connection.should_receive(:send_node).with(@message)
         @connection.should_receive(:send_node).with(@presence)
-        @connection.send(@node_set)
+        @connection.send_xml(@node_set)
       end
       
     end
@@ -100,7 +100,7 @@ describe Babylon::XmppConnection do
       end
       it "should call send_node for the node" do
         @connection.should_receive(:send_node).with(@message)
-        @connection.send(@message)
+        @connection.send_xml(@message)
       end
     end
     
@@ -108,7 +108,7 @@ describe Babylon::XmppConnection do
       it "should call send_string with the string value of the object" do
         @object = "Hello mon ami!"
         @connection.should_receive(:send_string).with("#{@object}")
-        @connection.send(@object)
+        @connection.send_xml(@object)
       end
     end
   end

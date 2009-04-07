@@ -12,7 +12,7 @@ describe Babylon::ComponentConnection do
 
   describe ".connection_completed" do
     it "should send a <stream> element that initiates the communication" do
-      @component.should_receive(:send).with("<?xml version=\"1.0\"?>\n<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" to=\"#{@params["jid"]}\" xmlns=\"jabber:component:accept\">")
+      @component.should_receive(:send_xml).with("<?xml version=\"1.0\"?>\n<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" to=\"#{@params["jid"]}\" xmlns=\"jabber:component:accept\">")
       @component.connection_completed
     end
   end

@@ -68,7 +68,7 @@ module Babylon
       end
       @outstream = builder.doc
       start_stream, stop_stream = builder.to_xml.split('<paste_content_here/>')
-      send(start_stream)
+      send_xml(start_stream)
     end
 
     ##
@@ -91,7 +91,7 @@ module Babylon
             if stanza.at("starttls") # we shall start tls
               starttls = Nokogiri::XML::Node.new("starttls", @outstream)
               starttls["xmlns"] = "urn:ietf:params:xml:ns:xmpp-tls"
-              send(starttls)
+              send_xml(starttls)
               @state = :wait_for_proceed
             elsif stanza.at("mechanisms") # tls is ok
               if stanza.at("mechanisms/[contains(mechanism,'PLAIN')]")
@@ -100,7 +100,7 @@ module Babylon
                 auth['mechanism'] = "PLAIN"
                 auth['xmlns'] = "urn:ietf:params:xml:ns:xmpp-sasl"
                 auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
-                send(auth)
+                send_xml(auth)
                 @state = :wait_for_success
               end
             end
@@ -111,7 +111,7 @@ module Babylon
             @success = true
             @state = :wait_for_stream
             @parser.reset
-            send @outstream.root.to_xml.split('<paste_content_here/>').first
+            send_xml @outstream.root.to_xml.split('<paste_content_here/>').first
           elsif stanza.name == "failure"
             if stanza.at("bad-auth") || stanza.at("not-authorized")
               raise AuthenticationError
@@ -138,7 +138,7 @@ module Babylon
                 end
               end
               iq = @outstream.add_child(builder.doc.root)
-              send(iq)
+              send_xml(iq)
               @state = :wait_for_confirmed_binding
             end
           end
@@ -157,14 +157,14 @@ module Babylon
             end
           end
           iq = @outstream.add_child(builder.doc.root)
-          send(iq)
+          send_xml(iq)
           @state = :wait_for_confirmed_session
 
         when :wait_for_confirmed_session
           if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @session_iq_id && stanza.at("session")
             # And now, send a presence!
             presence = Nokogiri::XML::Node.new("presence", @outstream)
-            send(presence)
+            send_xml(presence)
             begin
               @handler.on_connected(self) if @handler and @handler.respond_to?("on_connected")
             rescue
@@ -177,7 +177,7 @@ module Babylon
           start_tls() # starting TLS
           @state = :wait_for_stream
           @parser.reset
-          send @outstream.root.to_xml.split('<paste_content_here/>').first
+          send_xml @outstream.root.to_xml.split('<paste_content_here/>').first
         end
       rescue
         Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
