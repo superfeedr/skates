@@ -9,6 +9,10 @@ module Babylon
   class XmlNotWellFormed < Exception; end
 
   ##
+  # Error when there is no connection to the host and port.
+  class NoConnection < Exception; end
+
+  ##
   # Authentication Error (wrong password/jid combination). Used for Clients and Components
   class AuthenticationError < Exception; end
 
@@ -24,7 +28,11 @@ module Babylon
     # This can very well be overwritten by subclasses.
     def self.connect(params, handler)
       Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]}") # Very low level Logging
-      EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
+      begin
+        EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
+      rescue
+        Babylon.logger.error("CONNECTION ERROR : #{$!}") # Very low level Logging
+      end
     end
 
     def connection_completed
