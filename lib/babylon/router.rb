@@ -53,7 +53,7 @@ module Babylon
           Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}")
           # Parsing the stanza
           begin
-            controller = route.controller.new({:stanza => Kernel.const_get(route.action.capitalize).new(stanza)})
+            controller = route.controller.new(Kernel.const_get(route.action.capitalize).new(stanza))
           rescue NameError
             raise UndefinedStanza
           end

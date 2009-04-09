@@ -11,13 +11,12 @@ describe Babylon::Base::Controller do
       @params = {:a => "a", :b => 1, :c => {:key => "value"}, :stanza => "<hello>world</hello>"}    
     end
     
-    it "should have instances for each pair of the hash passed for initailization" do
-      c = Babylon::Base::Controller.new(@params)
+    it "should have a stanza instance" do
+      stanza = mock(Object)
+      c = Babylon::Base::Controller.new(stanza)
       
-      @params.each do |key, value|
-        c.instance_variables.should be_include "@#{key}"
-        c.instance_variable_get("@#{key}").should == value
-      end
+      c.instance_variables.should be_include "@stanza"
+      c.instance_variable_get("@stanza").should == stanza
     end
     
     it "should not be rendered yet" do
@@ -110,14 +109,34 @@ describe Babylon::Base::Controller do
     
   end
 
-  describe ".hashed_variables" do
-    it "should return an hash containing all instance variables" do
-      @controller = Babylon::Base::Controller.new()
-      vars = Hash.new
-       @controller.instance_variables.each do |var|
-        vars[var[1..-1]] = @controller.instance_variable_get(var)
+  describe ".assigns" do
+    
+    before(:each) do
+      @stanza = mock(Babylon::Base::Stanza)
+      @controller = Babylon::Base::Controller.new(@stanza)
+    end
+    
+    it "should be a hash" do
+      @controller.assigns.should be_an_instance_of(Hash)
+    end
+    
+    it "should only contain the @stanza if the action hasn't been called yet" do
+      @controller.assigns.should_not be_empty
+      @controller.assigns["stanza"].should == @stanza
+    end
+    
+    it "should return an hash containing all instance variables defined in the action" do
+      vars = {"a" => 1, "b" => "b", "c" => { "d" => 4}}
+      class MyController < Babylon::Base::Controller
+        def do_something
+          @a = 1
+          @b = "b"
+          @c = { "d" => 4 }
+        end
       end
-      @controller.__send__(:hashed_variables).should == vars
+      @controller = MyController.new(@stanza)
+      @controller.do_something
+      @controller.assigns.should == vars.merge("stanza" => @stanza)
     end
   end
 

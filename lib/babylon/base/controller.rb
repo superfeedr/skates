@@ -9,10 +9,8 @@ module Babylon
       
       ##
       # Creates a new controller (you should not override this class) and assigns the stanza as well as any other value of the hash to instances named after the keys of the hash.
-      def initialize(params = {})
-        params.each do |key, value|
-          instance_variable_set("@#{key}", value)
-        end
+      def initialize(stanza = nil)
+        @stanza = stanza
         @rendered = false
       end
       
@@ -27,6 +25,18 @@ module Babylon
           Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
         end
         self.render
+      end
+      
+      ##
+      # Returns the list of variables assigned during the action.
+      def assigns
+        vars = Hash.new
+         instance_variables.each do |var|
+           if !["@rendered", "@action_name", "@block"].include? var
+             vars[var[1..-1]] = instance_variable_get(var)
+           end
+        end
+        return vars
       end
       
       ##
@@ -52,15 +62,6 @@ module Babylon
       end
       
       protected
-
-      # Used to transfer the assigned variables from the controller to the views
-      def hashed_variables
-        vars = Hash.new
-         instance_variables.each do |var|
-          vars[var[1..-1]] = instance_variable_get(var)
-        end
-        return vars
-      end
       
       def view_path(file_name)
         File.join("app/views", "#{self.class.name.gsub("Controller","").downcase}", file_name)
@@ -73,7 +74,7 @@ module Babylon
       
       # Creates the view and "evaluates" it to build the XML for the stanza
       def render_for_file(file)
-        @block.call(Babylon::Base::View.new(file, hashed_variables).evaluate) if @block
+        @block.call(Babylon::Base::View.new(file, assigns).evaluate) if @block
         Babylon.logger.info("RENDERED : #{file}")
       end
     end
