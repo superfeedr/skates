@@ -41,6 +41,10 @@ module Babylon
       
       ##
       # Called by default after each action to "build" a XMPP stanza. By default, it will use the /controller_name/action.xml.builder
+      # You can use the following options :
+      #   - :file : render a specific file (can be in a different controller)
+      #   - :action : render another action of the current controller
+      #   - :nothing : doesn't render anything
       def render(options = nil)
         return if @rendered # Avoid double rendering
         
@@ -55,6 +59,8 @@ module Babylon
           end
         elsif action_name = options[:action]
           render(:file => default_template_name(action_name.to_s))
+        elsif options[:nothing]
+          # Then we don't do anything.
         end
         
         # And finally, we set up rendered to be true 

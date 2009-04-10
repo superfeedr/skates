@@ -84,21 +84,34 @@ describe Babylon::Base::Controller do
       @controller.rendered.should be_true
     end
     
-    it "should call render with default_file_name if no option is provided" do
-      @controller.should_receive(:default_template_name)
-      @controller.render      
+    describe "with :nothing option" do
+      it "should not render any file" do
+        @controller.should_not_receive(:render_for_file)
+        @controller.render :nothing => true
+      end
     end
     
-    it "should call render with the file name corresponding to the action given as option" do
-      action = :unsubscribe
-      @controller.should_receive(:default_template_name).with("#{action}")
-      @controller.render(:action => action)
+    describe "with no option" do
+      it "should call render with default_file_name if no option is provided" do
+        @controller.should_receive(:default_template_name)
+        @controller.render      
+      end
     end
     
-    it "should call render_for_file with the correct path if an option file is provided" do
-      file = "myfile"
-      @controller.should_receive(:render_for_file)
-      @controller.render(:file => file)
+    describe " with an :action option" do
+      it "should call render with the file name corresponding to the action given as option" do
+        action = :unsubscribe
+        @controller.should_receive(:default_template_name).with("#{action}")
+        @controller.render(:action => action)
+      end
+    end
+    
+    describe " with a file option" do
+      it "should call render_for_file with the correct path if an option file is provided" do
+        file = "myfile"
+        @controller.should_receive(:render_for_file)
+        @controller.render(:file => file)
+      end
     end
     
     it "should render twice when called twice" do
