@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/julien51/babylon}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine"]
+  s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine", "templater", "daemons"]
   s.rubyforge_project = %q{babylon}
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{Babylon is a framework to create EventMachine based XMPP External Components in Ruby.}

@@ -1,2 +1,31 @@
 #!/usr/bin/env ruby
-require File.dirname(__FILE__) + '/../config/boot'
+
+require 'rubygems'
+require 'daemons'
+
+if ["run", "start", "stop", "restart"].include? ARGV[0]
+  command   = ARGV[0]
+  env       = "development"
+else
+  env       = ARGV[0] || "development"
+  case env
+  when "development"
+    command = "run"
+  when "production"
+    command = "start"
+  else
+    # By default, we run in "on-top" mode
+    command = "run"
+  end
+end
+
+options = {
+  :ARGV       => [command, '--', env],
+  :app_name   => "#{Dir.pwd.split("/").last}",
+  :dir        => "../tmp/pid/",
+  :multiple   => true,
+  :backtrace  => true
+}
+
+Daemons.run(File.dirname(__FILE__) + '/../config/boot.rb', options)
+

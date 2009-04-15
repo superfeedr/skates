@@ -40,7 +40,16 @@ module Babylon
       empty_directory :initializers_directory do |d|
         d.destination = "#{application_name}/config/initializers"
       end
-      
+      empty_directory :tmp_directory do |d|
+        d.destination = "#{application_name}/tmp"
+      end 
+      empty_directory :log_directory do |d|
+        d.destination = "#{application_name}/tmp/log"
+      end
+      empty_directory :pid_directory do |d|
+        d.destination = "#{application_name}/tmp/pid"
+      end
+           
       # And now add the critical files
       file :boot_file do |f|
         f.source = "#{source_root}/config/boot.rb"
@@ -58,7 +67,7 @@ module Babylon
         f.source = "#{source_root}/config/routes.rb"
         f.destination = "#{application_name}/config/routes.rb"
       end
-      file :component_file do |f|
+      template :component_file do |f|
         f.source = "#{source_root}/script/component"
         f.destination = "#{application_name}/script/component"
       end

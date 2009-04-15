@@ -85,7 +85,7 @@ Babylon's edge versions are located at Github : http://github.com/julien51/babyl
 
 == REQUIREMENTS :
 
-Gems : Eventmachine, nokogiri, YAML, log4r, sax-machine, templater
+Gems : Eventmachine, nokogiri, YAML, log4r, sax-machine, templater, daemons
 
 == LICENSE:
 
