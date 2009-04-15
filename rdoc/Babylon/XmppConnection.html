@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Babylon::XmppConnection</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/babylon/xmpp_connection_rb.html.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/babylon/xmpp_connection.rb">lib/babylon/xmpp_connection.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">EventMachine::Connection</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#M000050">::connect</a></li>
+					
+					<li><a href="#M000057">::new</a></li>
+					
+					<li><a href="#M000051">#connection_completed</a></li>
+					
+					<li><a href="#M000065">#receive_data</a></li>
+					
+					<li><a href="#M000060">#receive_stanza</a></li>
+					
+					<li><a href="#M000062">#send</a></li>
+					
+					<li><a href="#M000063">#send_node</a></li>
+					
+					<li><a href="#M000064">#send_string</a></li>
+					
+					<li><a href="#M000052">#unbind</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../Babylon.html">Babylon</a></li>
+				
+					<li><a href="../Babylon/AuthenticationError.html">Babylon::AuthenticationError</a></li>
+				
+					<li><a href="../Babylon/Base.html">Babylon::Base</a></li>
+				
+					<li><a href="../Babylon/Base/Controller.html">Babylon::Base::Controller</a></li>
+				
+					<li><a href="../Babylon/Base/Stanza.html">Babylon::Base::Stanza</a></li>
+				
+					<li><a href="../Babylon/Base/View.html">Babylon::Base::View</a></li>
+				
+					<li><a href="../Babylon/CentralRouter.html">Babylon::CentralRouter</a></li>
+				
+					<li><a href="../Babylon/ClientConnection.html">Babylon::ClientConnection</a></li>
+				
+					<li><a href="../Babylon/ComponentConnection.html">Babylon::ComponentConnection</a></li>
+				
+					<li><a href="../Babylon/Generator.html">Babylon::Generator</a></li>
+				
+					<li><a href="../Babylon/Generator/ApplicationGenerator.html">Babylon::Generator::ApplicationGenerator</a></li>
+				
+					<li><a href="../Babylon/Generator/ControllerGenerator.html">Babylon::Generator::ControllerGenerator</a></li>
+				
+					<li><a href="../Babylon/NotConnected.html">Babylon::NotConnected</a></li>
+				
+					<li><a href="../Babylon/Route.html">Babylon::Route</a></li>
+				
+					<li><a href="../Babylon/Router.html">Babylon::Router</a></li>
+				
+					<li><a href="../Babylon/Router/DSL.html">Babylon::Router::DSL</a></li>
+				
+					<li><a href="../Babylon/Runner.html">Babylon::Runner</a></li>
+				
+					<li><a href="../Babylon/UndefinedStanza.html">Babylon::UndefinedStanza</a></li>
+				
+					<li><a href="../Babylon/XmlNotWellFormed.html">Babylon::XmlNotWellFormed</a></li>
+				
+					<li><a href="../Babylon/XmppConnection.html">Babylon::XmppConnection</a></li>
+				
+					<li><a href="../Babylon/XmppParser.html">Babylon::XmppParser</a></li>
+				
+					<li><a href="../Babylon/XpathHelper.html">Babylon::XpathHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Babylon::XmppConnection</h1>
+
+		<div id="description">
+			<p>
+This class is in charge of handling the network connection to the XMPP
+server.
+</p>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
+
+			
+			<div id="jid-attribute-method" class="method-detail">
+				<a name="jid"></a>
+				
+				<a name="jid="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">jid</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="host-attribute-method" class="method-detail">
+				<a name="host"></a>
+				
+				<a name="host="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">host</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="port-attribute-method" class="method-detail">
+				<a name="port"></a>
+				
+				<a name="port="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">port</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="connect-method" class="method-detail ">
+				<a name="M000050"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">connect</span><span
+						class="method-args">(params, handler)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Connects the <a href="XmppConnection.html">XmppConnection</a> to the right
+host with the right port. I It passes itself (as handler) and the
+configuration This can very well be overwritten by subclasses.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="connect-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 25</span>
+25:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">handler</span>)
+26:       <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;CONNECTING TO #{params[&quot;host&quot;]}:#{params[&quot;port&quot;]}&quot;</span>) <span class="ruby-comment cmt"># Very low level Logging</span>
+27:       <span class="ruby-constant">EventMachine</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;host&quot;</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;port&quot;</span>], <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>({<span class="ruby-value str">&quot;handler&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">handler</span>}))
+28:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="M000057"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(params)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Instantiate the Handler (called internally by EventMachine) and attaches a
+new <a href="XmppParser.html">XmppParser</a>
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 49</span>
+49:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>)
+50:       <span class="ruby-keyword kw">super</span>()
+51:       <span class="ruby-ivar">@connected</span> = <span class="ruby-keyword kw">false</span>
+52:       <span class="ruby-ivar">@jid</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;jid&quot;</span>]
+53:       <span class="ruby-ivar">@password</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;password&quot;</span>]
+54:       <span class="ruby-ivar">@host</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;host&quot;</span>]
+55:       <span class="ruby-ivar">@port</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;port&quot;</span>]
+56:       <span class="ruby-ivar">@handler</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;handler&quot;</span>]
+57:       <span class="ruby-ivar">@parser</span> = <span class="ruby-constant">XmppParser</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">method</span>(<span class="ruby-identifier">:receive_stanza</span>))
+58:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="connection-completed-method" class="method-detail ">
+				<a name="M000051"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">connection_completed</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+
+					
+					<div class="method-source-code"
+						id="connection-completed-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 30</span>
+30:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connection_completed</span>
+31:       <span class="ruby-ivar">@connected</span> = <span class="ruby-keyword kw">true</span>
+32:       <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">&quot;CONNECTED&quot;</span>) <span class="ruby-comment cmt"># Very low level Logging</span>
+33:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="receive-stanza-method" class="method-detail ">
+				<a name="M000060"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">receive_stanza</span><span
+						class="method-args">(stanza)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Called when a full stanza has been received and returns it to the central
+router to be sent to the corresponding controller.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="receive-stanza-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 62</span>
+62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">receive_stanza</span>(<span class="ruby-identifier">stanza</span>)
+63:       <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;PARSED : #{stanza.to_xml}&quot;</span>)
+64:       <span class="ruby-comment cmt"># If not handled by subclass (for authentication)</span>
+65:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">stanza</span>.<span class="ruby-identifier">name</span>
+66:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;stream:error&quot;</span>
+67:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">stanza</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">stanza</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;xml-not-well-formed&quot;</span>
+68:           <span class="ruby-comment cmt"># &lt;stream:error&gt;&lt;xml-not-well-formed xmlns:xmlns=&quot;urn:ietf:params:xml:ns:xmpp-streams&quot;/&gt;&lt;/stream:error&gt;</span>
+69:           <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;DISCONNECTED DUE TO MALFORMED STANZA&quot;</span>)
+70:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">XmlNotWellFormed</span>
+71:         <span class="ruby-keyword kw">end</span>
+72:         <span class="ruby-comment cmt"># In any case, we need to close the connection.</span>
+73:         <span class="ruby-identifier">close_connection</span>
+74:       <span class="ruby-keyword kw">else</span>
+75:         <span class="ruby-keyword kw">begin</span>
+76:           <span class="ruby-ivar">@handler</span>.<span class="ruby-identifier">on_stanza</span>(<span class="ruby-identifier">stanza</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@handler</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@handler</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value str">&quot;on_stanza&quot;</span>)
+77:         <span class="ruby-keyword kw">rescue</span>
+78:           <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;on_stanza failed : #{$!}\n#{$!.backtrace.join(&quot;\n&quot;)}&quot;</span>)
+79:         <span class="ruby-keyword kw">end</span>
+80:       <span class="ruby-keyword kw">end</span> 
+81:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="send-method" class="method-detail ">
+				<a name="M000062"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">send</span><span
+						class="method-args">(xml)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sends the Nokogiri::XML data (after converting to string) on the stream. It
+also appends the right &#8220;from&#8221; to be the component&#8217;s JId
+if none has been mentionned. Eventually it displays this data for debugging
+purposes. This method also adds a &#8220;from&#8221; attribute to all
+stanza if it was ommited (the full jid) only if a &#8220;to&#8221;
+attribute is present. if not, we assume that we&#8217;re speaking to the
+server and the server doesn&#8217;t need a &#8220;from&#8221; to identify
+where the message is coming from.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="send-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 86</span>
+86:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">xml</span>)
+87:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotConnected</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@connected</span>
+88:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">NodeSet</span>
+89:         <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+90:           <span class="ruby-identifier">send_node</span>(<span class="ruby-identifier">node</span>)
+91:         <span class="ruby-keyword kw">end</span>
+92:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Node</span>
+93:         <span class="ruby-identifier">send_node</span>(<span class="ruby-identifier">xml</span>)
+94:       <span class="ruby-keyword kw">else</span>
+95:         <span class="ruby-comment cmt"># We try a cast into a string.</span>
+96:         <span class="ruby-identifier">send_string</span>(<span class="ruby-node">&quot;#{xml}&quot;</span>)
+97:       <span class="ruby-keyword kw">end</span>
+98:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="unbind-method" class="method-detail ">
+				<a name="M000052"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">unbind</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Called when the connection is terminated and stops the event loop
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="unbind-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 37</span>
+37:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unbind</span>()
+38:       <span class="ruby-ivar">@connected</span> = <span class="ruby-keyword kw">false</span>
+39:       <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">&quot;DISCONNECTED&quot;</span>) <span class="ruby-comment cmt"># Very low level Logging</span>
+40:       <span class="ruby-keyword kw">begin</span>
+41:         <span class="ruby-ivar">@handler</span>.<span class="ruby-identifier">on_disconnected</span>() <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@handler</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@handler</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value str">&quot;on_disconnected&quot;</span>)
+42:       <span class="ruby-keyword kw">rescue</span>
+43:         <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;on_disconnected failed : #{$!}\n#{$!.backtrace.join(&quot;\n&quot;)}&quot;</span>)
+44:       <span class="ruby-keyword kw">end</span>
+45:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="private-instance-method-details" class="method-section section">
+			<h3 class="section-header">Private Instance Methods</h3>
+
+		
+			<div id="receive-data-method" class="method-detail ">
+				<a name="M000065"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">receive_data</span><span
+						class="method-args">(data)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+<a href="XmppConnection.html#M000065">receive_data</a> is called when data
+is received. It is then passed to the parser.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="receive-data-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 122</span>
+122:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">receive_data</span>(<span class="ruby-identifier">data</span>)
+123:       <span class="ruby-keyword kw">begin</span>
+124:         <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;RECEIVED : #{data}&quot;</span>)
+125:         <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">data</span>)
+126:       <span class="ruby-keyword kw">rescue</span>
+127:         <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;#{$!}\n#{$!.backtrace.join(&quot;\n&quot;)}&quot;</span>)
+128:       <span class="ruby-keyword kw">end</span>
+129:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="send-node-method" class="method-detail ">
+				<a name="M000063"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">send_node</span><span
+						class="method-args">(node)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sends a node on the &#8220;line&#8221;.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="send-node-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 104</span>
+104:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_node</span>(<span class="ruby-identifier">node</span>)
+105:       <span class="ruby-identifier">node</span>[<span class="ruby-value str">&quot;from&quot;</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">jid</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span>[<span class="ruby-value str">&quot;to&quot;</span>]
+106:       <span class="ruby-identifier">send_string</span>(<span class="ruby-identifier">node</span>.<span class="ruby-identifier">to_xml</span>)
+107:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="send-string-method" class="method-detail ">
+				<a name="M000064"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">send_string</span><span
+						class="method-args">(string)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sends a string on the line
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="send-string-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/babylon/xmpp_connection.rb, line 111</span>
+111:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_string</span>(<span class="ruby-identifier">string</span>)
+112:       <span class="ruby-keyword kw">begin</span>
+113:         <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;SENDING : #{string}&quot;</span>)
+114:         <span class="ruby-identifier">send_data</span>(<span class="ruby-node">&quot;#{string}&quot;</span>) 
+115:       <span class="ruby-keyword kw">rescue</span>
+116:         <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;#{$!}\n#{$!.backtrace.join(&quot;\n&quot;)}&quot;</span>)
+117:       <span class="ruby-keyword kw">end</span>
+118:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: README.rdoc [Babylon]</title>
+
+	<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+</head>
+
+<body class="file">
+  <div id="metadata">
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./Babylon.html">Babylon</a></li>
+				
+					<li><a href="./Babylon/AuthenticationError.html">Babylon::AuthenticationError</a></li>
+				
+					<li><a href="./Babylon/Base.html">Babylon::Base</a></li>
+				
+					<li><a href="./Babylon/Base/Controller.html">Babylon::Base::Controller</a></li>
+				
+					<li><a href="./Babylon/Base/Stanza.html">Babylon::Base::Stanza</a></li>
+				
+					<li><a href="./Babylon/Base/View.html">Babylon::Base::View</a></li>
+				
+					<li><a href="./Babylon/CentralRouter.html">Babylon::CentralRouter</a></li>
+				
+					<li><a href="./Babylon/ClientConnection.html">Babylon::ClientConnection</a></li>
+				
+					<li><a href="./Babylon/ComponentConnection.html">Babylon::ComponentConnection</a></li>
+				
+					<li><a href="./Babylon/Generator.html">Babylon::Generator</a></li>
+				
+					<li><a href="./Babylon/Generator/ApplicationGenerator.html">Babylon::Generator::ApplicationGenerator</a></li>
+				
+					<li><a href="./Babylon/Generator/ControllerGenerator.html">Babylon::Generator::ControllerGenerator</a></li>
+				
+					<li><a href="./Babylon/NotConnected.html">Babylon::NotConnected</a></li>
+				
+					<li><a href="./Babylon/Route.html">Babylon::Route</a></li>
+				
+					<li><a href="./Babylon/Router.html">Babylon::Router</a></li>
+				
+					<li><a href="./Babylon/Router/DSL.html">Babylon::Router::DSL</a></li>
+				
+					<li><a href="./Babylon/Runner.html">Babylon::Runner</a></li>
+				
+					<li><a href="./Babylon/UndefinedStanza.html">Babylon::UndefinedStanza</a></li>
+				
+					<li><a href="./Babylon/XmlNotWellFormed.html">Babylon::XmlNotWellFormed</a></li>
+				
+					<li><a href="./Babylon/XmppConnection.html">Babylon::XmppConnection</a></li>
+				
+					<li><a href="./Babylon/XmppParser.html">Babylon::XmppParser</a></li>
+				
+					<li><a href="./Babylon/XpathHelper.html">Babylon::XpathHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1><a href="Babylon.html">Babylon</a></h1>
+<h2>DESCRIPTION:</h2>
+<p>
+<a href="Babylon.html">Babylon</a> is a framework to build XMPP
+Applications in Ruby. The framework uses EventMachine to handle network
+connections.
+</p>
+<p>
+This framework can use both an XMPP Component (XEP-0114) and an XMPP Client
+(and XMPP Servers should come soone). However, we strongly discourage any
+production application using a regular client.
+</p>
+<h2>FEATURES/PROBLEMS:</h2>
+<p>
+Please report/request them at the Lighthouse : <a
+href="http://babylon.lighthouseapp.com/projects/27641-babylon/overview">babylon.lighthouseapp.com/projects/27641-babylon/overview</a>
+</p>
+<p>
+The current version is a good candidate for version 0.1. We will probably
+not add any important features before that release, but we need some help
+with the tests and documentation.
+</p>
+<h2>ROADMAP :</h2>
+<ul>
+<li>Improve the Client Connection to support other authentication than PLAIN
+SASL
+
+</li>
+<li>Implement the ServerConnection for S2S
+
+</li>
+<li>Implement &#8220;auto-responding&#8221; features for disco-info... etc
+
+</li>
+<li>Use a better generator (the next version of Nokogiri should fix that)
+
+</li>
+<li>Implement &#8220;background&#8221; running when in production (and adjust
+log level)
+
+</li>
+<li>Delete route priorities? And rely on the order only? (As Rails does)
+
+</li>
+<li>Review doc
+
+</li>
+<li>Write more spec
+
+</li>
+<li>Write tests
+
+</li>
+<li>Evangelize!
+
+</li>
+</ul>
+<p>
+You can help with at least one of these points, don&#8217;t turn your back
+on <a href="Babylon.html">Babylon</a>!
+</p>
+<h2>DOCUMENTATION :</h2>
+<p>
+You can find it on our Rubyforge page : <a
+href="http://babylon.rubyforge.org/">babylon.rubyforge.org/</a> Please note
+that the documentation is probably incomplete... so if you have any
+problems with something that is not clear enough to you, feel free to send
+us questions and do not hesitate to fork the project to add your own
+documentation. We will be more than happy to help you help us!
+</p>
+<h2>SYNOPSIS :</h2>
+<p>
+You can build applications directly with <a
+href="Babylon.html">Babylon</a>, or you can use the <a
+href="Babylon/ClientConnection.html">Babylon::ClientConnection</a> and <a
+href="Babylon/ComponentConnection.html">Babylon::ComponentConnection</a> to
+create simple apps, but you will then have to handle stanza routing and
+creation yourself. You can also use these classes in external gems.
+</p>
+<h3>To create an Application with Babylon:</h3>
+<ol>
+<li>Install the gem
+
+</li>
+<li>The app contains a generator that will &#8220;build&#8221; a scaffold for
+your application.
+
+<pre>
+ $&gt; babylon application &lt;myapp&gt;
+</pre>
+</li>
+<li>Use the generator or write your own controllers :
+
+<pre>
+ $&gt; babylon controller messages echo:10://message[@type='chat']/body,subscribed:0://presence[@type='subscribe']
+</pre>
+</li>
+</ol>
+<p>
+This will generate a &#8220;MessagesController&#8221; class with 2 methods
+: echo and subscribed.
+</p>
+<pre>
+ - &quot;echo&quot; will be called when the component receives message stanzas of type 'chat',
+ - &quot;subscribed&quot; will be called for presence stanzas of type 'subscribe'.
+</pre>
+<p>
+10 and 0 are the priority : useful when a stanza matches 2 XPath.
+</p>
+<p>
+Each of these actions will be called with stanza objects. You have to
+define your own objects in stanzas/echo.rb and stanzas/subscribed.rb By
+defining them, you can choose which elements and attributes you want to
+have access to. These attributes will be populated upon instantiation of
+the Stanza objects.
+</p>
+<p>
+This will also generate 2 &#8216;views&#8217; used to build your responses
+stanzas.
+</p>
+<p>
+And finally, this will write 2 routes in the config/routes.rb
+</p>
+<ol>
+<li>Customize your controllers, stanzas and views!
+
+</li>
+<li>Make sure that the XMPP settings are correct in config/config.yaml. !!! You
+need to have a Jabber Component, regular clients will NOT work!!!
+
+</li>
+<li>And finally start the component :
+
+<pre>
+ script/component
+</pre>
+</li>
+</ol>
+<h3>To use the Connection Classes only (Client or Component), you can just call the following :</h3>
+<p>
+<a
+href="Babylon/ClientConnection.html#M000011">Babylon::ClientConnection.connect</a>(params,
+handler) or, Babylon::ComponentConnection.connect(params, handler)
+</p>
+<p>
+where params is a hash for all the necessary information to connect, and
+handler is an object that will receive the callbacks. Right now 3 callbacks
+are supported:
+</p>
+<p>
+on_connected(connection), on_disconnected and on_stanza(stanza)
+</p>
+<h2>ADDITIONAL INFORMATION :</h2>
+<p>
+Feel free to pull, branch, improve and commit the {code|specs|tests|docs} :
+we will merge it if it&#8217;s a step ahead!
+</p>
+<p>
+Babylon&#8217;s edge versions are located at Github : <a
+href="http://github.com/julien51/babylon/tree/master">github.com/julien51/babylon/tree/master</a>
+</p>
+<h2>REQUIREMENTS :</h2>
+<p>
+Gems : Eventmachine, nokogiri, YAML, log4r, sax-machine
+</p>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2009 Julien Genestoux <a
+href="http://notifixio.us">notifixio.us</a>
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
+</html>
+

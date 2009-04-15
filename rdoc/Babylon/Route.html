@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Babylon::Route</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/babylon/router_rb.html.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/babylon/router.rb">lib/babylon/router.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#M000043">::new</a></li>
+					
+					<li><a href="#M000044">#accepts?</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../Babylon.html">Babylon</a></li>
+				
+					<li><a href="../Babylon/AuthenticationError.html">Babylon::AuthenticationError</a></li>
+				
+					<li><a href="../Babylon/Base.html">Babylon::Base</a></li>
+				
+					<li><a href="../Babylon/Base/Controller.html">Babylon::Base::Controller</a></li>
+				
+					<li><a href="../Babylon/Base/Stanza.html">Babylon::Base::Stanza</a></li>
+				
+					<li><a href="../Babylon/Base/View.html">Babylon::Base::View</a></li>
+				
+					<li><a href="../Babylon/CentralRouter.html">Babylon::CentralRouter</a></li>
+				
+					<li><a href="../Babylon/ClientConnection.html">Babylon::ClientConnection</a></li>
+				
+					<li><a href="../Babylon/ComponentConnection.html">Babylon::ComponentConnection</a></li>
+				
+					<li><a href="../Babylon/Generator.html">Babylon::Generator</a></li>
+				
+					<li><a href="../Babylon/Generator/ApplicationGenerator.html">Babylon::Generator::ApplicationGenerator</a></li>
+				
+					<li><a href="../Babylon/Generator/ControllerGenerator.html">Babylon::Generator::ControllerGenerator</a></li>
+				
+					<li><a href="../Babylon/NotConnected.html">Babylon::NotConnected</a></li>
+				
+					<li><a href="../Babylon/Route.html">Babylon::Route</a></li>
+				
+					<li><a href="../Babylon/Router.html">Babylon::Router</a></li>
+				
+					<li><a href="../Babylon/Router/DSL.html">Babylon::Router::DSL</a></li>
+				
+					<li><a href="../Babylon/Runner.html">Babylon::Runner</a></li>
+				
+					<li><a href="../Babylon/UndefinedStanza.html">Babylon::UndefinedStanza</a></li>
+				
+					<li><a href="../Babylon/XmlNotWellFormed.html">Babylon::XmlNotWellFormed</a></li>
+				
+					<li><a href="../Babylon/XmppConnection.html">Babylon::XmppConnection</a></li>
+				
+					<li><a href="../Babylon/XmppParser.html">Babylon::XmppParser</a></li>
+				
+					<li><a href="../Babylon/XpathHelper.html">Babylon::XpathHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Babylon::Route</h1>
+
+		<div id="description">
+			<p>
+<a href="Route.html">Route</a> class which associate an XPATH match and a
+priority to a controller and an action
+</p>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
+
+			
+			<div id="priority-attribute-method" class="method-detail">
+				<a name="priority"></a>
+				
+				<a name="priority="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">priority</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="controller-attribute-method" class="method-detail">
+				<a name="controller"></a>
+				
+				<a name="controller="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">controller</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="action-attribute-method" class="method-detail">
+				<a name="action"></a>
+				
+				<a name="action="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">action</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="xpath-attribute-method" class="method-detail">
+				<a name="xpath"></a>
+				
+				<a name="xpath="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">xpath</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="M000043"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(params)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates a new route
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 110</span>
+110:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>)
+111:       <span class="ruby-identifier">raise</span>(<span class="ruby-value str">&quot;No controller given for route&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;controller&quot;</span>]
+112:       <span class="ruby-identifier">raise</span>(<span class="ruby-value str">&quot;No action given for route&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;action&quot;</span>]
+113:       <span class="ruby-ivar">@priority</span>   = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;priority&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
+114:       <span class="ruby-ivar">@xpath</span>      = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;xpath&quot;</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;xpath&quot;</span>]
+115:       <span class="ruby-ivar">@css</span>        = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;css&quot;</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;css&quot;</span>]
+116:       <span class="ruby-ivar">@controller</span> = <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-node">&quot;#{params[&quot;controller&quot;].capitalize}Controller&quot;</span>)
+117:       <span class="ruby-ivar">@action</span>     = <span class="ruby-identifier">params</span>[<span class="ruby-value str">&quot;action&quot;</span>]
+118:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="accepts--method" class="method-detail ">
+				<a name="M000044"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">accepts?</span><span
+						class="method-args">(stanza)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Checks that the route matches the stanzas and calls the the action on the
+controller
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="accepts--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 122</span>
+122:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">accepts?</span>(<span class="ruby-identifier">stanza</span>)
+123:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@xpath</span>
+124:         <span class="ruby-identifier">stanza</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-ivar">@xpath</span>, <span class="ruby-constant">XpathHelper</span>.<span class="ruby-identifier">new</span>).<span class="ruby-identifier">first</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+125:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@css</span>
+126:         <span class="ruby-identifier">stanza</span>.<span class="ruby-identifier">css</span>(<span class="ruby-ivar">@css</span>).<span class="ruby-identifier">first</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+127:       <span class="ruby-keyword kw">end</span>
+128:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Babylon::Base::Controller</title>
+
+	<link rel="stylesheet" href="../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../lib/babylon/base/controller_rb.html.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/babylon/base/controller.rb">lib/babylon/base/controller.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#M000000">::new</a></li>
+					
+					<li><a href="#M000005">#default_template_name</a></li>
+					
+					<li><a href="#M000003">#hashed_variables</a></li>
+					
+					<li><a href="#M000001">#perform</a></li>
+					
+					<li><a href="#M000002">#render</a></li>
+					
+					<li><a href="#M000006">#render_for_file</a></li>
+					
+					<li><a href="#M000004">#view_path</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../../Babylon.html">Babylon</a></li>
+				
+					<li><a href="../../Babylon/AuthenticationError.html">Babylon::AuthenticationError</a></li>
+				
+					<li><a href="../../Babylon/Base.html">Babylon::Base</a></li>
+				
+					<li><a href="../../Babylon/Base/Controller.html">Babylon::Base::Controller</a></li>
+				
+					<li><a href="../../Babylon/Base/Stanza.html">Babylon::Base::Stanza</a></li>
+				
+					<li><a href="../../Babylon/Base/View.html">Babylon::Base::View</a></li>
+				
+					<li><a href="../../Babylon/CentralRouter.html">Babylon::CentralRouter</a></li>
+				
+					<li><a href="../../Babylon/ClientConnection.html">Babylon::ClientConnection</a></li>
+				
+					<li><a href="../../Babylon/ComponentConnection.html">Babylon::ComponentConnection</a></li>
+				
+					<li><a href="../../Babylon/Generator.html">Babylon::Generator</a></li>
+				
+					<li><a href="../../Babylon/Generator/ApplicationGenerator.html">Babylon::Generator::ApplicationGenerator</a></li>
+				
+					<li><a href="../../Babylon/Generator/ControllerGenerator.html">Babylon::Generator::ControllerGenerator</a></li>
+				
+					<li><a href="../../Babylon/NotConnected.html">Babylon::NotConnected</a></li>
+				
+					<li><a href="../../Babylon/Route.html">Babylon::Route</a></li>
+				
+					<li><a href="../../Babylon/Router.html">Babylon::Router</a></li>
+				
+					<li><a href="../../Babylon/Router/DSL.html">Babylon::Router::DSL</a></li>
+				
+					<li><a href="../../Babylon/Runner.html">Babylon::Runner</a></li>
+				
+					<li><a href="../../Babylon/UndefinedStanza.html">Babylon::UndefinedStanza</a></li>
+				
+					<li><a href="../../Babylon/XmlNotWellFormed.html">Babylon::XmlNotWellFormed</a></li>
+				
+					<li><a href="../../Babylon/XmppConnection.html">Babylon::XmppConnection</a></li>
+				
+					<li><a href="../../Babylon/XmppParser.html">Babylon::XmppParser</a></li>
+				
+					<li><a href="../../Babylon/XpathHelper.html">Babylon::XpathHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Babylon::Base::Controller</h1>
+
+		<div id="description">
+			<p>
+Your application&#8217;s controller should be descendant of this class.
+</p>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
+
+			
+			<div id="stanza-attribute-method" class="method-detail">
+				<a name="stanza"></a>
+				
+				<a name="stanza="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">stanza</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="rendered-attribute-method" class="method-detail">
+				<a name="rendered"></a>
+				
+				<a name="rendered="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">rendered</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="action-name-attribute-method" class="method-detail">
+				<a name="action_name"></a>
+				
+				<a name="action_name="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">action_name</span><span
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="M000000"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(params = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates a new controller (you should not override this class) and assigns
+the stanza as well as any other value of the hash to instances named after
+the keys of the hash.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/controller.rb, line 12</span>
+12:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span> = {})
+13:         <span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+14:           <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{key}&quot;</span>, <span class="ruby-identifier">value</span>)
+15:         <span class="ruby-keyword kw">end</span>
+16:         <span class="ruby-ivar">@rendered</span> = <span class="ruby-keyword kw">false</span>
+17:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="perform-method" class="method-detail ">
+				<a name="M000001"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">perform</span><span
+						class="method-args">(action, &block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Performs the action and calls back the optional block argument : you should
+not override this function
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="perform-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/controller.rb, line 21</span>
+21:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">perform</span>(<span class="ruby-identifier">action</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+22:         <span class="ruby-ivar">@action_name</span> = <span class="ruby-identifier">action</span>
+23:         <span class="ruby-ivar">@block</span> = <span class="ruby-identifier">block</span>
+24:         <span class="ruby-keyword kw">begin</span>
+25:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-ivar">@action_name</span>)
+26:         <span class="ruby-keyword kw">rescue</span>
+27:           <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;#{$!}:\n#{$!.backtrace.join(&quot;\n&quot;)}&quot;</span>)
+28:         <span class="ruby-keyword kw">end</span>
+29:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">render</span>
+30:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="render-method" class="method-detail ">
+				<a name="M000002"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">render</span><span
+						class="method-args">(options = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Called by default after each action to &#8220;build&#8221; a XMPP stanza.
+By default, it will use the /controller_name/action.xml.builder
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="render-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/controller.rb, line 34</span>
+34:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>)
+35:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rendered</span> <span class="ruby-comment cmt"># Avoid double rendering</span>
+36:         
+37:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-comment cmt"># default rendering</span>
+38:           <span class="ruby-identifier">render</span>(<span class="ruby-identifier">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">default_template_name</span>)
+39:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:file</span>]
+40:           <span class="ruby-identifier">file</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:file</span>]
+41:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'/'</span>)
+42:             <span class="ruby-identifier">render_for_file</span>(<span class="ruby-node">&quot;app/views/#{file}.xml.builder&quot;</span>)
+43:           <span class="ruby-keyword kw">else</span>
+44:             <span class="ruby-identifier">render_for_file</span>(<span class="ruby-identifier">view_path</span>(<span class="ruby-identifier">file</span>)) 
+45:           <span class="ruby-keyword kw">end</span>
+46:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">action_name</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:action</span>]
+47:           <span class="ruby-identifier">render</span>(<span class="ruby-identifier">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">default_template_name</span>(<span class="ruby-identifier">action_name</span>.<span class="ruby-identifier">to_s</span>))
+48:         <span class="ruby-keyword kw">end</span>
+49:         
+50:         <span class="ruby-comment cmt"># And finally, we set up rendered to be true </span>
+51:         <span class="ruby-ivar">@rendered</span> = <span class="ruby-keyword kw">true</span>
+52:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="protected-instance-method-details" class="method-section section">
+			<h3 class="section-header">Protected Instance Methods</h3>
+
+		
+			<div id="default-template-name-method" class="method-detail ">
+				<a name="M000005"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">default_template_name</span><span
+						class="method-args">(action_name = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Default template name used to build stanzas
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="default-template-name-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/controller.rb, line 70</span>
+70:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_template_name</span>(<span class="ruby-identifier">action_name</span> = <span class="ruby-keyword kw">nil</span>)
+71:         <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;#{action_name || @action_name}.xml.builder&quot;</span>
+72:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="hashed-variables-method" class="method-detail ">
+				<a name="M000003"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">hashed_variables</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Used to transfer the assigned variables from the controller to the views
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="hashed-variables-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/controller.rb, line 57</span>
+57:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hashed_variables</span>
+58:         <span class="ruby-identifier">vars</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+59:          <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
+60:           <span class="ruby-identifier">vars</span>[<span class="ruby-identifier">var</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]] = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">var</span>)
+61:         <span class="ruby-keyword kw">end</span>
+62:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">vars</span>
+63:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="render-for-file-method" class="method-detail ">
+				<a name="M000006"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">render_for_file</span><span
+						class="method-args">(file)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates the view and &#8220;evaluates&#8221; it to build the XML for the
+stanza
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="render-for-file-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/controller.rb, line 75</span>
+75:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_for_file</span>(<span class="ruby-identifier">file</span>)
+76:         <span class="ruby-ivar">@block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-constant">Babylon</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span><span class="ruby-operator">::</span><span class="ruby-constant">View</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">hashed_variables</span>).<span class="ruby-identifier">evaluate</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@block</span>
+77:         <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;RENDERED : #{file}&quot;</span>)
+78:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="view-path-method" class="method-detail ">
+				<a name="M000004"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">view_path</span><span
+						class="method-args">(file_name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+
+					
+					<div class="method-source-code"
+						id="view-path-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/controller.rb, line 65</span>
+65:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">view_path</span>(<span class="ruby-identifier">file_name</span>)
+66:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;app/views&quot;</span>, <span class="ruby-node">&quot;#{self.class.name.gsub(&quot;Controller&quot;,&quot;&quot;).downcase}&quot;</span>, <span class="ruby-identifier">file_name</span>)
+67:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

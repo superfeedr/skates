@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: Babylon::Router</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/babylon/router/dsl_rb.html.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/babylon/router/dsl.rb">lib/babylon/router/dsl.rb</a></li>
+					
+						<li><a href="../lib/babylon/router_rb.html.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/babylon/router.rb">lib/babylon/router.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+			<div id="namespace-list-section" class="section">
+				<h3 class="section-header">Namespace</h3>
+				<ul class="link-list">
+					
+					<li><span class="type">CLASS</span> <a href="Router/DSL.html">Babylon::Router::DSL</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#M000037">#add_route</a></li>
+					
+					<li><a href="#M000034">#add_routes</a></li>
+					
+					<li><a href="#M000035">#connected</a></li>
+					
+					<li><a href="#M000036">#connection</a></li>
+					
+					<li><a href="#M000041">#draw</a></li>
+					
+					<li><a href="#M000040">#purge_routes!</a></li>
+					
+					<li><a href="#M000038">#route</a></li>
+					
+					<li><a href="#M000042">#sort</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../Babylon.html">Babylon</a></li>
+				
+					<li><a href="../Babylon/AuthenticationError.html">Babylon::AuthenticationError</a></li>
+				
+					<li><a href="../Babylon/Base.html">Babylon::Base</a></li>
+				
+					<li><a href="../Babylon/Base/Controller.html">Babylon::Base::Controller</a></li>
+				
+					<li><a href="../Babylon/Base/Stanza.html">Babylon::Base::Stanza</a></li>
+				
+					<li><a href="../Babylon/Base/View.html">Babylon::Base::View</a></li>
+				
+					<li><a href="../Babylon/CentralRouter.html">Babylon::CentralRouter</a></li>
+				
+					<li><a href="../Babylon/ClientConnection.html">Babylon::ClientConnection</a></li>
+				
+					<li><a href="../Babylon/ComponentConnection.html">Babylon::ComponentConnection</a></li>
+				
+					<li><a href="../Babylon/Generator.html">Babylon::Generator</a></li>
+				
+					<li><a href="../Babylon/Generator/ApplicationGenerator.html">Babylon::Generator::ApplicationGenerator</a></li>
+				
+					<li><a href="../Babylon/Generator/ControllerGenerator.html">Babylon::Generator::ControllerGenerator</a></li>
+				
+					<li><a href="../Babylon/NotConnected.html">Babylon::NotConnected</a></li>
+				
+					<li><a href="../Babylon/Route.html">Babylon::Route</a></li>
+				
+					<li><a href="../Babylon/Router.html">Babylon::Router</a></li>
+				
+					<li><a href="../Babylon/Router/DSL.html">Babylon::Router::DSL</a></li>
+				
+					<li><a href="../Babylon/Runner.html">Babylon::Runner</a></li>
+				
+					<li><a href="../Babylon/UndefinedStanza.html">Babylon::UndefinedStanza</a></li>
+				
+					<li><a href="../Babylon/XmlNotWellFormed.html">Babylon::XmlNotWellFormed</a></li>
+				
+					<li><a href="../Babylon/XmppConnection.html">Babylon::XmppConnection</a></li>
+				
+					<li><a href="../Babylon/XmppParser.html">Babylon::XmppParser</a></li>
+				
+					<li><a href="../Babylon/XpathHelper.html">Babylon::XpathHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">Babylon::Router</h1>
+
+		<div id="description">
+			<p>
+The router is in charge of sending the right stanzas to the right
+controllers based on user defined Routes.
+</p>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="add-route-method" class="method-detail ">
+				<a name="M000037"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">add_route</span><span
+						class="method-args">(route)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Insert a route and makes sure that the routes are sorted
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="add-route-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 39</span>
+39:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_route</span>(<span class="ruby-identifier">route</span>)
+40:       <span class="ruby-ivar">@routes</span> <span class="ruby-operator">||=</span> []
+41:       <span class="ruby-ivar">@routes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">route</span>
+42:       <span class="ruby-identifier">sort</span>
+43:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="add-routes-method" class="method-detail ">
+				<a name="M000034"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">add_routes</span><span
+						class="method-args">(routes)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Add several routes to the router Routes should be of form {name => params}
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="add-routes-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_routes</span>(<span class="ruby-identifier">routes</span>)
+20:       <span class="ruby-identifier">routes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">params</span><span class="ruby-operator">|</span>
+21:         <span class="ruby-identifier">add_route</span>(<span class="ruby-constant">Route</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>))
+22:       <span class="ruby-keyword kw">end</span>
+23:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="connected-method" class="method-detail ">
+				<a name="M000035"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">connected</span><span
+						class="method-args">(connection)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Connected is called by the <a href="XmppConnection.html">XmppConnection</a>
+to indicate that the XMPP connection has been established
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="connected-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 27</span>
+27:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected</span>(<span class="ruby-identifier">connection</span>)
+28:       <span class="ruby-ivar">@@connection</span> = <span class="ruby-identifier">connection</span>
+29:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="connection-method" class="method-detail ">
+				<a name="M000036"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">connection</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Accessor for @@connection
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="connection-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 33</span>
+33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connection</span>
+34:       <span class="ruby-ivar">@@connection</span>
+35:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="draw-method" class="method-detail ">
+				<a name="M000041"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">draw</span><span
+						class="method-args">(&block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Run the router <a href="Router/DSL.html">DSL</a>.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="draw-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 77</span>
+77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">draw</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+78:       <span class="ruby-identifier">r</span> = <span class="ruby-constant">Router</span><span class="ruby-operator">::</span><span class="ruby-constant">DSL</span>.<span class="ruby-identifier">new</span>
+79:       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">instance_eval</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+80:       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">routes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">route</span><span class="ruby-operator">|</span>
+81:         <span class="ruby-identifier">raise</span>(<span class="ruby-node">&quot;Route lacks destination: #{route.inspect}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">route</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Route</span>)
+82:       <span class="ruby-keyword kw">end</span>
+83:       <span class="ruby-ivar">@routes</span> <span class="ruby-operator">||=</span> []
+84:       <span class="ruby-ivar">@routes</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">routes</span>
+85:       <span class="ruby-identifier">sort</span>
+86:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="purge-routes--method" class="method-detail ">
+				<a name="M000040"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">purge_routes!</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Throw away all added routes from this router. Helpful for testing.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="purge-routes--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 72</span>
+72:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">purge_routes!</span>
+73:       <span class="ruby-ivar">@routes</span> = []
+74:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="route-method" class="method-detail ">
+				<a name="M000038"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">route</span><span
+						class="method-args">(stanza)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Look for the first matching route and calls the corresponding action for
+the corresponding controller. Sends the response on the XMPP stream/
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="route-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 47</span>
+47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">route</span>(<span class="ruby-identifier">stanza</span>)
+48:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@@connection</span>
+49:       <span class="ruby-ivar">@routes</span> <span class="ruby-operator">||=</span> []
+50:       <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">route</span><span class="ruby-operator">|</span>
+51:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">route</span>.<span class="ruby-identifier">accepts?</span>(<span class="ruby-identifier">stanza</span>)
+52:           <span class="ruby-comment cmt"># Here should happen the magic : call the controller</span>
+53:           <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;ROUTING TO #{route.controller}::#{route.action}&quot;</span>)
+54:           <span class="ruby-comment cmt"># Parsing the stanza</span>
+55:           <span class="ruby-keyword kw">begin</span>
+56:             <span class="ruby-identifier">controller</span> = <span class="ruby-identifier">route</span>.<span class="ruby-identifier">controller</span>.<span class="ruby-identifier">new</span>({<span class="ruby-identifier">:stanza</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">route</span>.<span class="ruby-identifier">action</span>.<span class="ruby-identifier">capitalize</span>).<span class="ruby-identifier">new</span>(<span class="ruby-identifier">stanza</span>)})
+57:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+58:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">UndefinedStanza</span>
+59:           <span class="ruby-keyword kw">end</span>
+60:           <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">perform</span>(<span class="ruby-identifier">route</span>.<span class="ruby-identifier">action</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span>
+61:             <span class="ruby-comment cmt"># Response should be a Nokogiri::Nodeset</span>
+62:             <span class="ruby-ivar">@@connection</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">response</span>)
+63:           <span class="ruby-keyword kw">end</span>
+64:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+65:         <span class="ruby-keyword kw">end</span>
+66:       }
+67:       <span class="ruby-keyword kw">false</span>
+68:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="private-instance-method-details" class="method-section section">
+			<h3 class="section-header">Private Instance Methods</h3>
+
+		
+			<div id="sort-method" class="method-detail ">
+				<a name="M000042"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">sort</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+
+					
+					<div class="method-source-code"
+						id="sort-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/router.rb, line 89</span>
+89:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sort</span>
+90:       <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">sort!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r1</span>,<span class="ruby-identifier">r2</span><span class="ruby-operator">|</span>
+91:         <span class="ruby-identifier">r2</span>.<span class="ruby-identifier">priority</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">r1</span>.<span class="ruby-identifier">priority</span>
+92:       }
+93:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

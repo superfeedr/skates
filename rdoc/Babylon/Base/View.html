@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Babylon::Base::View</title>
+
+	<link rel="stylesheet" href="../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../lib/babylon/base/view_rb.html.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/babylon/base/view.rb">lib/babylon/base/view.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#M000008">::new</a></li>
+					
+					<li><a href="#M000009">#evaluate</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../../Babylon.html">Babylon</a></li>
+				
+					<li><a href="../../Babylon/AuthenticationError.html">Babylon::AuthenticationError</a></li>
+				
+					<li><a href="../../Babylon/Base.html">Babylon::Base</a></li>
+				
+					<li><a href="../../Babylon/Base/Controller.html">Babylon::Base::Controller</a></li>
+				
+					<li><a href="../../Babylon/Base/Stanza.html">Babylon::Base::Stanza</a></li>
+				
+					<li><a href="../../Babylon/Base/View.html">Babylon::Base::View</a></li>
+				
+					<li><a href="../../Babylon/CentralRouter.html">Babylon::CentralRouter</a></li>
+				
+					<li><a href="../../Babylon/ClientConnection.html">Babylon::ClientConnection</a></li>
+				
+					<li><a href="../../Babylon/ComponentConnection.html">Babylon::ComponentConnection</a></li>
+				
+					<li><a href="../../Babylon/Generator.html">Babylon::Generator</a></li>
+				
+					<li><a href="../../Babylon/Generator/ApplicationGenerator.html">Babylon::Generator::ApplicationGenerator</a></li>
+				
+					<li><a href="../../Babylon/Generator/ControllerGenerator.html">Babylon::Generator::ControllerGenerator</a></li>
+				
+					<li><a href="../../Babylon/NotConnected.html">Babylon::NotConnected</a></li>
+				
+					<li><a href="../../Babylon/Route.html">Babylon::Route</a></li>
+				
+					<li><a href="../../Babylon/Router.html">Babylon::Router</a></li>
+				
+					<li><a href="../../Babylon/Router/DSL.html">Babylon::Router::DSL</a></li>
+				
+					<li><a href="../../Babylon/Runner.html">Babylon::Runner</a></li>
+				
+					<li><a href="../../Babylon/UndefinedStanza.html">Babylon::UndefinedStanza</a></li>
+				
+					<li><a href="../../Babylon/XmlNotWellFormed.html">Babylon::XmlNotWellFormed</a></li>
+				
+					<li><a href="../../Babylon/XmppConnection.html">Babylon::XmppConnection</a></li>
+				
+					<li><a href="../../Babylon/XmppParser.html">Babylon::XmppParser</a></li>
+				
+					<li><a href="../../Babylon/XpathHelper.html">Babylon::XpathHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Babylon::Base::View</h1>
+
+		<div id="description">
+			<p>
+Your application&#8217;s views (stanzas) should be descendant of this
+class.
+</p>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
+
+			
+			<div id="output-attribute-method" class="method-detail">
+				<a name="output"></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">output</span><span
+						class="attribute-access-type">[R]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="view-template-attribute-method" class="method-detail">
+				<a name="view_template"></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">view_template</span><span
+						class="attribute-access-type">[R]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="M000008"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(path, assigns)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Instantiate a new view with the various varibales passed in assigns and the
+path of the template to render.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/view.rb, line 11</span>
+11:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">assigns</span>)
+12:         <span class="ruby-ivar">@output</span> = <span class="ruby-value str">&quot;&quot;</span>
+13:         <span class="ruby-ivar">@view_template</span> = <span class="ruby-identifier">path</span>
+14:         <span class="ruby-identifier">assigns</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> 
+15:           <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{key}&quot;</span>, <span class="ruby-identifier">value</span>)
+16:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:define_method</span>, <span class="ruby-identifier">key</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-comment cmt"># Defining accessors</span>
+17:             <span class="ruby-identifier">value</span>
+18:           <span class="ruby-keyword kw">end</span>
+19:         <span class="ruby-keyword kw">end</span>
+20:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="evaluate-method" class="method-detail ">
+				<a name="M000009"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">evaluate</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+&#8220;Loads&#8221; the view file, and uses the Nokogiri Builder to build
+the XML stanzas that will be sent.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="evaluate-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/babylon/base/view.rb, line 24</span>
+24:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">evaluate</span>
+25:         <span class="ruby-identifier">str</span> = (<span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">cached_views</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">cached_views</span>[<span class="ruby-ivar">@view_template</span>]) <span class="ruby-operator">?</span> <span class="ruby-constant">Babylon</span>.<span class="ruby-identifier">cached_views</span>[<span class="ruby-ivar">@view_template</span>] <span class="ruby-operator">:</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@view_template</span>)
+26:         <span class="ruby-identifier">xml</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Builder</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span>
+27:           <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">str</span>)
+28:         <span class="ruby-keyword kw">end</span>
+29:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">children</span> <span class="ruby-comment cmt">#we return the doc's children (to avoid the instruct)</span>
+30:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
