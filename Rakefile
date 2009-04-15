@@ -35,7 +35,11 @@ begin
                   "templates/babylon/config/config.yaml", 
                   "templates/babylon/config/dependencies.rb", 
                   "templates/babylon/config/routes.rb", 
-                  "templates/babylon/script/component"
+                  "templates/babylon/script/component",
+                  "templates/babylon/tmp/log/test.log",
+                  "templates/babylon/tmp/log/development.log",
+                  "templates/babylon/tmp/log/production.log",
+                  "templates/babylon/tmp/pid/README"
                   ]
     gem.rubyforge_project = 'babylon'
   end
