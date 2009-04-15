@@ -17,6 +17,9 @@ module Babylon
       EventMachine.epoll
       EventMachine.run do
         
+        # Add an outputter to the logger
+        Babylon.logger.add(File.open "tmp/log/#{Babylon.environment}.log")
+        
         # Requiring all models
         Dir.glob('app/models/*.rb').each { |f| require f }
 
@@ -26,7 +29,7 @@ module Babylon
         # Load the controllers
         Dir.glob('app/controllers/*_controller.rb').each {|f| require f }
 
-        #  Evaluate routes defined with the new DSL router.
+        # Evaluate routes defined with the new DSL router.
         CentralRouter.draw do
           eval File.read("config/routes.rb")
         end
@@ -41,10 +44,10 @@ module Babylon
         Babylon.config = YAML.load(config_file)[Babylon.environment] 
         
         case Babylon.config["application_type"] 
-          when "client"
-            Babylon::ClientConnection.connect(Babylon.config, self) 
-          else # By default, we assume it's a component
-            Babylon::ComponentConnection.connect(Babylon.config, self) 
+        when "client"
+          Babylon::ClientConnection.connect(Babylon.config, self) 
+        else # By default, we assume it's a component
+          Babylon::ComponentConnection.connect(Babylon.config, self) 
         end
         
         # And finally, let's allow the application to do all it wants to do after we started the EventMachine!

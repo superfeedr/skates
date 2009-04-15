@@ -60,7 +60,7 @@ module Babylon
   def self.logger
     unless self.class_variable_defined?("@@logger")
       @@logger = Log4r::Logger.new("BABYLON")
-      @@logger.add(Log4r::Outputter.stderr)
+      @@logger.add(Log4r::Outputter.stdout) if Babylon.environment == "development"
     end
     @@logger
   end
