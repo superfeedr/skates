@@ -18,7 +18,7 @@ module Babylon
       EventMachine.run do
         
         # Add an outputter to the logger
-        Babylon.logger.add(File.open("tmp/log/#{Babylon.environment}.log", "w"))
+        Babylon.logger.add(Log4r::FileOutputter.new("#{Babylon.environment}", :filename => "tmp/log/#{Babylon.environment}.log", :trunc => false))
         
         # Requiring all models
         Dir.glob('app/models/*.rb').each { |f| require f }
