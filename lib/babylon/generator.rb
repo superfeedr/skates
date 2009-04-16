@@ -44,10 +44,10 @@ module Babylon
         d.destination = "#{application_name}/tmp"
       end 
       empty_directory :log_directory do |d|
-        d.destination = "#{application_name}/tmp/log"
+        d.destination = "#{application_name}/log"
       end
       empty_directory :pid_directory do |d|
-        d.destination = "#{application_name}/tmp/pid"
+        d.destination = "#{application_name}/tmp/pids"
       end
            
       # And now add the critical files

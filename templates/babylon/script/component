@@ -5,7 +5,7 @@ require 'daemons'
 
 if ["run", "start", "stop", "restart"].include? ARGV[0]
   command   = ARGV[0]
-  env       = "development"
+  env       = ARGV[1] || "development"
 else
   env       = ARGV[0] || "development"
   case env
@@ -22,7 +22,7 @@ end
 options = {
   :ARGV       => [command, '--', env],
   :app_name   => "#{Dir.pwd.split("/").last}",
-  :dir        => "../tmp/pid/",
+  :dir        => "../tmp/pids/",
   :multiple   => true,
   :backtrace  => true
 }
