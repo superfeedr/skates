@@ -23,7 +23,8 @@ describe Babylon::Runner do
   describe ".on_connected" do
     it "should call connected on CentralRouter" do
       connection = mock(Object)
-      Babylon::CentralRouter.should_receive(:connected).with(connection)
+      Babylon.router = mock(Babylon::Router)
+      Babylon.router.should_receive(:connected).with(connection)
       Babylon::Runner.on_connected(connection)
     end
     
@@ -35,6 +36,7 @@ describe Babylon::Runner do
       my_observer = MyObserver.new
       Babylon::Runner.add_connection_observer(my_observer)
       connection = mock(Object)
+      Babylon.router.stub!(:connected).with(connection)
       my_observer.should_receive(:on_connected).with(connection)
       Babylon::Runner.on_connected(connection)
     end
@@ -63,7 +65,7 @@ describe Babylon::Runner do
   describe ".on_stanza" do
     it "should call route on CentralRouter" do
       stanza = mock(Object)
-      Babylon::CentralRouter.should_receive(:route).with(stanza)
+      Babylon.router.should_receive(:route).with(stanza)
       Babylon::Runner.on_stanza(stanza)
     end
   end

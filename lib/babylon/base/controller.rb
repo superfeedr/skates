@@ -45,7 +45,7 @@ module Babylon
       #   - :file : render a specific file (can be in a different controller)
       #   - :action : render another action of the current controller
       #   - :nothing : doesn't render anything
-      def render(options = nil)
+      def render(options = nil) 
         return if @rendered # Avoid double rendering
         
         if options.nil? # default rendering

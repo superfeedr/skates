@@ -29,10 +29,11 @@ module Babylon
         # Load the controllers
         Dir.glob('app/controllers/*_controller.rb').each {|f| require f }
 
+        # Create the router
+        Babylon.router = Babylon::CentralRouter.new
+        
         # Evaluate routes defined with the new DSL router.
-        CentralRouter.draw do
-          eval File.read("config/routes.rb")
-        end
+        require 'config/routes.rb'
         
         config_file = File.open('config/config.yaml')
         
@@ -72,7 +73,7 @@ module Babylon
     # Will be called by the connection class once it is connected to the server.
     # It "plugs" the router and then calls on_connected on the various observers.
     def self.on_connected(connection)
-      Babylon::CentralRouter.connected(connection)
+      Babylon.router.connected(connection) if Babylon.router
       connection_observers.each do |conn_obs|
         conn_obs.on_connected(connection) if conn_obs.respond_to?("on_connected")
       end
@@ -91,7 +92,7 @@ module Babylon
     ##
     # Will be called by the connection class when it receives and parses a stanza.
     def self.on_stanza(stanza)
-      Babylon::CentralRouter.route(stanza)
+      Babylon.router.route(stanza)
     end
     
   end

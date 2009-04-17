@@ -99,7 +99,7 @@ module Babylon
       ##
       # This is a hack since Templater doesn't offer any simple way to edit files right now...
       def add_route_for_actions_in_controller(actions, controller)
-        sentinel = "Babylon::CentralRouter.draw do"
+        sentinel = "Babylon.router.draw do"
         router_path = "config/routes.rb"
         actions.each do |action|
           to_inject = "xpath(\"#{action[2]}\").to(:controller => \"#{controller}\", :action => \"#{action[0]}\").priority(#{action[1]})"

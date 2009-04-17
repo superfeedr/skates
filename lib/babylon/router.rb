@@ -1,17 +1,10 @@
 require File.dirname(__FILE__)+"/router/dsl"
 
 module Babylon
-  
-  
-  ## 
-  # Undefined stanza
-  class UndefinedStanza < Exception; end
-  
   ##
-  # The router is in charge of sending the right stanzas to the right controllers based on user defined Routes.
-  module Router
-    
-    @@connection = nil
+  # Routers are in charge of sending the right stanzas to the right controllers based on user defined Routes.
+  # Each application can have only one!
+  class CentralRouter
     
     ##
     # Add several routes to the router
@@ -25,13 +18,13 @@ module Babylon
     ##
     # Connected is called by the XmppConnection to indicate that the XMPP connection has been established
     def connected(connection)
-      @@connection = connection
+      @connection = connection
     end
     
     ## 
     # Accessor for @@connection
     def connection
-      @@connection
+      @connection
     end
     
     ##
@@ -45,26 +38,32 @@ module Babylon
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
     def route(stanza)
-      return false if !@@connection
+      Dike.finger
+      
+      return false if !@connection
       @routes ||= []
-      @routes.each { |route|
+      @routes.each do |route|
         if route.accepts?(stanza)
           # Here should happen the magic : call the controller
           Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}")
           # Parsing the stanza
           begin
-            controller = route.controller.new(Kernel.const_get(route.action.capitalize).new(stanza))
-          rescue NameError
-            raise UndefinedStanza
+            @stanza = Kernel.const_get(route.action.capitalize).new(stanza)
+          rescue 
+            Babylon.logger.error("STANZA COULDN'T BE INSTANTIATED : #{$!.class} => #{$!}")
           end
-          controller.perform(route.action) do |response|
-            # Response should be a Nokogiri::Nodeset
-            @@connection.send_xml(response)
+          @controller = route.controller.new(@stanza)
+          begin
+            @controller.perform(route.action) do |response|
+              # Response should be a Nokogiri::Nodeset
+              connection.send_xml(response)
+            end
+          rescue
+            Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}")
           end
-          return true
+          break # We found our action, let's break.
         end
-      }
-      false
+      end
     end
 
     # Throw away all added routes from this router. Helpful for
@@ -91,12 +90,6 @@ module Babylon
         r2.priority <=> r1.priority
       }
     end
-  end
-
-  ##
-  # Main router for a Babylon Application.
-  module CentralRouter
-    extend Router
   end
 
   ##

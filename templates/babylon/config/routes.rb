@@ -17,6 +17,6 @@
 # disco_info.to(:controller => "discovery", :action => "services")
 #
 # See lib/babylon/router/dsl.rb for more helpers.
-Babylon::CentralRouter.draw do
+Babylon.router.draw do
   
 end

@@ -40,6 +40,21 @@ module Babylon
   end
   
   ##
+  # Sets up the router
+  def self.router=(router)
+    @@router = router
+  end
+  
+  ##
+  # Retruns the router
+  def self.router
+    unless self.class_variable_defined?("@@router")
+      @@router = nil
+    end
+    @@router
+  end
+  
+  ##
   # Caches the view files to improve performance.  
   def self.cache_views
     @@cached_views= {}
