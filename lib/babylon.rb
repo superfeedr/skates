@@ -57,17 +57,17 @@ module Babylon
   ##
   # Caches the view files to improve performance.  
   def self.cache_views
-    @@cached_views= {}
+    @@views= {}
     Dir.glob('app/views/*/*').each do |f|
-      @@cached_views[f] = File.read(f)
+      @@views[f] = File.read(f)
     end        
   end
   
-  def self.cached_views
-    unless self.class_variable_defined?("@@cached_views")
-      @@cached_views= {}
+  def self.views
+    unless self.class_variable_defined?("@@views")
+      @@views= {}
     end
-    @@cached_views
+    @@views
   end
 
   ##

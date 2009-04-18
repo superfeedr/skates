@@ -37,10 +37,8 @@ module Babylon
         
         config_file = File.open('config/config.yaml')
         
-        # Caching views in production mode.
-        if Babylon.environment == "production"
-          Babylon.cache_views
-        end
+        # Caching views
+        Babylon.cache_views
         
         Babylon.config = YAML.load(config_file)[Babylon.environment] 
         

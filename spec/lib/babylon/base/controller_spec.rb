@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 describe Babylon::Base::Controller do
 
   before(:each) do
-    File.stub!(:read).and_return("") # Stubbing read for view
+    Babylon.views.stub!(:[]).and_return("") # Stubbing read for view
   end
   
   describe ".initialize" do
@@ -203,11 +203,6 @@ describe Babylon::Base::Controller do
     it "should evaluate the newly instantiated view" do
       Babylon::Base::View.stub!(:new).with("path_to_a_file",an_instance_of(Hash)).and_return(@view)
       @view.should_receive(:evaluate).and_return("")
-      @controller.__send__(:render_for_file, "path_to_a_file")
-    end
-    
-    it "should call the block with the result of the evaluation of the view if @block is set" do
-      @block.should_receive(:call)
       @controller.__send__(:render_for_file, "path_to_a_file")
     end
     

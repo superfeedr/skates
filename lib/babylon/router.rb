@@ -6,6 +6,10 @@ module Babylon
   # Each application can have only one!
   class CentralRouter
     
+    def initialize
+      @routes = []
+    end
+    
     ##
     # Add several routes to the router
     # Routes should be of form {name => params}
@@ -30,57 +34,50 @@ module Babylon
     ##
     # Insert a route and makes sure that the routes are sorted
     def add_route(route)
-      @routes ||= []
       @routes << route
       sort
     end
 
+    ##
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
-    def route(stanza)
-      Dike.finger
+    def route(stanza) 
       
-      return false if !@connection
-      @routes ||= []
-      @routes.each do |route|
-        if route.accepts?(stanza)
-          # Here should happen the magic : call the controller
-          Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}")
-          # Parsing the stanza
-          begin
-            @stanza = Kernel.const_get(route.action.capitalize).new(stanza)
-          rescue 
-            Babylon.logger.error("STANZA COULDN'T BE INSTANTIATED : #{$!.class} => #{$!}")
-          end
-          @controller = route.controller.new(@stanza)
-          begin
-            @controller.perform(route.action) do |response|
-              # Response should be a Nokogiri::Nodeset
-              connection.send_xml(response)
-            end
-          rescue
-            Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}")
-          end
-          break # We found our action, let's break.
-        end
-      end
-    end
+      return false if !@connection 
 
-    # Throw away all added routes from this router. Helpful for
-    # testing.
-    def purge_routes!
-      @routes = []
-    end
-
-    # Run the router DSL.
-    def draw(&block)
-      r = Router::DSL.new
-      r.instance_eval(&block)
-      r.routes.each do |route|
-        raise("Route lacks destination: #{route.inspect}") unless route.is_a?(Route)
-      end
-      @routes ||= []
-      @routes += r.routes
+      @route = @routes.select{ |r| r.accepts?(stanza) }.first 
+      
+      return false unless @route 
+      Babylon.logger.info("ROUTING TO #{@route.controller}::#{@route.action}") 
+      
+      begin 
+        @stanza = Kernel.const_get(@route.action.capitalize).new(stanza) 
+      rescue 
+        Babylon.logger.error("STANZA COULDN'T BE INSTANTIATED : #{$!.class} => #{$!}") 
+      end 
+      @controller = @route.controller.new(@stanza) 
+      begin 
+        @controller.perform(@route.action)
+      rescue 
+        Babylon.logger.error("#{$!.class} => #{$!} IN #{@route.controller}::#{@route.action}\n#{$!.backtrace.join("\n")}") 
+      end 
+      connection.send_xml(@controller.response) 
+    end 
+    
+    # Throw away all added routes from this router. Helpful for 
+    # testing. 
+    def purge_routes! 
+      @routes = [] 
+    end 
+    
+    # Run the router DSL. 
+    def draw(&block) 
+      r = Router::DSL.new 
+      r.instance_eval(&block) 
+      r.routes.each do |route| 
+        raise("Route lacks destination: #{route.inspect}") unless route.is_a?(Route) 
+      end 
+      @routes += r.routes 
       sort
     end
 

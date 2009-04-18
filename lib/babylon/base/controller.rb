@@ -52,8 +52,8 @@ module Babylon
           render(:file => default_template_name)
         elsif options[:file]
           file = options[:file]
-          if file.include?('/')
-            render_for_file("app/views/#{file}.xml.builder")
+          if file =~ /^\// # Render from view root
+            render_for_file(File.join("app", "views", "#{file}.xml.builder"))
           else
             render_for_file(view_path(file)) 
           end
@@ -62,26 +62,30 @@ module Babylon
         elsif options[:nothing]
           # Then we don't do anything.
         end
-        
         # And finally, we set up rendered to be true 
         @rendered = true
+      end
+      
+      def response
+        @view.output
       end
       
       protected
       
       def view_path(file_name)
-        File.join("app/views", "#{self.class.name.gsub("Controller","").downcase}", file_name)
+        File.join("app", "views", "#{self.class.name.gsub("Controller","").downcase}", file_name)
       end
       
       # Default template name used to build stanzas
       def default_template_name(action_name = nil)
-        return "#{action_name || @action_name}.xml.builder"
+        "#{action_name || @action_name}.xml.builder"
       end
       
       # Creates the view and "evaluates" it to build the XML for the stanza
       def render_for_file(file)
-        @block.call(Babylon::Base::View.new(file, assigns).evaluate) if @block
-        Babylon.logger.info("RENDERED : #{file}")
+        Babylon.logger.info("RENDERING : #{file}")
+        @view = Babylon::Base::View.new(file, assigns)
+        @view.evaluate
       end
     end
   end

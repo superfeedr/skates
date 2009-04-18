@@ -86,9 +86,7 @@ describe Babylon::XmppConnection do
       end
       
       it "should call send_node for each of the nodes in the set" do
-        @connection.should_receive(:send_node).with(@iq)
-        @connection.should_receive(:send_node).with(@message)
-        @connection.should_receive(:send_node).with(@presence)
+        @connection.should_receive(:send_node).exactly(3).times
         @connection.send_xml(@node_set)
       end
       
@@ -99,7 +97,7 @@ describe Babylon::XmppConnection do
         @message = Nokogiri::XML::Node.new("message", @doc)
       end
       it "should call send_node for the node" do
-        @connection.should_receive(:send_node).with(@message)
+        @connection.should_receive(:send_node).once
         @connection.send_xml(@message)
       end
     end

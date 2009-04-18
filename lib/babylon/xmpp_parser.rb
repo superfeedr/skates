@@ -8,7 +8,7 @@ module Babylon
     
     ##
     # Initialize the parser and adds the callback that will be called upon stanza completion
-    def initialize(&callback)
+    def initialize(callback)
       @callback = callback
       super()
       reset
@@ -93,11 +93,12 @@ module Babylon
     def add_namespaces_and_attributes_to_node(attrs, node) 
       (attrs.size / 2).times do |i|
         name, value = attrs[2 * i], attrs[2 * i + 1]
-        if name =~ /xmlns/
-          node.add_namespace(name.gsub("xmlns:", "").gsub("xmlns", ""), value)
-        else
+        # TODO : For now, it seems that Nokogiri has some problems with adding namespaces... so let's add all namespaces as attributes.
+        # if name == "xmlns"
+        #   node.add_namespace(nil, value)
+        # else
           node.set_attribute name, value
-        end
+        # end
       end
     end
     

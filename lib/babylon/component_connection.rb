@@ -18,12 +18,11 @@ module Babylon
     # We use a "tweak" here to send only the starting tag of stream:stream
     def connection_completed
       super
-      builder = Nokogiri::XML::Builder.new do
-        self.send('stream:stream', {'xmlns' => "jabber:component:accept", 'xmlns:stream' => 'http://etherx.jabber.org/streams', 'to' => @context.jid}) do
-          paste_content_here #  The stream:stream element should be cut here ;)
-        end
+      xml = Nokogiri::XML::Builder.new 
+      xml.send('stream:stream', {'xmlns' => "jabber:component:accept", 'xmlns:stream' => 'http://etherx.jabber.org/streams', 'to' => jid}) do
+        xml.paste_content_here #  The stream:stream element should be cut here ;)
       end
-      start, stop = builder.to_xml.split('<paste_content_here/>')
+      start, stop = xml.to_xml.split('<paste_content_here/>')
       send_xml(start)
     end
 

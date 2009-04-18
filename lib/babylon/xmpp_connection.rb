@@ -31,7 +31,7 @@ module Babylon
       begin
         EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
       rescue
-        Babylon.logger.error("CONNECTION ERROR : #{$!}") # Very low level Logging
+        Babylon.logger.error("CONNECTION ERROR : #{$!.class} => #{$!}") # Very low level Logging
       end
     end
 
@@ -62,7 +62,7 @@ module Babylon
       @host = params["host"]
       @port = params["port"]
       @handler = params["handler"]
-      @parser = XmppParser.new(&method(:receive_stanza))
+      @parser = XmppParser.new(method(:receive_stanza))
     end
 
     ##
@@ -89,14 +89,18 @@ module Babylon
     end 
 
     ## 
-    # Sends the Nokogiri::XML data (after converting to string) on the stream. It also appends the right "from" to be the component's JId if none has been mentionned. Eventually it displays this data for debugging purposes.
-    # This method also adds a "from" attribute to all stanza if it was ommited (the full jid) only if a "to" attribute is present. if not, we assume that we're speaking to the server and the server doesn't need a "from" to identify where the message is coming from.
+    # Sends the Nokogiri::XML data (after converting to string) on the stream. It also appends a "from" attribute to all stanza if it was ommited (the full jid) only if a "to" attribute is present. if not, we assume that we're speaking to the server and the server doesn't need a "from" to identify where the message is coming from. Eventually it displays this data for debugging purposes.
+    # It accepts Nokogiri::XML::Document, Nokogiri::XML::NodeSet or 
     def send_xml(xml)
       raise NotConnected unless @connected
-      if xml.is_a? Nokogiri::XML::NodeSet
+      if xml.is_a? Nokogiri::XML::Document
+        send_xml(xml.children)
+        xml.unlink # Unlink the document when done.
+      elsif xml.is_a? Nokogiri::XML::NodeSet
         xml.each do |node|
           send_node(node)
         end
+        xml.unlink # We unlink the nodeset in the end.
       elsif xml.is_a? Nokogiri::XML::Node
         send_node(xml)
       else
@@ -112,6 +116,7 @@ module Babylon
     def send_node(node)
       node["from"] ||= jid if node["to"]
       send_string(node.to_xml)
+      node.unlink # We unlink the node once sent
     end
 
     ## 

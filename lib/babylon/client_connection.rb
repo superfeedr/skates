@@ -61,13 +61,12 @@ module Babylon
     # We use a "tweak" here to send only the starting tag of stream:stream
     def connection_completed
       super
-      builder = Nokogiri::XML::Builder.new do
-        self.send('stream:stream', {'xmlns' => @context.stream_namespace(), 'xmlns:stream' => 'http://etherx.jabber.org/streams', 'to' => @context.jid.split("/").first.split("@").last,  'version' => '1.0'}) do
-          paste_content_here #  The stream:stream element should be cut here ;)
-        end
+      xml = Nokogiri::XML::Builder.new
+      xml.send('stream:stream', {'xmlns' => stream_namespace(), 'xmlns:stream' => 'http://etherx.jabber.org/streams', 'to' => jid.split("/").first.split("@").last,  'version' => '1.0'}) do
+          xml.paste_content_here #  The stream:stream element should be cut here ;)
       end
-      @outstream = builder.doc
-      start_stream, stop_stream = builder.to_xml.split('<paste_content_here/>')
+      @outstream = xml.doc
+      start_stream, stop_stream = xml.to_xml.split('<paste_content_here/>')
       send_xml(start_stream)
     end
 
@@ -126,18 +125,17 @@ module Babylon
             if stanza.at("bind")
               # Let's build the binding_iq
               @binding_iq_id = Integer(rand(10000))
-              builder = Nokogiri::XML::Builder.new do
-                iq(:type => "set", :id => @context.binding_iq_id) do
-                  bind(:xmlns => "urn:ietf:params:xml:ns:xmpp-bind")  do                
-                    if @context.jid.split("/").size == 2 
-                      resource(@context.jid.split("/").last)
-                    else
-                      resource("babylon_client_#{@context.binding_iq_id}")
-                    end
+              xml = Nokogiri::XML::Builder.new
+              xml.iq(:type => "set", :id => binding_iq_id) do
+                xml.bind(:xmlns => "urn:ietf:params:xml:ns:xmpp-bind")  do                
+                  if jid.split("/").size == 2 
+                    xml.resource(jid.split("/").last)
+                  else
+                    xml.resource("babylon_client_#{binding_iq_id}")
                   end
                 end
               end
-              iq = @outstream.add_child(builder.doc.root)
+              iq = @outstream.add_child(xml.doc.root)
               send_xml(iq)
               @state = :wait_for_confirmed_binding
             end
@@ -151,12 +149,11 @@ module Babylon
           end
           # And now, we must initiate the session
           @session_iq_id = Integer(rand(10000))
-          builder = Nokogiri::XML::Builder.new do
-            iq(:type => "set", :id => @context.session_iq_id) do
-              session(:xmlns => "urn:ietf:params:xml:ns:xmpp-session")
-            end
+          xml = Nokogiri::XML::Builder.new
+          xml.iq(:type => "set", :id => @session_iq_id) do
+            xml.session(:xmlns => "urn:ietf:params:xml:ns:xmpp-session")
           end
-          iq = @outstream.add_child(builder.doc.root)
+          iq = @outstream.add_child(xml.doc.root)
           send_xml(iq)
           @state = :wait_for_confirmed_session
 

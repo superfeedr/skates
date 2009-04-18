@@ -8,7 +8,7 @@ describe Babylon::Base::View do
     end
     
     it "should assign @output" do
-      @view.output.should == ""
+      @view.output.should be_nil
     end
     
     it "should assign @view_template to path" do
@@ -24,17 +24,18 @@ describe Babylon::Base::View do
 
   describe ".evaluate" do
     before(:each) do
-      @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @view_template = "/a/path/to/a/view/file"
+      @view = Babylon::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
-        message(:to => "you", :from => "me", :type => :chat) do
-          body("salut") 
+        xml.message(:to => "you", :from => "me", :type => :chat) do
+          xml.body("salut") 
        end
       eoxml
-      File.stub!(:read).and_return(@xml_string)
+      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
     end
         
     it "should read the template file" do
-      File.stub!(:read).and_return(@xml_string)
+      Babylon.views.should_receive(:[]).with(@view_template).and_return(@xml_string)
       @view.evaluate
     end
     
@@ -46,11 +47,11 @@ describe Babylon::Base::View do
       @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
        message(:to => a, :from => b, :type => :chat) do
-         body(@context.c[:d]) 
+         body(c[:d]) 
        end
       eoxml
       File.stub!(:read).and_return(@xml_string)
-      @view.evaluate.to_s.should == '<message type="chat" to="a" from="123"><body>d</body></message>'
+      @view.evaluate.to_s.should == "<?xml version=\"1.0\"?>\n<message type=\"chat\" to=\"you\" from=\"me\">\n  <body>salut</body>\n</message>\n"
     end
   end
   
