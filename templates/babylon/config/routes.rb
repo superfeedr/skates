@@ -6,15 +6,18 @@
 #
 # xpath("//message[@type = 'chat']").to(:controller => "message", :action => "priority").priority(5000000)
 #
-# It is not possible to easily check for namespace URI equivalence in xpath, but the following helper function was added.
+# A number of namespaces have been specified for you; see Babylon::StanzaRouter::DEFAULT_NAMESPACES.
 #
-# xpath("//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco#info')]").to(:controller => "discovery", :action => "services")
-#
-# That syntax is ugly out of necessity. But, relax, you're using Ruby.
+# xpath("//iq[@type='get']/disco_info:query").to(:controller => "discovery", :action => "services")
 #
 # There are a few helper methods for generating xpaths. The following is equivalent to the above example:
 #
 # disco_info.to(:controller => "discovery", :action => "services")
+#
+# If you want to add custom namespaces, simply do:
+# 
+# namespace "custom", "http://me.org/namespaces/custom"
+# and you can then match xpath("//custom:node")
 #
 # See lib/babylon/router/dsl.rb for more helpers.
 Babylon.router.draw do

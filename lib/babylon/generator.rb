@@ -5,14 +5,14 @@ module Babylon
     extend Templater::Manifold
     
     desc <<-DESC
-      Babylon is a framework to generate XMPP Applications in Ruby."
+      Babylon is a framework to generate XMPP Applications in Ruby.
     DESC
     
     ##
     # Generates a Babylon Application
     class ApplicationGenerator < Templater::Generator
       desc <<-DESC
-        Generates the file architecture for a Babylon Application. To run, you MUST provide an application name"
+        Generates the file architecture for a Babylon Application. To run, you MUST provide an application name
       DESC
       
       first_argument :application_name, :required => true, :desc => "Your application name."
@@ -78,7 +78,7 @@ module Babylon
     # Generates a new controller, with the corresponding stanzas and routes.
     class ControllerGenerator < Templater::Generator
       desc <<-DESC
-        Generates a new controller for the current Application. It also adds the corresponding routes and actions, based on a Xpath and priority. \nSyntax: babylon controller <controller_name> [<action_name>:<priority>:<xpath>],[...]"
+        Generates a new controller for the current Application. It also adds the corresponding routes and actions, based on a Xpath and priority. \nSyntax: babylon controller <controller_name> [<action_name>:<priority>:<xpath>],[...]
       DESC
       
       first_argument  :controller_name, :required => true,   :desc => "Name of the Controller."
