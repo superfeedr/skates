@@ -6,10 +6,19 @@ module Babylon
   # Each application can have only one!
   class StanzaRouter
     
-    attr_reader :routes, :connection
+    attr_reader :routes, :connection, :namespaces
     
+    DEFAULT_NAMESPACES =
+      {
+        'disco_info'  => 'http://jabber.org/protocol/disco#info',
+        'disco_items' => 'http://jabber.org/protocol/disco#items',
+        'muc'         => 'http://jabber.org/protocol/muc',
+        'muc_admin'   => 'http://jabber.org/protocol/muc#admin'
+      }
+
     def initialize
       @routes = []
+      @namespaces = DEFAULT_NAMESPACES
     end
     
     ##
@@ -22,7 +31,7 @@ module Babylon
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
     def route(xml_stanza) 
-      route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
+      route = routes.detect { |r| r.accepts?(xml_stanza) }
       return false unless route 
       execute_route(route.controller, route.action, xml_stanza)
     end 
@@ -55,7 +64,9 @@ module Babylon
         raise("Route lacks destination: #{route.inspect}") unless route.is_a?(Route) 
       end 
       @routes += dsl.routes 
+      @namespaces.merge!(dsl.namespaces)
       sort
+      @routes.each {|route| route.router = self }
     end
 
     private
@@ -68,8 +79,7 @@ module Babylon
   ##
   # Route class which associate an XPATH match and a priority to a controller and an action
   class Route
-    
-    attr_accessor :priority, :controller, :action, :xpath
+    attr_accessor :priority, :controller, :action, :xpath, :router
     
     ##
     # Creates a new route
@@ -86,7 +96,7 @@ module Babylon
     ##
     # Checks that the route matches the stanzas and calls the the action on the controller.
     def accepts?(stanza)
-      stanza.xpath(@xpath, XpathHelper.new).empty? ? false : self
+      stanza.xpath(@xpath, router.namespaces).empty? ? false : self
     end
     
   end

@@ -40,7 +40,7 @@ describe Babylon::Router::DSL do
         disco_info.to(:controller => "controller", :action => "action")
       end
       route = Babylon.router.instance_variable_get("@routes").last
-      route.xpath.should == "//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco#info')]"
+      route.xpath.should == "//iq[@type='get']/disco_info:query"
     end
 
     it "matches the disco#info namespace for the specified node" do
@@ -48,7 +48,7 @@ describe Babylon::Router::DSL do
         disco_info("test").to(:controller => "controller", :action => "action")
       end
       route = Babylon.router.instance_variable_get("@routes").last
-      route.xpath.should == "//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco#info') and @node = 'test']"
+      route.xpath.should == "//iq[@type='get']/disco_info:query[@node='test']"
     end
   end
 
@@ -58,7 +58,7 @@ describe Babylon::Router::DSL do
         disco_items.to(:controller => "controller", :action => "action")
       end
       route = Babylon.router.instance_variable_get("@routes").last
-      route.xpath.should == "//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco#items')]"
+      route.xpath.should == "//iq[@type='get']/disco_items:query"
     end
 
     it "matches the disco#items namespace for the specified node" do
@@ -66,7 +66,7 @@ describe Babylon::Router::DSL do
         disco_items("test").to(:controller => "controller", :action => "action")
       end
       route = Babylon.router.instance_variable_get("@routes").last
-      route.xpath.should == "//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco#items') and @node = 'test']"
+      route.xpath.should == "//iq[@type='get']/disco_items:query[@node='test']"
     end
   end
 end

@@ -15,7 +15,6 @@ require 'babylon/client_connection'
 require 'babylon/router'
 require 'babylon/runner'
 require 'babylon/generator'
-require "babylon/xpath_helper"
 require 'babylon/base/controller'
 require 'babylon/base/view'
 require 'babylon/base/stanza'

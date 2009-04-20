@@ -3,11 +3,18 @@ module Babylon
 
     # Creates a simple DSL for stanza routing.
     class DSL
-      attr_reader :routes
+      attr_reader :routes, :namespaces
 
       def initialize
         @routes = []
+        @namespaces = {}
       end
+      
+      #Adds a namespace to the list of supported namespaces for the router.
+      def namespace(prefix, ns)
+        @namespaces[prefix] = ns
+      end
+
 
       # Match an xpath.
       def xpath(path)
@@ -51,9 +58,7 @@ module Babylon
       end
 
       def disco_for(type, node = nil)
-        str = "//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco##{type.to_s}')"
-        str += " and @node = '#{node}'" if node
-        str += "]"
+        str = "//iq[@type='get']/disco_#{type}:query#{"[@node='#{node}']" if node}"
         xpath(str)
       end
     end
