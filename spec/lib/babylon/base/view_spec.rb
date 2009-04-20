@@ -31,26 +31,39 @@ describe Babylon::Base::View do
           xml.body("salut") 
        end
       eoxml
-      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
     end
         
     it "should read the template file" do
-      Babylon.views.should_receive(:[]).with(@view_template).and_return(@xml_string)
+      Babylon.views.should_receive(:[]).twice.with(@view_template).and_return(@xml_string)
       @view.evaluate
     end
     
-    it "should return a Nokogiri Nodeset corresponding to the children of the doc's root" do
-      @view.evaluate.should.to_s == "<message type='chat' to='you' from='me'><body>salut</body></message>"
+    it "should raise an error if the view file couldn't be found" do
+      Babylon.views.stub!(:[]).with(@view_template).and_raise(nil)
+      lambda {
+        @view.evaluate
+      }.should raise_error(Babylon::Base::ViewFileNotFound)
+    end
+    
+    it "should return a Nokogiri Document" do
+      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
+      @view.evaluate.should be_an_instance_of(Nokogiri::XML::Document)
+    end
+    
+    it "should call eval on the view file" do
+      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
+      @view.should_receive(:eval).with(@xml_string)
+      @view.evaluate
     end
     
     it "should be able to access context's variables" do
+      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
       @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
        message(:to => a, :from => b, :type => :chat) do
          body(c[:d]) 
        end
       eoxml
-      File.stub!(:read).and_return(@xml_string)
       @view.evaluate.to_s.should == "<?xml version=\"1.0\"?>\n<message type=\"chat\" to=\"you\" from=\"me\">\n  <body>salut</body>\n</message>\n"
     end
   end

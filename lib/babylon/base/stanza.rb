@@ -13,7 +13,7 @@ module Babylon
     # element :message, :value => :id, :as => :stanza_id 
     # element :message, :value => :type, :as => :stanza_type 
     # element :message, :value => :"xml:lang", :as => :lang 
-    
+    #
     class Stanza
       
       include SAXMachine

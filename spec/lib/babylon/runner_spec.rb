@@ -21,9 +21,9 @@ describe Babylon::Runner do
   end
 
   describe ".on_connected" do
-    it "should call connected on CentralRouter" do
+    it "should call connected on StanzaRouter" do
       connection = mock(Object)
-      Babylon.router = mock(Babylon::Router)
+      Babylon.router = mock(Babylon::StanzaRouter)
       Babylon.router.should_receive(:connected).with(connection)
       Babylon::Runner.on_connected(connection)
     end
@@ -63,7 +63,7 @@ describe Babylon::Runner do
   end
 
   describe ".on_stanza" do
-    it "should call route on CentralRouter" do
+    it "should call route on StanzaRouter" do
       stanza = mock(Object)
       Babylon.router.should_receive(:route).with(stanza)
       Babylon::Runner.on_stanza(stanza)

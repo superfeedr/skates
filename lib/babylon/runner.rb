@@ -30,7 +30,7 @@ module Babylon
         Dir.glob('app/controllers/*_controller.rb').each {|f| require f }
 
         # Create the router
-        Babylon.router = Babylon::CentralRouter.new
+        Babylon.router = Babylon::StanzaRouter.new
         
         # Evaluate routes defined with the new DSL router.
         require 'config/routes.rb'

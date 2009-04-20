@@ -119,7 +119,23 @@ describe Babylon::Base::Controller do
       @controller.should_not_receive(:render_for_file)
       @controller.render      
     end
+  end
+
+  describe ".response" do
+    before(:each) do
+      @controller = Babylon::Base::Controller.new({})
+    end
     
+    it "should return if the controller has no view" do
+      @controller.response.should be_nil     
+    end
+    
+    it "should return the view's output if the controller has a view" do
+      view_output = "output"
+      view = mock(Babylon::Base::View, {:output => view_output})
+      @controller.instance_variable_set("@view", view)
+      @controller.response.should == view_output
+    end
   end
 
   describe ".assigns" do

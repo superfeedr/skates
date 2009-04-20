@@ -4,19 +4,12 @@ module Babylon
   ##
   # Routers are in charge of sending the right stanzas to the right controllers based on user defined Routes.
   # Each application can have only one!
-  class CentralRouter
+  class StanzaRouter
+    
+    attr_reader :routes, :connection
     
     def initialize
       @routes = []
-    end
-    
-    ##
-    # Add several routes to the router
-    # Routes should be of form {name => params}
-    def add_routes(routes)
-      routes.each do |name, params|
-        add_route(Route.new(params))
-      end
     end
     
     ##
@@ -25,43 +18,31 @@ module Babylon
       @connection = connection
     end
     
-    ## 
-    # Accessor for @@connection
-    def connection
-      @connection
-    end
-    
-    ##
-    # Insert a route and makes sure that the routes are sorted
-    def add_route(route)
-      @routes << route
-      sort
-    end
-
     ##
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
-    def route(stanza) 
+    def route(xml_stanza) 
       
       return false if !@connection 
-
-      @route = @routes.select{ |r| r.accepts?(stanza) }.first 
       
-      return false unless @route 
-      Babylon.logger.info("ROUTING TO #{@route.controller}::#{@route.action}") 
+      route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
+            
+      return false unless route 
+      
+      Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}") 
       
       begin 
-        @stanza = Kernel.const_get(@route.action.capitalize).new(stanza) 
+        stanza = Kernel.const_get(route.action.capitalize).new(xml_stanza) 
       rescue 
         Babylon.logger.error("STANZA COULDN'T BE INSTANTIATED : #{$!.class} => #{$!}") 
       end 
-      @controller = @route.controller.new(@stanza) 
+      controller = route.controller.new(stanza) 
       begin 
-        @controller.perform(@route.action)
+        controller.perform(route.action)
       rescue 
-        Babylon.logger.error("#{$!.class} => #{$!} IN #{@route.controller}::#{@route.action}\n#{$!.backtrace.join("\n")}") 
+        Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}") 
       end 
-      connection.send_xml(@controller.response) 
+      connection.send_xml(controller.response) 
     end 
     
     # Throw away all added routes from this router. Helpful for 
