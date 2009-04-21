@@ -17,7 +17,7 @@ module Babylon
     ## 
     # Resets the Pushed SAX Parser.
     def reset
-      @parser   = Nokogiri::XML::SAX::PushParser.new(self)
+      @parser   = Nokogiri::XML::SAX::PushParser.new(self, "UTF-8")
       start_document
       @elem     = nil
     end
