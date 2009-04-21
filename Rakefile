@@ -10,6 +10,11 @@ begin
     gem.homepage = "http://github.com/julien51/babylon"
     gem.authors = ["julien Genestoux"]
     gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine", "templater", "daemons"]
+    gem.add_dependency "eventmachine"
+    gem.add_dependency "nokogiri"
+    gem.add_dependency "daemons"
+    gem.add_dependency "templater"
+
     gem.executables = "babylon"
     gem.files = [ "bin/babylon", 
                   "lib/babylon.rb", 
@@ -24,7 +29,6 @@ begin
                   "lib/babylon/generator.rb", 
                   "lib/babylon/xmpp_connection.rb", 
                   "lib/babylon/xmpp_parser.rb", 
-                  "lib/babylon/xpath_helper.rb", 
                   "LICENSE", 
                   "Rakefile", 
                   "README.rdoc", 
