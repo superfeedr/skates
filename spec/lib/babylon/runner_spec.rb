@@ -28,16 +28,21 @@ describe Babylon::Runner do
       Babylon::Runner.on_connected(connection)
     end
     
-    it "should call on_connected on the various observers" do
-      class MyObserver
+    it "should call on_connected on the various observers and send the corresponding response" do
+      class MyObserver < Babylon::Base::Controller
         def on_connected(connection)
+        end
+        def response
+          "hello world"
         end
       end
       my_observer = MyObserver.new
-      Babylon::Runner.add_connection_observer(my_observer)
+      Babylon::Runner.add_connection_observer(MyObserver)
       connection = mock(Object)
       Babylon.router.stub!(:connected).with(connection)
-      my_observer.should_receive(:on_connected).with(connection)
+      MyObserver.should_receive(:new).and_return(my_observer)
+      my_observer.should_receive(:perform).with("on_connected")
+      connection.should_receive(:send_xml).with("hello world")
       Babylon::Runner.on_connected(connection)
     end
     
@@ -51,12 +56,13 @@ describe Babylon::Runner do
     end
     
     it "should call on_disconnected on the various observers" do
-      class MyObserver
+      class MyObserver < Babylon::Base::Controller
         def on_disconnected
         end
       end
       my_observer = MyObserver.new
-      Babylon::Runner.add_connection_observer(my_observer)
+      Babylon::Runner.add_connection_observer(MyObserver)
+      MyObserver.should_receive(:new).and_return(my_observer)
       my_observer.should_receive(:on_disconnected)
       Babylon::Runner.on_disconnected
     end

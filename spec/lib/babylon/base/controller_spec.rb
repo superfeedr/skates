@@ -41,14 +41,6 @@ describe Babylon::Base::Controller do
       end
       @controller.instance_variable_get("@action_name").should == @action
     end
-
-    it "should assign the block" do
-      block = Proc.new {
-        # Do something
-      }
-      @controller.perform(:subscribe, &block) 
-      @controller.instance_variable_get("@block").should == block
-    end
     
     it "should call the action" do
       @controller.should_receive(:send).with(@action).and_return()

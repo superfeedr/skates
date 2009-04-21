@@ -16,9 +16,8 @@ module Babylon
       
       ##
       # Performs the action and calls back the optional block argument : you should not override this function
-      def perform(action, &block)
+      def perform(action)
         @action_name = action
-        @block = block
         begin
           self.send(@action_name)
         rescue

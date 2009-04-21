@@ -62,10 +62,16 @@ module Babylon
     
     ##
     # Adding a connection observer. These observer will receive on_connected and on_disconnected events.
-    def self.add_connection_observer(object)
-      @@observers ||= Array.new
-      @@observers.push(object)
+    def self.add_connection_observer(observer)
+      @@observers ||= Array.new 
+      if observer.superclass == Babylon::Base::Controller
+        @@observers.push(observer) unless @@observers.include? observer
+        Babylon.logger.debug("Added #{observer} to the list of Connection Observers")
+      else
+        Babylon.logger.error("Observer can only be Babylon::Base::Controller")
+      end
     end
+    
     
     ## 
     # Will be called by the connection class once it is connected to the server.
@@ -73,12 +79,10 @@ module Babylon
     def self.on_connected(connection)
       Babylon.router.connected(connection) if Babylon.router
       connection_observers.each do |conn_obs|
-        if conn_obs.is_a? Class
-          # If it is a class, we create a new instance of it
-          observer = Kernel.const_get(conn_obs).new
-          observer.on_connected(connection) if observer.respond_to?("on_connected")
-        else
-          conn_obs.on_connected(connection) if conn_obs.respond_to?("on_connected")
+        observer = conn_obs.new
+        if observer.respond_to?("on_connected")
+          observer.perform("on_connected") 
+          connection.send_xml(observer.response) 
         end
       end
     end
@@ -89,13 +93,8 @@ module Babylon
     def self.on_disconnected()
       EventMachine.stop_event_loop
       connection_observers.each do |conn_obs|
-        if conn_obs.is_a? Class
-          # If it is a class, we create a new instance of it
-          observer = Kernel.const_get(conn_obs).new
-          observer.on_disconnected if observer.respond_to?("on_disconnected")
-        else
-          conn_obs.on_disconnected if conn_obs.respond_to?("on_disconnected")
-        end
+        observer = conn_obs.new
+        observer.on_disconnected if observer.respond_to?("on_disconnected")
       end
     end
     
