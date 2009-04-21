@@ -93,7 +93,7 @@ module Babylon
       end
       
       def controller_class_name
-        "#{controller_name.capitalize}Controller"
+        "#{controller_name.camel_case}Controller"
       end
       
       ##
