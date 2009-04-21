@@ -24,7 +24,7 @@ describe Babylon::XmppParser do
     
     it "should reset the parser to a parser" do
       new_parser = Nokogiri::XML::SAX::PushParser.new(@parser, "UTF-8")
-      Nokogiri::XML::SAX::PushParser.should_receive(:new).with(@parser).and_return(new_parser)
+      Nokogiri::XML::SAX::PushParser.should_receive(:new).with(@parser, "UTF-8").and_return(new_parser)
       @parser.reset
       @parser.parser.should == new_parser
     end

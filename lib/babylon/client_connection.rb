@@ -62,8 +62,8 @@ module Babylon
     def connection_completed
       super
       xml = Nokogiri::XML::Builder.new
-      xml.send('stream:stream', {'xmlns' => stream_namespace(), 'xmlns:stream' => 'http://etherx.jabber.org/streams', 'to' => jid.split("/").first.split("@").last,  'version' => '1.0'}) do
-          xml.paste_content_here #  The stream:stream element should be cut here ;)
+      xml.send('stream:stream', {'xmlns' => stream_namespace(), 'xmlns:stream' => 'http://etherx.jabber.org/streams', 'to' => jid.split("/").first.split("@").last,  'version' => '1.0'}) do |stream|
+          stream.paste_content_here #  The stream:stream element should be cut here ;)
       end
       @outstream = xml.doc
       start_stream, stop_stream = xml.to_xml.split('<paste_content_here/>')
@@ -126,12 +126,12 @@ module Babylon
               # Let's build the binding_iq
               @binding_iq_id = Integer(rand(10000))
               xml = Nokogiri::XML::Builder.new
-              xml.iq(:type => "set", :id => binding_iq_id) do
-                xml.bind(:xmlns => "urn:ietf:params:xml:ns:xmpp-bind")  do                
+              xml.iq(:type => "set", :id => binding_iq_id) do |iq|
+                iq.bind(:xmlns => "urn:ietf:params:xml:ns:xmpp-bind")  do |bind|
                   if jid.split("/").size == 2 
-                    xml.resource(jid.split("/").last)
+                    bind.resource(@jid.split("/").last)
                   else
-                    xml.resource("babylon_client_#{binding_iq_id}")
+                    bind.resource("babylon_client_#{binding_iq_id}")
                   end
                 end
               end
@@ -150,8 +150,8 @@ module Babylon
           # And now, we must initiate the session
           @session_iq_id = Integer(rand(10000))
           xml = Nokogiri::XML::Builder.new
-          xml.iq(:type => "set", :id => @session_iq_id) do
-            xml.session(:xmlns => "urn:ietf:params:xml:ns:xmpp-session")
+          xml.iq(:type => "set", :id => @session_iq_id) do |iq|
+            iq.session(:xmlns => "urn:ietf:params:xml:ns:xmpp-session")
           end
           iq = @outstream.add_child(xml.doc.root)
           send_xml(iq)
