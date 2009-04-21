@@ -73,7 +73,13 @@ module Babylon
     def self.on_connected(connection)
       Babylon.router.connected(connection) if Babylon.router
       connection_observers.each do |conn_obs|
-        conn_obs.on_connected(connection) if conn_obs.respond_to?("on_connected")
+        if conn_obs.is_a? Class
+          # If it is a class, we create a new instance of it
+          observer = Kernel.const_get(conn_obs).new
+          observer.on_connected(connection) if observer.respond_to?("on_connected")
+        else
+          conn_obs.on_connected(connection) if conn_obs.respond_to?("on_connected")
+        end
       end
     end
     
@@ -83,7 +89,13 @@ module Babylon
     def self.on_disconnected()
       EventMachine.stop_event_loop
       connection_observers.each do |conn_obs|
-        conn_obs.on_disconnected if conn_obs.respond_to?("on_disconnected")
+        if conn_obs.is_a? Class
+          # If it is a class, we create a new instance of it
+          observer = Kernel.const_get(conn_obs).new
+          observer.on_disconnected if observer.respond_to?("on_disconnected")
+        else
+          conn_obs.on_disconnected if conn_obs.respond_to?("on_disconnected")
+        end
       end
     end
     
