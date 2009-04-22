@@ -54,19 +54,19 @@ describe Babylon::XmppParser do
       @parser.elem = @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
     end
     
-    it "should add the characters to the current element" do
+    it "should add the characters to the buffer" do
       chars = "hello my name is julien"
       @parser.characters(chars)
-      @parser.elem.content.should == chars
+      @parser.instance_variable_get("@buffer").should == chars
     end
     
     it "should concatenate the text if we receive in both pieces" do
       chars = "hello my name is julien"
       @parser.characters(chars)
-      @parser.elem.content.should == chars
+      @parser.instance_variable_get("@buffer").should == chars
       chars2 = "and I'm french!"
       @parser.characters(chars2)
-      @parser.elem.content.should == chars + chars2
+      @parser.instance_variable_get("@buffer").should == chars + chars2
     end
   end
   
@@ -166,6 +166,15 @@ describe Babylon::XmppParser do
   
   describe ".end_element" do
     
+    it "should add the content of the buffer to the @elem" do
+      @elem = Nokogiri::XML::Element.new("element", @parser.doc)
+      chars = "hello world"
+      @parser.instance_variable_set("@buffer", chars)
+      @parser.elem = @elem
+      @parser.end_element("element")
+      @elem.content.should == chars
+    end
+    
     describe "if the current element is the top element" do   
       before(:each) do
         @elem = Nokogiri::XML::Element.new("element", @parser.doc)
@@ -244,16 +253,6 @@ describe Babylon::XmppParser do
     end
   end
   
-  describe ".cdata_block" do
-    before(:each) do
-      @parser.elem = @parser.top = Nokogiri::XML::Element.new("element", @parser.doc)
-    end
-    it "should create a CData block in the current element when called directly" do
-      @parser.cdata_block("salut my friend!")
-      @parser.elem.to_xml.should == "<element><![CDATA[salut my friend!]]></element>"
-    end
-  end
-  
   describe "a communication with an XMPP Client" do
     
     before(:each) do
@@ -297,7 +296,7 @@ describe Babylon::XmppParser do
         @parser.push(s)
       end
       
-      @stanzas.join("").should == "<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:component:accept\" from=\"plays.shakespeare.lit\" id=\"3BF96D32\"/><handshake/><message from=\"juliet@example.com\" to=\"romeo@example.net\" xml:lang=\"en\">\n          <body>Art thou not Romeo, and a Montague?</body>\n        </message>"
+      @stanzas.join("").should == "<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:component:accept\" from=\"plays.shakespeare.lit\" id=\"3BF96D32\"/><handshake/><message from=\"juliet@example.com\" to=\"romeo@example.net\" xml:lang=\"en\">\n  <body>Art thou not Romeo, and a Montague?</body>\n</message>"
   
     end
     

@@ -10,6 +10,7 @@ module Babylon
     # Initialize the parser and adds the callback that will be called upon stanza completion
     def initialize(callback)
       @callback = callback
+      @buffer = ""
       super()
       reset
     end
@@ -28,12 +29,6 @@ module Babylon
       @parser << data
     end
     
-    ##
-    # Called when the document contains a CData block
-    def cdata_block(string)
-      @elem.add_child(Nokogiri::XML::CDATA.new(@doc, string))
-    end
-
     ## 
     # Called when the document received in the stream is started
     def start_document
@@ -43,7 +38,7 @@ module Babylon
     ##
     # Adds characters to the current element (being parsed)
     def characters(string)
-      @elem.add_child(Nokogiri::XML::Text.new(string, @doc)) if @elem
+      @buffer += string 
     end
 
     ##
@@ -72,6 +67,8 @@ module Babylon
     # Terminates the current element and calls the callback
     def end_element(name)
       if @elem
+        @elem.add_child(Nokogiri::XML::Text.new(decode(@buffer.strip), @doc)) unless @buffer.strip.empty?
+        @buffer = "" # empty the buffer
         if @elem == @top 
           @callback.call(@elem) 
           # Remove the element from its content, since we're done with it!
