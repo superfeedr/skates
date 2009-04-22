@@ -15,9 +15,9 @@ describe Babylon::Base::View do
       @view.view_template == "/a/path/to/a/view/file"
     end
     
-    it "should assign any variable passed in hash and create an setter for it" do
+    it "should assign any variable passed in hash" do
       {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}}.each do |key, value|
-        @view.send(key).should == value
+        @view.instance_variable_get("@#{key}").should == value
       end
     end
   end
