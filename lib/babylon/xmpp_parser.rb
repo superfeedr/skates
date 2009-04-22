@@ -72,7 +72,7 @@ module Babylon
     # Terminates the current element and calls the callback
     def end_element(name)
       if @elem
-        if @elem == @top
+        if @elem == @top 
           @callback.call(@elem) 
           # Remove the element from its content, since we're done with it!
           @elem.unlink if @elem
@@ -91,9 +91,13 @@ module Babylon
     ##
     # Adds namespaces and attributes. Nokogiri passes them as a array of [name, value, name, value]...
     def add_namespaces_and_attributes_to_node(attrs, node) 
+      
       (attrs.size / 2).times do |i|
         name, value = attrs[2 * i], attrs[2 * i + 1]
-        if name == "xmlns"
+        # We're intentionnaly not adding namespaces to stream:stream since it generates a lot of trouvble for xpath routing.
+        if node.name == "stream:stream"
+          node.set_attribute name, decode(value)
+        elsif name == "xmlns"
           node.add_namespace(nil, value)
         elsif name =~ /\Axmlns:/
           node.add_namespace(name.gsub("xmlns:", ""), value)

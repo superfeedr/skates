@@ -26,7 +26,7 @@ module Babylon
       return false if !@connection 
       
       route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
-            
+      
       return false unless route 
       
       Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}") 
@@ -82,6 +82,7 @@ module Babylon
       raise("No controller given for route") unless params["controller"]
       raise("No action given for route") unless params["action"]
       @priority   = params["priority"] || 0
+      # For the xpath, we actually need to add the "stream" namespace by default.
       @xpath      = params["xpath"] if params["xpath"]
       @css        = params["css"] if params["css"]
       @controller = Kernel.const_get("#{params["controller"].capitalize}Controller")

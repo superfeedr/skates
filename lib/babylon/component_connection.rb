@@ -18,11 +18,15 @@ module Babylon
     # We use a "tweak" here to send only the starting tag of stream:stream
     def connection_completed
       super
-      xml = Nokogiri::XML::Builder.new 
-      xml.send('stream:stream', {'xmlns' => "jabber:component:accept", 'xmlns:stream' => 'http://etherx.jabber.org/streams', 'to' => jid}) do |stream|
-        stream.paste_content_here #  The stream:stream element should be cut here ;)
-      end
-      start, stop = xml.to_xml.split('<paste_content_here/>')
+      @doc = Nokogiri::XML::Document.new 
+      stream = Nokogiri::XML::Node.new("stream", @doc)
+      stream.add_namespace(nil, stream_namespace)
+      stream.add_namespace("stream", "http://etherx.jabber.org/streams")
+      stream["to"] = jid
+      @doc.add_child(stream)
+      paste_content_here= Nokogiri::XML::Node.new("paste_content_here", @doc)
+      stream.add_child(paste_content_here)
+      start, stop = @doc.to_xml.split('<stream:paste_content_here/>')
       send_xml(start)
     end
 
@@ -71,7 +75,7 @@ module Babylon
     
     def handshake(stanza)
       hash = Digest::SHA1::hexdigest(stanza.attributes['id'].content + @password)
-      handshake = Nokogiri::XML::Node.new("handshake", stanza.document)
+      handshake = Nokogiri::XML::Node.new("handshake", @doc)
       handshake.content = hash
       handshake
     end

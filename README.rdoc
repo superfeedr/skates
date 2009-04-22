@@ -4,11 +4,11 @@
 
 Babylon is a framework to build XMPP Applications in Ruby. The framework uses EventMachine to handle network connections.
 
-This framework can use both an XMPP Component (XEP-0114) and an XMPP Client (and XMPP Servers should come soone). However, we strongly discourage any production application using a regular client.
+This framework can use both an XMPP Component (XEP-0114) and an XMPP Client (and XMPP Servers should come soon). However, we strongly discourage any production application using a regular client.
 
 == FEATURES/PROBLEMS:
 
-Please report/request them at the Lighthouse : http://babylon.lighthouseapp.com/projects/27641-babylon/overview
+Please report/request them at the Lighthouse : http://github.com/julien51/babylon/issues
 
 The current version is a good candidate for version 0.1. We will probably not add any important features before that release, but we need some help with the tests and documentation.
 
@@ -16,9 +16,7 @@ The current version is a good candidate for version 0.1. We will probably not ad
 
 - Improve the Client Connection to support other authentication than PLAIN SASL
 - Implement the ServerConnection for S2S
-- Implement "auto-responding" features for disco-info... etc
-- Use a better generator (the next version of Nokogiri should fix that)
-- Implement "background" running when in production (and adjust log level)
+- Implement templates for disco-info... and common XEPs
 - Delete route priorities? And rely on the order only? (As Rails does)
 - Review doc
 - Write more spec
@@ -30,7 +28,7 @@ You can help with at least one of these points, don't turn your back on Babylon!
 == DOCUMENTATION :
 
 You can find it on our Rubyforge page : http://babylon.rubyforge.org/
-Please note that the documentation is probably incomplete... so if you have any problems with something that is not clear enough to you, feel free to send us questions and do not hesitate to fork the project to add your own documentation. We will be more than happy to help you help us!
+Feel free to fork the github repo and add some documnetation if you think anything is missing. You can't be a bad coder, a bad tester and a bad documenter at the same time ;)
 
 == SYNOPSIS :
 
@@ -45,7 +43,9 @@ You can build applications directly with Babylon, or you can use the Babylon::Cl
 
 3. Use the generator or write your own controllers : 
 
-    $> babylon controller messages echo:10://message[@type='chat']/body,subscribed:0://presence[@type='subscribe']
+    $> babylon controller messages echo:10://stream:message[@type='chat']/strea:body,subscribed:0://stream:presence[@type='subscribe']
+
+(Don't forget namespaces into your xpath.)
 
 This will generate a "MessagesController" class with 2 methods : echo and subscribed. 
  - "echo" will be called when the component receives message stanzas of type 'chat', 

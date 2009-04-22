@@ -100,11 +100,11 @@ describe Babylon::XmppParser do
         @parser.doc.should == new_doc
       end
       
-      it "should add a stream:stream element as the root of the document, with the right attributes" do
+      it "should add a stream:stream element as the root of the document, with the right attributes and no namespace" do
         @parser.start_element(@stream, @stream_attributes)
         @parser.doc.root.name.should == "stream:stream"
         @parser.doc.root["to"].should == "firehoser.superfeedr.com"
-        @parser.doc.namespaces.should == {"xmlns"=>"jabber:component:accept", "xmlns:stream"=>"http://etherx.jabber.org/streams"}
+        @parser.doc.namespaces.should == {}
       end
       
       it "should callback the parser's callback" do

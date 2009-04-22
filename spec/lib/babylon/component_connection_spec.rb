@@ -12,7 +12,7 @@ describe Babylon::ComponentConnection do
 
   describe ".connection_completed" do
     it "should send a <stream> element that initiates the communication" do
-      @component.should_receive(:send_xml).with("<?xml version=\"1.0\"?>\n<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" to=\"#{@params["jid"]}\" xmlns=\"jabber:component:accept\">\n  ")
+      @component.should_receive(:send_xml).with("<?xml version=\"1.0\"?>\n<stream:stream xmlns=\"jabber:component:accept\" xmlns:stream=\"http://etherx.jabber.org/streams\" to=\"jid@server\">\n  ")
       @component.connection_completed
     end
   end
@@ -34,6 +34,7 @@ describe Babylon::ComponentConnection do
 
     describe "when waiting for stream" do
       before(:each) do
+        @component.connection_completed
         @component.instance_variable_set("@state", :wait_for_stream)
       end
 
@@ -113,6 +114,7 @@ describe Babylon::ComponentConnection do
   describe ".handshake" do
 
     it "should build a handshake Element with the password and the id of the stanza" do
+      @component.connection_completed
       doc = Nokogiri::XML::Document.new
       stanza = Nokogiri::XML::Node.new("stream:stream", doc)
       stanza["xmlns:stream"] = 'http://etherx.jabber.org/streams'
