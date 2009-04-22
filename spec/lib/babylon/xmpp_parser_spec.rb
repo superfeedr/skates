@@ -104,10 +104,7 @@ describe Babylon::XmppParser do
         @parser.start_element(@stream, @stream_attributes)
         @parser.doc.root.name.should == "stream:stream"
         @parser.doc.root["to"].should == "firehoser.superfeedr.com"
-        @parser.doc.namespaces.should == {}
-        ##
-        # FIX LATER : We should actually get that, but Nokogiri fails to add namespaces correctly. 
-        # @parser.doc.namespaces.should == {"xmlns:xmlns"=>"jabber:component:accept", "xmlns:stream"=>"http://etherx.jabber.org/streams"}
+        @parser.doc.namespaces.should == {"xmlns"=>"jabber:component:accept", "xmlns:stream"=>"http://etherx.jabber.org/streams"}
       end
       
       it "should callback the parser's callback" do
@@ -243,10 +240,7 @@ describe Babylon::XmppParser do
     
     it "should add namespace for each attribute name that starts with xmlns" do
       @parser.__send__(:add_namespaces_and_attributes_to_node, @attrs, @element)
-      ##
-      @element.namespaces.values.should == []
-      # TODO : We should have that : but Nokogiri fails with namespaces
-      # @element.namespaces.values.should == ["http://www.w3.org/2005/Atom", "http://namespace.com"]
+      @element.namespaces.values.should == ["http://www.w3.org/2005/Atom", "http://namespace.com"]
     end
   end
   

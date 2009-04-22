@@ -93,13 +93,28 @@ module Babylon
     def add_namespaces_and_attributes_to_node(attrs, node) 
       (attrs.size / 2).times do |i|
         name, value = attrs[2 * i], attrs[2 * i + 1]
-        # TODO : For now, it seems that Nokogiri has some problems with adding namespaces... so let's add all namespaces as attributes.
-        # if name == "xmlns"
-        #   node.add_namespace(nil, value)
-        # else
-          node.set_attribute name, value
-        # end
+        if name == "xmlns"
+          node.add_namespace(nil, value)
+        elsif name =~ /\Axmlns:/
+          node.add_namespace(name.gsub("xmlns:", ""), value)
+        else
+          node.set_attribute name, decode(value)
+        end
       end
+    end
+    
+    def decode(str)
+      @entities ||= {
+        'lt'    => '<',
+        'gt'    => '>',
+        'amp'   => '&',
+        'quot'  => '"',
+        '#13'   => "\r",
+      }
+
+      @entities.keys.inject(str) { |string,key|
+        string.gsub(/&#{key};/, @entities[key])
+      }
     end
     
   end
