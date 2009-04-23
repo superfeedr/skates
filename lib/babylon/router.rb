@@ -22,7 +22,7 @@ module Babylon
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
     def route(xml_stanza) 
-      
+            
       return false if !@connection 
       
       route = routes.select{ |r| r.accepts?(xml_stanza) }.first 

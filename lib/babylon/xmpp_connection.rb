@@ -23,11 +23,11 @@ module Babylon
     attr_accessor :jid, :host, :port
 
     ##
-    # Connects the XmppConnection to the right host with the right port. I
+    # Connects the XmppConnection to the right host with the right port.
     # It passes itself (as handler) and the configuration
     # This can very well be overwritten by subclasses.
     def self.connect(params, handler)
-      Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]}") # Very low level Logging
+      Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]} with #{handler.inspect} as connection handler") # Very low level Logging
       begin
         EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
       rescue
@@ -53,7 +53,7 @@ module Babylon
     end
 
     ## 
-    # Instantiate the Handler (called internally by EventMachine) and attaches a new XmppParser
+    # Instantiate the Handler (called internally by EventMachine)
     def initialize(params)
       super()
       @connected = false
@@ -62,8 +62,13 @@ module Babylon
       @host = params["host"]
       @port = params["port"]
       @handler = params["handler"]
-      @parser = XmppParser.new(method(:receive_stanza))
     end
+    
+    ##
+    # Attaches a new parser since the network connection has been established.
+    def post_init
+      @parser = XmppParser.new(method(:receive_stanza))
+    end   
 
     ##
     # Called when a full stanza has been received and returns it to the central router to be sent to the corresponding controller.
@@ -133,9 +138,10 @@ module Babylon
     ## 
     # receive_data is called when data is received. It is then passed to the parser. 
     def receive_data(data)
+      
       begin
         Babylon.logger.debug("RECEIVED : #{data}")
-        @parser.push(data)
+        @parser.push(data) 
       rescue
         Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
       end
