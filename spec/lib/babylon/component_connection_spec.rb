@@ -112,7 +112,6 @@ describe Babylon::ComponentConnection do
   end
 
   describe ".handshake" do
-
     it "should build a handshake Element with the password and the id of the stanza" do
       @component.connection_completed
       doc = Nokogiri::XML::Document.new
