@@ -75,9 +75,11 @@ module Babylon
     
     def handshake(stanza)
       hash = Digest::SHA1::hexdigest(stanza.attributes['id'].content + @password)
-      handshake = Nokogiri::XML::Node.new("handshake", Nokogiri::XML::Document.new )
+      doc = Nokogiri::XML::Document.new
+      handshake = Nokogiri::XML::Node.new("handshake", doc)
+      doc.add_child(handshake)
       handshake.content = hash
-      handshake
+      doc
     end
     
     
