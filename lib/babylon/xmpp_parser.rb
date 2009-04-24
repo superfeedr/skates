@@ -4,7 +4,7 @@ module Babylon
   # This is the XML SAX Parser that accepts "pushed" content
   class XmppParser < Nokogiri::XML::SAX::Document
     
-    attr_accessor :elem, :doc, :parser, :top
+    attr_accessor :elem, :doc, :parser
     
     ##
     # Initialize the parser and adds the callback that will be called upon stanza completion
@@ -18,21 +18,14 @@ module Babylon
     ## 
     # Resets the Pushed SAX Parser.
     def reset
-      @parser   = Nokogiri::XML::SAX::PushParser.new(self, "UTF-8")
-      start_document
-      @elem     = nil
+      @parser = Nokogiri::XML::SAX::PushParser.new(self, "UTF-8")
+      @elem = @doc = nil
     end
     
     ##
     # Pushes the received data to the parser. The parser will then callback the document's methods (start_tag, end_tag... etc)
     def push(data)
       @parser << data
-    end
-    
-    ## 
-    # Called when the document received in the stream is started
-    def start_document
-      @doc = Nokogiri::XML::Document.new
     end
     
     ##
@@ -42,33 +35,19 @@ module Babylon
     end
 
     ##
-    # Instantiate a new current Element, adds the corresponding attributes and namespaces
+    # Instantiate a new current Element, adds the corresponding attributes and namespaces.
     # The new element is eventually added to a parent element (if present).
-    # If this element is the first element (the root of the document), then instead of adding it to a parent, we add it to the document itself. In this case, the current element will not be terminated, so we activate the callback immediately.
+    # If no element is being parsed, then, we create a new document, to which we add this new element as root. (we create one document per stanza to avoid memory problems)
     def start_element(qname, attributes = [])
-      e = Nokogiri::XML::Element.new(qname, @doc)
-      add_namespaces_and_attributes_to_node(attributes, e)
+      @doc ||= Nokogiri::XML::Document.new
+      @elem ||= @doc # If we have no current element, then, we take the doc
+      @elem = @elem.add_child(Nokogiri::XML::Element.new(qname, @doc))
+      add_namespaces_and_attributes_to_current_node(attributes)
       
-      if e.name == "stream:stream"
-        # Should be called only for stream:stream.
-        # We re-initialize the document and set its root to be the newly created element.
-        start_document
-        @doc.root = e
-        # Also, we activate the callback since this element  will never end.
-        @callback.call(e)
-      else
-        # Adding the newly created element to the @elem that is being parsed, or, if no element is being parsed, then we set the @top and the @elem to be this newly created element.
-        # @top is the "highest" element to (it's parent is the <stream> element)
-        if @elem
-          @elem = @elem.add_child(e)
-        else
-          if @doc.root.children.empty?
-            @doc.root.add_child(e)
-          else
-            @doc.root.children.first.replace(e)
-          end
-          @elem = @top = e
-        end
+      if @elem.name == "stream:stream"
+        # We activate the callback since this element  will never end.
+        @callback.call(@elem)
+        @doc = @elem = nil # Let's prepare for the next stanza
       end
     end
 
@@ -78,12 +57,11 @@ module Babylon
       if @elem
         @elem.add_child(Nokogiri::XML::Text.new(decode(@buffer.strip), @doc)) unless @buffer.strip.empty?
         @buffer = "" # empty the buffer
-        if @elem == @top 
+        if @elem == @doc.root 
+          # If we're actually finishing the stanza (a stanza is always a document's root)
           @callback.call(@elem) 
-          # Remove the element from its content, since we're done with it!
-          @elem.unlink
-          # And the current elem is the next sibling or the root
-          @elem = @top = nil
+          # We delete the current element and the doc (1 doc per stanza policy)
+          @elem = @doc = nil
         else
           @elem = @elem.parent 
         end
@@ -96,20 +74,17 @@ module Babylon
     
     ##
     # Adds namespaces and attributes. Nokogiri passes them as a array of [name, value, name, value]...
-    def add_namespaces_and_attributes_to_node(attrs, node) 
-      
+    def add_namespaces_and_attributes_to_current_node(attrs) 
       (attrs.size / 2).times do |i|
         name, value = attrs[2 * i], attrs[2 * i + 1]
-        # We're intentionnaly not adding namespaces to stream:stream since it generates a lot of trouvble for xpath routing.
-        if node.name == "stream:stream"
-          node.set_attribute name, decode(value)
-        elsif name == "xmlns"
-          node.add_namespace(nil, value)
-        elsif name =~ /\Axmlns:/
-          node.add_namespace(name.gsub("xmlns:", ""), value)
-        else
-          node.set_attribute name, decode(value)
-        end
+        # TODO : FIX namespaces :they give a lot of problems with XPath
+        # if name == "xmlns"
+        #   @elem.add_namespace(nil, value)
+        # elsif name =~ /\Axmlns:/
+        #   @elem.add_namespace(name.gsub("xmlns:", ""), value)
+        # else
+          @elem.set_attribute name, decode(value)
+        # end
       end
     end
     
