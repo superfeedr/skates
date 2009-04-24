@@ -19,7 +19,6 @@ module Babylon
       include SAXMachine
       
       def initialize(xml = nil)
-        @xml = xml
         parse("#{xml}")
       end
     end
