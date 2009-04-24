@@ -32,7 +32,7 @@ describe Babylon::Runner do
       class MyObserver < Babylon::Base::Controller
         def on_connected(connection)
         end
-        def response
+        def evaluate
           "hello world"
         end
       end

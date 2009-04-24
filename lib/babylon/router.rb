@@ -38,11 +38,11 @@ module Babylon
       end 
       controller = route.controller.new(stanza) 
       begin 
-        controller.perform(route.action)
+        controller.perform(route.action) 
+        connection.send_xml(controller.evaluate) 
       rescue 
         Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}") 
       end 
-      connection.send_xml(controller.response) 
     end 
     
     # Throw away all added routes from this router. Helpful for 

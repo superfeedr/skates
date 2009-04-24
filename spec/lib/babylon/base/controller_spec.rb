@@ -71,9 +71,9 @@ describe Babylon::Base::Controller do
       @controller.action_name = :subscribe
     end
     
-    it "should set rendered to true" do
+    it "should assign a value to view" do
       @controller.render
-      @controller.rendered.should be_true
+      @controller.instance_variable_get("@view").should_not be_nil
     end
     
     describe "with :nothing option" do
@@ -110,23 +110,6 @@ describe Babylon::Base::Controller do
       @controller.render
       @controller.should_not_receive(:render_for_file)
       @controller.render      
-    end
-  end
-
-  describe ".response" do
-    before(:each) do
-      @controller = Babylon::Base::Controller.new({})
-    end
-    
-    it "should return if the controller has no view" do
-      @controller.response.should be_nil     
-    end
-    
-    it "should return the view's output if the controller has a view" do
-      view_output = "output"
-      view = mock(Babylon::Base::View, {:output => view_output})
-      @controller.instance_variable_set("@view", view)
-      @controller.response.should == view_output
     end
   end
 
@@ -205,12 +188,6 @@ describe Babylon::Base::Controller do
     
     it "should instantiate a new view, with the file provided and the hashed_variables" do
       Babylon::Base::View.should_receive(:new).with("path_to_a_file",an_instance_of(Hash)).and_return(@view)
-      @controller.__send__(:render_for_file, "path_to_a_file")
-    end
-    
-    it "should evaluate the newly instantiated view" do
-      Babylon::Base::View.stub!(:new).with("path_to_a_file",an_instance_of(Hash)).and_return(@view)
-      @view.should_receive(:evaluate).and_return("")
       @controller.__send__(:render_for_file, "path_to_a_file")
     end
     

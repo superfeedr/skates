@@ -31,14 +31,16 @@ module Babylon
     ##
     # Adds characters to the current element (being parsed)
     def characters(string)
+      @buffer ||= ""
       @buffer += string 
     end
-
+    
     ##
     # Instantiate a new current Element, adds the corresponding attributes and namespaces.
     # The new element is eventually added to a parent element (if present).
     # If no element is being parsed, then, we create a new document, to which we add this new element as root. (we create one document per stanza to avoid memory problems)
     def start_element(qname, attributes = [])
+      clear_characters_buffer
       @doc ||= Nokogiri::XML::Document.new
       @elem ||= @doc # If we have no current element, then, we take the doc
       @elem = @elem.add_child(Nokogiri::XML::Element.new(qname, @doc))
@@ -48,27 +50,38 @@ module Babylon
         # We activate the callback since this element  will never end.
         @callback.call(@elem)
         @doc = @elem = nil # Let's prepare for the next stanza
+        # And then, we start a new Sax Push Parser
+      end
+    end
+    
+    
+    ##
+    # Clears the characters buffer
+    def clear_characters_buffer
+      if @buffer && @elem
+        @buffer.strip!
+        @elem.add_child(Nokogiri::XML::Text.new(decode(@buffer), @doc)) unless @buffer.empty?
+        @buffer = nil # empty the buffer
       end
     end
 
     ##
     # Terminates the current element and calls the callback
     def end_element(name)
+      clear_characters_buffer
       if @elem
-        @elem.add_child(Nokogiri::XML::Text.new(decode(@buffer.strip), @doc)) unless @buffer.strip.empty?
-        @buffer = "" # empty the buffer
-        if @elem == @doc.root 
+        if @elem.parent == @doc
           # If we're actually finishing the stanza (a stanza is always a document's root)
           @callback.call(@elem) 
           # We delete the current element and the doc (1 doc per stanza policy)
-          @elem = @doc = nil
+          @elem = @doc = nil 
         else
           @elem = @elem.parent 
-        end
-      else
+        end 
+      else 
         # Not sure what to do since it seems we're not processing any element at this time, so how can one end?
-      end
-    end
+      end 
+    end 
     
     private
     
@@ -89,19 +102,16 @@ module Babylon
     end
     
     def decode(str)
-      @entities ||= {
+      entities = {
         'lt'    => '<',
         'gt'    => '>',
         'amp'   => '&',
         'quot'  => '"',
         '#13'   => "\r",
-      }
-
-      @entities.keys.inject(str) { |string,key|
-        string.gsub(/&#{key};/, @entities[key])
-      }
-    end
-    
-  end
-
-end
+      } 
+      entities.keys.inject(str) { |string, key|
+        string.gsub(/&#{key};/, entities[key])
+      } 
+    end 
+  end 
+end 

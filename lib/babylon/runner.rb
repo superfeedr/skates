@@ -82,7 +82,7 @@ module Babylon
         observer = conn_obs.new
         if observer.respond_to?("on_connected")
           observer.perform("on_connected") 
-          connection.send_xml(observer.response) 
+          connection.send_xml(observer.evaluate) 
         end
       end
     end

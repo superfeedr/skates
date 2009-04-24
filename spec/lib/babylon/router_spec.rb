@@ -63,7 +63,7 @@ describe Babylon::StanzaRouter do
           @accepting_route = mock(Babylon::Route, :accepts? => true)
           @accepting_route.should_receive(:accepts?).and_return(true)
           @accepting_route.stub!(:action).and_return("action")
-          @mock_controller = mock(Babylon::Base::Controller.new, :response => mock(Nokogiri::XML::Document))
+          @mock_controller = mock(Babylon::Base::Controller.new, :evaluate => mock(Nokogiri::XML::Document), :perform => true)
           @mock_controller_class = mock(Class, :new => @mock_controller)
           @accepting_route.stub!(:controller).and_return(@mock_controller_class)
           @mock_stanza = mock(Babylon::Base::Stanza)
@@ -87,7 +87,7 @@ describe Babylon::StanzaRouter do
         end
         
         it "should send the controller's response to the connection" do
-          @connection.should_receive(:send_xml).with(@mock_controller.response)
+          @connection.should_receive(:send_xml).with(@mock_controller.evaluate)
           @router.route(@xml)
         end
         

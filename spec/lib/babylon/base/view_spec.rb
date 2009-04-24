@@ -7,10 +7,6 @@ describe Babylon::Base::View do
       @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
     end
     
-    it "should assign @output" do
-      @view.output.should be_nil
-    end
-    
     it "should assign @view_template to path" do
       @view.view_template == "/a/path/to/a/view/file"
     end
