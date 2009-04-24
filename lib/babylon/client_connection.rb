@@ -54,6 +54,18 @@ module Babylon
       end
     end
 
+    def stream_stanza
+      doc = Nokogiri::XML::Document.new
+      stream = Nokogiri::XML::Node.new("stream", doc)
+      doc.add_child(stream)
+      stream.add_namespace(nil, stream_namespace())
+      stream.add_namespace("stream", "http://etherx.jabber.org/streams")
+      stream["to"] = jid.split("/").first.split("@").last
+      stream["version"] = "1.0"
+      paste_content_here = Nokogiri::XML::Node.new("paste_content_here", doc)
+      stream.add_child(paste_content_here)
+      doc.to_xml.split('<stream:paste_content_here/>').first
+    end
 
     ##
     # Connection_completed is called when the connection (socket) has been established and is in charge of "building" the XML stream 
@@ -61,21 +73,7 @@ module Babylon
     # We use a "tweak" here to send only the starting tag of stream:stream
     def connection_completed
       super
-      begin
-      @outstream = Nokogiri::XML::Document.new
-      stream = Nokogiri::XML::Node.new("stream", @outstream)
-      @outstream.add_child(stream)
-      stream.add_namespace(nil, stream_namespace())
-      stream.add_namespace("stream", "http://etherx.jabber.org/streams")
-      stream["to"] = jid.split("/").first.split("@").last
-      stream["version"] = "1.0"
-      paste_content_here = Nokogiri::XML::Node.new("paste_content_here", @outstream)
-      stream.add_child(paste_content_here)
-      start_stream, stop_stream = @outstream.to_xml.split('<stream:paste_content_here/>')
-      send_xml(start_stream)
-    rescue
-      Babylon.logger.error "#{$!} => #{$!.class}\n#{$!.backtrace.join("\n")}"
-    end
+      send_xml(stream_stanza)
     end
 
     ##
@@ -87,26 +85,34 @@ module Babylon
         when :connected
           super # Can be dispatched
 
+        when :wait_for_stream_authenticated
+          if stanza.name == "stream:stream" && stanza.attributes['id']
+            @state = :wait_for_bind
+          end
+
         when :wait_for_stream
           if stanza.name == "stream:stream" && stanza.attributes['id']
-            @state = :wait_for_auth_mechanisms unless @success
-            @state = :wait_for_bind if @success
+            @state = :wait_for_auth_mechanisms
           end
 
         when :wait_for_auth_mechanisms
           if stanza.name == "stream:features"
             if stanza.at("startls") # we shall start tls
-              starttls = Nokogiri::XML::Node.new("starttls", @outstream)
+              doc = Nokogiri::XML::Document.new
+              starttls = Nokogiri::XML::Node.new("starttls", doc)
+              doc.add_child(starttls)
               starttls.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-tls")
-              send_xml(starttls)
+              send_xml(doc)
               @state = :wait_for_proceed
             elsif stanza.at("mechanisms") # tls is ok
               if stanza.at("mechanisms").children.map() { |m| m.text }.include? "PLAIN"
-                auth = Nokogiri::XML::Node.new("auth", @outstream)
+                doc = Nokogiri::XML::Document.new
+                auth = Nokogiri::XML::Node.new("auth", doc)
+                doc.add_child(auth)
                 auth['mechanism'] = "PLAIN"
                 auth.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-sasl")
                 auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
-                send_xml(auth)
+                send_xml(doc)
                 @state = :wait_for_success
               end
             end
@@ -114,10 +120,9 @@ module Babylon
 
         when :wait_for_success
           if stanza.name == "success" # Yay! Success
-            @success = true
-            @state = :wait_for_stream
+            @state = :wait_for_stream_authenticated
             @parser.reset
-            send_xml @outstream.root.to_xml.split('<stream:paste_content_here/>').first
+            send_xml(stream_stanza)
           elsif stanza.name == "failure"
             if stanza.at("bad-auth") || stanza.at("not-authorized")
               raise AuthenticationError
@@ -130,22 +135,24 @@ module Babylon
         when :wait_for_bind
           if stanza.name == "stream:features"
             if stanza.at("bind")
+              doc = Nokogiri::XML::Document.new
               # Let's build the binding_iq
               @binding_iq_id = Integer(rand(10000))
-              iq = Nokogiri::XML::Node.new("iq", @outstream)
+              iq = Nokogiri::XML::Node.new("iq", doc)
+              doc.add_child(iq)
               iq["type"] = "set"
               iq["id"] = "#{@binding_iq_id}"
-              bind = Nokogiri::XML::Node.new("bind", @outstream)
+              bind = Nokogiri::XML::Node.new("bind", doc)
               bind.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-bind")
               iq.add_child(bind)
-              resource = Nokogiri::XML::Node.new("resource", @outstream)
+              resource = Nokogiri::XML::Node.new("resource", doc)
               if jid.split("/").size == 2 
                 resource.content = (@jid.split("/").last)
               else
                 resource.content = "babylon_client_#{binding_iq_id}"
               end
               bind.add_child(resource)
-              send_xml(iq)
+              send_xml(doc)
               @state = :wait_for_confirmed_binding
             end
           end
@@ -158,20 +165,22 @@ module Babylon
           end
           # And now, we must initiate the session
           @session_iq_id = Integer(rand(10000))
-          
-          iq = Nokogiri::XML::Node.new("iq", @outstream)
+          doc = Nokogiri::XML::Document.new
+          iq = Nokogiri::XML::Node.new("iq", doc)
+          doc.add_child(iq)
           iq["type"] = "set"
           iq["id"] = "#{@session_iq_id}"
-          session = Nokogiri::XML::Node.new("session", @outstream)
+          session = Nokogiri::XML::Node.new("session", doc)
           session.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-session")
           iq.add_child(session)
-          send_xml(iq)
+          send_xml(doc)
           @state = :wait_for_confirmed_session
 
         when :wait_for_confirmed_session
           if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @session_iq_id && stanza.at("session")
             # And now, send a presence!
-            presence = Nokogiri::XML::Node.new("presence", @outstream)
+            doc = Nokogiri::XML::Document.new
+            presence = Nokogiri::XML::Node.new("presence", doc)
             send_xml(presence)
             begin
               @handler.on_connected(self) if @handler and @handler.respond_to?("on_connected")
@@ -185,7 +194,7 @@ module Babylon
           start_tls() # starting TLS
           @state = :wait_for_stream
           @parser.reset
-          send_xml @outstream.root.to_xml.split('<stream:paste_content_here/>').first
+          send_xml stream_stanza
         end
       rescue
         Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
