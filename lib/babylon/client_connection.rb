@@ -102,7 +102,7 @@ module Babylon
               starttls = Nokogiri::XML::Node.new("starttls", doc)
               doc.add_child(starttls)
               starttls.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-tls")
-              send_xml(doc)
+              send_xml(starttls)
               @state = :wait_for_proceed
             elsif stanza.at("mechanisms") # tls is ok
               if stanza.at("mechanisms").children.map() { |m| m.text }.include? "PLAIN"
@@ -112,7 +112,7 @@ module Babylon
                 auth['mechanism'] = "PLAIN"
                 auth.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-sasl")
                 auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
-                send_xml(doc)
+                send_xml(auth)
                 @state = :wait_for_success
               end
             end
@@ -152,7 +152,7 @@ module Babylon
                 resource.content = "babylon_client_#{binding_iq_id}"
               end
               bind.add_child(resource)
-              send_xml(doc)
+              send_xml(iq)
               @state = :wait_for_confirmed_binding
             end
           end
@@ -173,7 +173,7 @@ module Babylon
           session = Nokogiri::XML::Node.new("session", doc)
           session.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-session")
           iq.add_child(session)
-          send_xml(doc)
+          send_xml(iq)
           @state = :wait_for_confirmed_session
 
         when :wait_for_confirmed_session

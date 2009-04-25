@@ -41,9 +41,9 @@ describe Babylon::Base::View do
       }.should raise_error(Babylon::Base::ViewFileNotFound)
     end
     
-    it "should return a Nokogiri Document" do
+    it "should return a Nokogiri NodeSet" do
       Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
-      @view.evaluate.should be_an_instance_of(Nokogiri::XML::Document)
+      @view.evaluate.should be_an_instance_of(Nokogiri::XML::NodeSet)
     end
     
     it "should call eval on the view file" do
@@ -60,7 +60,7 @@ describe Babylon::Base::View do
          body(c[:d]) 
        end
       eoxml
-      @view.evaluate.to_s.should == "<?xml version=\"1.0\"?>\n<message type=\"chat\" to=\"you\" from=\"me\">\n  <body>salut</body>\n</message>\n"
+      @view.evaluate.to_s.should == "<message type=\"chat\" to=\"you\" from=\"me\">\n  <body>salut</body>\n</message>"
     end
   end
   

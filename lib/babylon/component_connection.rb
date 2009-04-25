@@ -79,7 +79,7 @@ module Babylon
       handshake = Nokogiri::XML::Node.new("handshake", doc)
       doc.add_child(handshake)
       handshake.content = hash
-      doc
+      handshake
     end
     
     

@@ -23,9 +23,11 @@ module Babylon
       def evaluate 
         return if @view_template == ""
         raise ViewFileNotFound unless Babylon.views[@view_template] 
-        xml = Nokogiri::XML::Builder.new 
-        eval(Babylon.views[@view_template]) 
-        xml.doc # we output the document built 
+        builder = Nokogiri::XML::Builder.new 
+        builder.stream do |xml|
+          eval(Babylon.views[@view_template]) 
+        end
+        builder.doc.root.children # we output the document built 
       end 
     end 
   end 

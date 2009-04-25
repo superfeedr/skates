@@ -78,7 +78,6 @@ module Babylon
       case stanza.name
       when "stream:error"
         if !stanza.children.empty? and stanza.children.first.name == "xml-not-well-formed"
-          # <stream:error><xml-not-well-formed xmlns:xmlns="urn:ietf:params:xml:ns:xmpp-streams"/></stream:error>
           Babylon.logger.error("DISCONNECTED DUE TO MALFORMED STANZA")
           raise XmlNotWellFormed
         end
@@ -95,17 +94,13 @@ module Babylon
 
     ## 
     # Sends the Nokogiri::XML data (after converting to string) on the stream. It also appends a "from" attribute to all stanza if it was ommited (the full jid) only if a "to" attribute is present. if not, we assume that we're speaking to the server and the server doesn't need a "from" to identify where the message is coming from. Eventually it displays this data for debugging purposes.
-    # It accepts Nokogiri::XML::Document, Nokogiri::XML::NodeSet or 
+    # It accepts Nokogiri::XML::NodeSet or Nokogiri::XML::Node.
     def send_xml(xml)
       raise NotConnected unless @connected
-      if xml.is_a? Nokogiri::XML::Document
-        send_xml(xml.children)
-        xml.unlink # Unlink the document when done.
-      elsif xml.is_a? Nokogiri::XML::NodeSet
+      if xml.is_a? Nokogiri::XML::NodeSet
         xml.each do |node|
           send_node(node)
         end
-        xml.unlink # We unlink the nodeset in the end.
       elsif xml.is_a? Nokogiri::XML::Node
         send_node(xml)
       else
@@ -121,7 +116,6 @@ module Babylon
     def send_node(node)
       node["from"] ||= jid if node["to"]
       send_string(node.to_xml)
-      node.unlink # We unlink the node once sent
     end
 
     ## 
@@ -134,7 +128,7 @@ module Babylon
         Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
       end
     end
-
+    
     ## 
     # receive_data is called when data is received. It is then passed to the parser. 
     def receive_data(data)

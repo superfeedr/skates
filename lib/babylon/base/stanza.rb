@@ -15,7 +15,6 @@ module Babylon
     # element :message, :value => :"xml:lang", :as => :lang 
     #
     class Stanza
-      
       include SAXMachine
       
       def initialize(xml = nil)

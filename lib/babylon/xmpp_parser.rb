@@ -60,7 +60,7 @@ module Babylon
     def clear_characters_buffer
       if @buffer && @elem
         @buffer.strip!
-        @elem.add_child(Nokogiri::XML::Text.new(decode(@buffer), @doc)) unless @buffer.empty?
+        @elem.add_child(Nokogiri::XML::Text.new(Babylon.decode_xml(@buffer), @doc)) unless @buffer.empty?
         @buffer = nil # empty the buffer
       end
     end
@@ -96,22 +96,9 @@ module Babylon
         # elsif name =~ /\Axmlns:/
         #   @elem.add_namespace(name.gsub("xmlns:", ""), value)
         # else
-          @elem.set_attribute name, decode(value)
+          @elem.set_attribute name, Babylon.decode_xml(value)
         # end
       end
     end
-    
-    def decode(str)
-      entities = {
-        'lt'    => '<',
-        'gt'    => '>',
-        'amp'   => '&',
-        'quot'  => '"',
-        '#13'   => "\r",
-      } 
-      entities.keys.inject(str) { |string, key|
-        string.gsub(/&#{key};/, entities[key])
-      } 
-    end 
   end 
 end 

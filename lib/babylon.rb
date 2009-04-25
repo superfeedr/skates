@@ -92,5 +92,21 @@ module Babylon
     @@config
   end
   
+  ##
+  # Decodes XML special characters.
+  def self.decode_xml(str)
+    entities = {
+      'lt'    => '<',
+      'gt'    => '>',
+      '#38'   => '&',
+      'amp'   => '&',
+      'quot'  => '"',
+      '#13'   => "\r",
+    } 
+    entities.keys.inject(str) { |string, key|
+      string.gsub(/&#{key};/, entities[key])
+    } 
+  end
+  
 end
 

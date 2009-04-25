@@ -231,10 +231,12 @@ describe Babylon::XmppParser do
           xmlns='jabber:component:accept'
           from='plays.shakespeare.lit'
           id='3BF96D32'>
-      <handshake/>    <message from='juliet@example.com'
+          <handshake/>    
+          <message from='juliet@example.com'
                         to='romeo@example.net'
                         xml:lang='en'>
           <body>Art thou not Romeo, and a Montague?</body>
+          <link href='http://sfbay.craigslist.org/search/sss?query=%2522mac+mini%2522+Intel+Core+Duo&amp;minAsk=min&amp;maxAsk=max&amp;format=rss&amp;format=rss' />
         </message>"
       pieces = rand(string.size/30)
       # So we have to pick 'pieces' number between 0 and string.size
@@ -258,8 +260,8 @@ describe Babylon::XmppParser do
         @parser.push(s)
       end
       
-      @stanzas.join("").should == "<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:component:accept\" from=\"plays.shakespeare.lit\" id=\"3BF96D32\"/><handshake/><message from=\"juliet@example.com\" to=\"romeo@example.net\" xml:lang=\"en\">\n  <body>Art thou not Romeo, and a Montague?</body>\n</message>"
-  
+      @stanzas.join("").should == "<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:component:accept\" from=\"plays.shakespeare.lit\" id=\"3BF96D32\"/><handshake/><message from=\"juliet@example.com\" to=\"romeo@example.net\" xml:lang=\"en\">\n  <body>Art thou not Romeo, and a Montague?</body>\n  <link href=\"http://sfbay.craigslist.org/search/sss?query=%2522mac+mini%2522+Intel+Core+Duo&amp;minAsk=min&amp;maxAsk=max&amp;format=rss&amp;format=rss\"/>\n</message>"
+      @stanzas.last.at("link")["href"].should == "http://sfbay.craigslist.org/search/sss?query=%2522mac+mini%2522+Intel+Core+Duo&minAsk=min&maxAsk=max&format=rss&format=rss"
     end
     
   end
