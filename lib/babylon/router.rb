@@ -21,12 +21,10 @@ module Babylon
     ##
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
-    def route(xml_stanza)       
-      return false if !@connection 
-      
+    def route(xml_stanza) 
       route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
       
-      return false unless route 
+      return unless route 
       
       Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}") 
       
@@ -38,7 +36,7 @@ module Babylon
       controller = route.controller.new(stanza) 
       begin 
         controller.perform(route.action) 
-        connection.send_xml(controller.evaluate) 
+        connection.send_xml(controller.evaluate) if @connection 
       rescue 
         Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}") 
       end 

@@ -4,6 +4,35 @@ module Babylon
   # Runner is in charge of running the application.
   class Runner
     
+    ## 
+    # Prepares the Application to run.
+    def self.prepare(env)
+      # Add an outputter to the logger
+      Babylon.logger.add(Log4r::FileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false))
+      
+      # Requiring all models
+      Dir.glob('app/models/*.rb').each { |f| require f }
+
+      # Requiring all stanzas
+      Dir.glob('app/stanzas/*.rb').each { |f| require f }
+
+      # Load the controllers
+      Dir.glob('app/controllers/*_controller.rb').each {|f| require f }
+
+      # Create the router
+      Babylon.router = Babylon::StanzaRouter.new
+      
+      # Evaluate routes defined with the new DSL router.
+      require 'config/routes.rb'
+      
+      config_file = File.open('config/config.yaml')
+      
+      # Caching views
+      Babylon.cache_views
+      
+      Babylon.config = YAML.load(config_file)[Babylon.environment]
+    end
+    
     ##
     # When run is called, it loads the configuration, the routes and add them into the router
     # It then loads the models.
@@ -17,30 +46,7 @@ module Babylon
       EventMachine.epoll
       EventMachine.run do
         
-        # Add an outputter to the logger
-        Babylon.logger.add(Log4r::FileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false))
-        
-        # Requiring all models
-        Dir.glob('app/models/*.rb').each { |f| require f }
-
-        # Requiring all stanzas
-        Dir.glob('app/stanzas/*.rb').each { |f| require f }
-
-        # Load the controllers
-        Dir.glob('app/controllers/*_controller.rb').each {|f| require f }
-
-        # Create the router
-        Babylon.router = Babylon::StanzaRouter.new
-        
-        # Evaluate routes defined with the new DSL router.
-        require 'config/routes.rb'
-        
-        config_file = File.open('config/config.yaml')
-        
-        # Caching views
-        Babylon.cache_views
-        
-        Babylon.config = YAML.load(config_file)[Babylon.environment] 
+        prepare(env)
         
         case Babylon.config["application_type"] 
         when "client"
