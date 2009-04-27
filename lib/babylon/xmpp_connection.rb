@@ -94,10 +94,10 @@ module Babylon
     end 
 
     ## 
-    # Sends the Nokogiri::XML data (after converting to string) on the stream. It also appends a "from" attribute to all stanza if it was ommited (the full jid) only if a "to" attribute is present. if not, we assume that we're speaking to the server and the server doesn't need a "from" to identify where the message is coming from. Eventually it displays this data for debugging purposes.
-    # It accepts Nokogiri::XML::NodeSet or Nokogiri::XML::Node.
+    # Sends the Nokogiri::XML data (after converting to string) on the stream. Eventually it displays this data for debugging purposes.
     def send_xml(xml)
       raise NotConnected unless @connected
+      return if xml.nil? or xml.empty?
       begin
         Babylon.logger.debug("SENDING : #{xml}")
         send_data "#{xml}" 
