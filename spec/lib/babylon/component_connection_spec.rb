@@ -120,7 +120,7 @@ describe Babylon::ComponentConnection do
       stanza["xmlns"] = 'jabber:component:accept'
       stanza["from"] = 'plays.shakespeare.lit'
       stanza["id"] = "1234"
-      @component.__send__(:handshake, stanza).at("handshake").content.should == Digest::SHA1::hexdigest(stanza.attributes['id'].content + @params["password"])
+      @component.__send__(:handshake, stanza).xpath("//handshake").first.content.should == Digest::SHA1::hexdigest(stanza.attributes['id'].content + @params["password"])
     end
 
   end

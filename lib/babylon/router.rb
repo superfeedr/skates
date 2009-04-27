@@ -24,7 +24,7 @@ module Babylon
     def route(xml_stanza) 
       route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
       
-      return unless route 
+      return false unless route 
       
       Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}") 
       
@@ -36,7 +36,8 @@ module Babylon
       controller = route.controller.new(stanza) 
       begin 
         controller.perform(route.action) 
-        connection.send_xml(controller.evaluate) if @connection 
+        response = controller.evaluate
+        connection.send_xml(response) if @connection 
       rescue 
         Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}") 
       end 

@@ -86,7 +86,7 @@ describe Babylon::XmppConnection do
       end
       
       it "should call send_node for each of the nodes in the set" do
-        @connection.should_receive(:send_node).exactly(3).times
+        @connection.should_receive(:send_data).with("#{@node_set}")
         @connection.send_xml(@node_set)
       end
       
@@ -97,7 +97,7 @@ describe Babylon::XmppConnection do
         @message = Nokogiri::XML::Node.new("message", @doc)
       end
       it "should call send_node for the node" do
-        @connection.should_receive(:send_node).once
+        @connection.should_receive(:send_data).with("#{@message}")
         @connection.send_xml(@message)
       end
     end
@@ -105,31 +105,9 @@ describe Babylon::XmppConnection do
     describe "with a String as argument" do 
       it "should call send_string with the string value of the object" do
         @object = "Hello mon ami!"
-        @connection.should_receive(:send_string).with("#{@object}")
+        @connection.should_receive(:send_data).with("#{@object}")
         @connection.send_xml(@object)
       end
-    end
-  end
-  
-  describe ".send_node" do
-    before(:each) do
-      @doc = Nokogiri::XML::Document.new
-      @message = Nokogiri::XML::Node.new("message", @doc)
-      @message["to"] = "you@yourplace.comaaa"
-    end
-    it "should add a 'from' attribute to the stanza" do
-      @connection.__send__(:send_node, @message)
-      @message["to"].should_not be_nil
-    end
-    
-    it "should call send_string with the xml value of the node"
-  end
-  
-  describe ".send_string" do
-    it "should call send_data" do
-      @string = "Hello mon ami"
-      @connection.should_receive(:send_data).with(@string).and_return(true)
-      @connection.__send__(:send_string, @string)
     end
   end
   

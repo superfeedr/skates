@@ -62,6 +62,7 @@ module Babylon
       @host = params["host"]
       @port = params["port"]
       @handler = params["handler"]
+      @buffer = "" 
     end
     
     ##
@@ -97,38 +98,16 @@ module Babylon
     # It accepts Nokogiri::XML::NodeSet or Nokogiri::XML::Node.
     def send_xml(xml)
       raise NotConnected unless @connected
-      if xml.is_a? Nokogiri::XML::NodeSet
-        xml.each do |node|
-          send_node(node)
-        end
-      elsif xml.is_a? Nokogiri::XML::Node
-        send_node(xml)
-      else
-        # We try a cast into a string.
-        send_string("#{xml}")
+      begin
+        Babylon.logger.debug("SENDING : #{xml}")
+        send_data "#{xml}" 
+      rescue
+        Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
       end
     end
 
     private
 
-    ##
-    # Sends a node on the "line".
-    def send_node(node)
-      node["from"] ||= jid if node["to"]
-      send_string(node.to_xml)
-    end
-
-    ## 
-    # Sends a string on the line
-    def send_string(string)
-      begin
-        Babylon.logger.debug("SENDING : #{string}")
-        send_data("#{string}") 
-      rescue
-        Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
-      end
-    end
-    
     ## 
     # receive_data is called when data is received. It is then passed to the parser. 
     def receive_data(data)
