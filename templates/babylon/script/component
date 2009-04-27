@@ -1,31 +1,47 @@
 #!/usr/bin/env ruby
-
 require 'rubygems'
 require 'daemons'
+require 'optparse'
 
-if ["run", "start", "stop", "restart"].include? ARGV[0]
-  command   = ARGV[0]
-  env       = ARGV[1] || "development"
-else
-  env       = ARGV[0] || "development"
-  case env
-  when "development"
-    command = "run"
-  when "production"
-    command = "start"
-  else
-    # By default, we run in "on-top" mode
-    command = "run"
-  end
+# default options
+OPTIONS = {
+  :command          => "run",
+  :environment      => "development",
+  :name             => "#{Dir.pwd.split("/").last}",
+}
+
+ARGV.options do |o|
+  script_name = File.basename($0)
+  
+  o.set_summary_indent('  ')
+  o.banner =    "Usage: script/#{script_name} [OPTIONS]"
+  o.define_head "Runs the Babylon Application."
+  o.separator   ""
+  o.separator   "Arguments :" 
+  
+  o.on("-c", "--command=[run|start|stop|restart]", String,
+       "The command you'd like to execute",
+       "Default: #{OPTIONS[:command]}")   { |OPTIONS[:command]| }
+  o.on("-e", "--environment=env", String,
+       "The environment to run the application (you should have defined the argument into config/config.yaml)",
+       "Default: #{OPTIONS[:environment]}") { |OPTIONS[:environment]| }
+  o.on("-n", "--name=app_name", String,
+       "Name of your application. The pid_file will be name after this.",
+       "Default: #{OPTIONS[:name]}") { |OPTIONS[:name]| }
+  
+  o.separator ""
+
+  o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
+  
+  o.parse!
 end
 
+
 options = {
-  :ARGV       => [command, '--', env],
-  :app_name   => "#{Dir.pwd.split("/").last}",
+  :ARGV       => [OPTIONS[:command], '--', OPTIONS[:environment]],
+  :app_name   => OPTIONS[:name],
   :dir        => "../tmp/pids/",
   :multiple   => true,
   :backtrace  => true
 }
-
 Daemons.run(File.dirname(__FILE__) + '/../config/boot.rb', options)
-
