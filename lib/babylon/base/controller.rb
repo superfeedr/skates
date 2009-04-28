@@ -44,8 +44,8 @@ module Babylon
       #   - :file : render a specific file (can be in a different controller)
       #   - :action : render another action of the current controller
       #   - :nothing : doesn't render anything
-      def render(options = nil) 
-        return if @view # Avoid double rendering, if we have already attached a view
+      def render(options = {}) 
+        return if @view and !options[:force] # Avoid double rendering, if we have already attached a view
         
         if options.nil? # default rendering
           result = render(:file => default_template_name)
