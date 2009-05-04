@@ -86,10 +86,15 @@ module Babylon
       Babylon.router.connected(connection) if Babylon.router
       connection_observers.each do |conn_obs|
         observer = conn_obs.new
-        if observer.respond_to?("on_connected")
-          observer.perform("on_connected") 
-          connection.send_xml(observer.evaluate) 
-        end
+        begin 
+          if observer.respond_to?("on_connected")
+            observer.perform("on_connected") 
+            response = controller.evaluate
+            connection.send_xml(response)
+          end
+        rescue 
+          Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}") 
+        end 
       end
     end
     

@@ -88,6 +88,7 @@ module Babylon
       def render_for_file(file)
         Babylon.logger.info("RENDERING : #{file}")
         @view = Babylon::Base::View.new(file, assigns)
+        Babylon.logger.info(" ")
       end
       
     end
