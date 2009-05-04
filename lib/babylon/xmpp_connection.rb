@@ -17,10 +17,28 @@ module Babylon
   class AuthenticationError < Exception; end
 
   ##
+  # Raised when the application tries to send a stanza that might be rejected by the server because it's too long.
+  class StanzaTooBig < Exception; end
+
+  ##
   # This class is in charge of handling the network connection to the XMPP server.
   class XmppConnection < EventMachine::Connection
-
+    
     attr_accessor :jid, :host, :port
+    
+    @@max_stanza_size = 65535
+    
+    ##
+    # Maximum Stanza size. Default is 65535
+    def self.max_stanza_size
+      @@max_stanza_size
+    end
+    
+    ##
+    # Setter for Maximum Stanza size.
+    def self.max_stanza_size=(_size)
+      @@max_stanza_size = _size
+    end
 
     ##
     # Connects the XmppConnection to the right host with the right port.
@@ -99,9 +117,12 @@ module Babylon
       raise NotConnected unless @connected
       return if xml.blank?
       begin
-        Babylon.logger.debug("SENDING : #{xml}")
-        xml.each do |element|
-          send_data element.to_s
+        if xml.is_a? Nokogiri::XML::NodeSet
+          xml.each do |element|
+            send_chunk(element.to_s)
+          end
+        else
+          send_chunk(xml.to_s)
         end
       rescue
         Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
@@ -109,6 +130,12 @@ module Babylon
     end
 
     private
+
+    def send_chunk(string)
+      raise StanzaTooBig if string.length > XmppConnection.max_stanza_size
+      Babylon.logger.debug("SENDING : " + string)
+      send_data string
+    end
 
     ## 
     # receive_data is called when data is received. It is then passed to the parser. 
