@@ -160,7 +160,7 @@ module Babylon
         when :wait_for_confirmed_binding
           if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @binding_iq_id
             if stanza.at("jid")
-              jid = stanza.at("jid").text
+              @jid = stanza.at("jid").text
             end
           end
           # And now, we must initiate the session
