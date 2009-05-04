@@ -47,7 +47,7 @@ module Babylon
       def render(options = {}) 
         return if @view and !options[:force] # Avoid double rendering, if we have already attached a view
         
-        if options.nil? # default rendering
+        if options == {} # default rendering
           result = render(:file => default_template_name)
         elsif options[:file]
           file = options[:file]
