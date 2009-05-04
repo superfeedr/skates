@@ -97,10 +97,12 @@ module Babylon
     # Sends the Nokogiri::XML data (after converting to string) on the stream. Eventually it displays this data for debugging purposes.
     def send_xml(xml)
       raise NotConnected unless @connected
-      return if xml.nil? or "#{xml}".empty?
+      return if xml.blank?
       begin
         Babylon.logger.debug("SENDING : #{xml}")
-        send_data "#{xml}" 
+        xml.each do |element|
+          send_data element.to_s
+        end
       rescue
         Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
       end
