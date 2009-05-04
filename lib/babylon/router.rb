@@ -23,25 +23,30 @@ module Babylon
     # Sends the response on the XMPP stream/ 
     def route(xml_stanza) 
       route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
-      
       return false unless route 
-      
-      Babylon.logger.info("ROUTING TO #{route.controller}::#{route.action}") 
-      
+      execute_route(route.controller, route.action, xml_stanza)
+    end 
+    
+    ##
+    # Executes the route for the given xml_stanza, by instantiating the controller_name, calling action_name and sending 
+    # the result to the connection
+    def execute_route(controller_name, action_name, xml_stanza = nil)
+      Babylon.logger.info("ROUTING TO #{controller_name}::#{action_name}") 
+      stanza = nil
       begin 
-        stanza = Kernel.const_get(route.action.capitalize).new(xml_stanza) 
+        stanza = Kernel.const_get(action_name.capitalize).new(xml_stanza) if xml_stanza
       rescue 
         Babylon.logger.error("STANZA COULDN'T BE INSTANTIATED : #{$!.class} => #{$!}") 
       end 
-      controller = route.controller.new(stanza) 
+      controller = controller_name.new(stanza) 
       begin 
-        controller.perform(route.action) 
+        controller.perform(action_name) 
         response = controller.evaluate
         connection.send_xml(response) if @connection 
       rescue 
-        Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}") 
+        Babylon.logger.error("#{$!.class} => #{$!} IN #{controller_name}::#{action_name}\n#{$!.backtrace.join("\n")}") 
       end 
-    end 
+    end
     
     # Throw away all added routes from this router. Helpful for 
     # testing. 

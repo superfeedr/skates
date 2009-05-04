@@ -84,17 +84,8 @@ module Babylon
     # It "plugs" the router and then calls on_connected on the various observers.
     def self.on_connected(connection)
       Babylon.router.connected(connection) if Babylon.router
-      connection_observers.each do |conn_obs|
-        observer = conn_obs.new
-        begin 
-          if observer.respond_to?("on_connected")
-            observer.perform("on_connected") 
-            response = controller.evaluate
-            connection.send_xml(response)
-          end
-        rescue 
-          Babylon.logger.error("#{$!.class} => #{$!} IN #{route.controller}::#{route.action}\n#{$!.backtrace.join("\n")}") 
-        end 
+      connection_observers.each do |observer|
+        Babylon.router.execute_route(observer, "on_connected")
       end
     end
     
@@ -102,11 +93,11 @@ module Babylon
     # Will be called by the connection class upon disconnection.
     # It stops the event loop and then calls on_disconnected on the various observers.
     def self.on_disconnected()
-      EventMachine.stop_event_loop
       connection_observers.each do |conn_obs|
         observer = conn_obs.new
         observer.on_disconnected if observer.respond_to?("on_disconnected")
       end
+      EventMachine.stop_event_loop
     end
     
     ##
