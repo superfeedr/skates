@@ -41,7 +41,7 @@ options = {
   :ARGV       => [OPTIONS[:command], '--', OPTIONS[:environment]],
   :app_name   => OPTIONS[:name],
   :dir        => "../tmp/pids/",
-  :multiple   => true,
+  :multiple   => false,
   :backtrace  => true
 }
 Daemons.run(File.dirname(__FILE__) + '/../config/boot.rb', options)
