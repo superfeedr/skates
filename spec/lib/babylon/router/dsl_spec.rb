@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 
 describe Babylon::Router::DSL do
   before(:each) do
+    Babylon.router = Babylon::StanzaRouter.new
     Babylon.router.purge_routes!
     class ControllerController; end
   end
@@ -33,15 +34,6 @@ describe Babylon::Router::DSL do
     routes.length.should == 1
   end
   
-  it "creates a route with the specified css, controller and action" do
-    Babylon.router.draw do
-      css("message"
-      ).to(:controller => "controller", :action => "action")
-    end
-    routes = Babylon.router.instance_variable_get("@routes")
-    routes.length.should == 1
-  end
-
   describe :disco_info do
     it "matches the root disco#info namespace" do
       Babylon.router.draw do

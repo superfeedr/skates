@@ -33,50 +33,46 @@ module Babylon
     def execute_route(controller_name, action_name, xml_stanza = nil)
       Babylon.logger.info("ROUTING TO #{controller_name}::#{action_name}") 
       stanza = nil
-      begin 
-        stanza = Kernel.const_get(action_name.capitalize).new(xml_stanza) if xml_stanza
-      rescue 
-        Babylon.logger.error("STANZA COULDN'T BE INSTANTIATED : #{$!.class} => #{$!}") 
-      end 
+      stanza = Kernel.const_get(action_name.capitalize).new(xml_stanza) if xml_stanza
       controller = controller_name.new(stanza) 
       begin 
         controller.perform(action_name) 
-        response = controller.evaluate
-        connection.send_xml(response) if @connection 
       rescue 
         Babylon.logger.error("#{$!.class} => #{$!} IN #{controller_name}::#{action_name}\n#{$!.backtrace.join("\n")}") 
       end 
+      connection.send_xml(controller.evaluate)
     end
     
+    ##
     # Throw away all added routes from this router. Helpful for 
     # testing. 
     def purge_routes! 
       @routes = [] 
     end 
     
+    ##
     # Run the router DSL. 
     def draw(&block) 
-      r = Router::DSL.new 
-      r.instance_eval(&block) 
-      r.routes.each do |route| 
+      dsl = Router::DSL.new 
+      dsl.instance_eval(&block) 
+      dsl.routes.each do |route| 
         raise("Route lacks destination: #{route.inspect}") unless route.is_a?(Route) 
       end 
-      @routes += r.routes 
+      @routes += dsl.routes 
       sort
     end
 
     private
+    
     def sort
-      @routes.sort! { |r1,r2|
-        r2.priority <=> r1.priority
-      }
+      @routes.sort! { |r1,r2| r2.priority <=> r1.priority }
     end
   end
 
   ##
   # Route class which associate an XPATH match and a priority to a controller and an action
   class Route
-
+    
     attr_accessor :priority, :controller, :action, :xpath
     
     ##
@@ -84,22 +80,17 @@ module Babylon
     def initialize(params)
       raise("No controller given for route") unless params["controller"]
       raise("No action given for route") unless params["action"]
+      raise("No xpath given for route") unless params["xpath"]
       @priority   = params["priority"] || 0
-      # For the xpath, we actually need to add the "stream" namespace by default.
-      @xpath      = params["xpath"] if params["xpath"]
-      @css        = params["css"] if params["css"]
+      @xpath      = params["xpath"] 
       @controller = Kernel.const_get("#{params["controller"].capitalize}Controller")
       @action     = params["action"]
     end
-
+    
     ##
-    # Checks that the route matches the stanzas and calls the the action on the controller
+    # Checks that the route matches the stanzas and calls the the action on the controller.
     def accepts?(stanza)
-      if @xpath
-        stanza.xpath(@xpath, XpathHelper.new).first ? self : false
-      elsif @css
-        stanza.css(@css).first ? self : false
-      end
+      stanza.xpath(@xpath, XpathHelper.new).empty? ? false : self
     end
     
   end

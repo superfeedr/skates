@@ -169,6 +169,7 @@ describe Babylon::Runner do
       @connection = mock(Object)
       Babylon.router = Babylon::StanzaRouter.new
       Babylon.router.stub!(:connected).with(@connection)
+      Babylon.router.stub!(:execute_route).with(MyController, "on_connected")
     end
 
     it "should call connected on StanzaRouter" do
