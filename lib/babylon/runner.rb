@@ -103,7 +103,11 @@ module Babylon
     ##
     # Will be called by the connection class when it receives and parses a stanza.
     def self.on_stanza(stanza)
-      Babylon.router.route(stanza)
+      begin
+        Babylon.router.route(stanza)
+      rescue
+        Babylon.logger.error("#{$!.class} => #{$!.inspect}\n#{$!.backtrace.join("\n")}")
+      end
     end
     
   end

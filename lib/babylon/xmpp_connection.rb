@@ -2,23 +2,23 @@ module Babylon
 
   ## 
   # Connection Exception
-  class NotConnected < Exception; end
+  class NotConnected < StandardError; end
 
   ## 
   # xml-not-well-formed Exception
-  class XmlNotWellFormed < Exception; end
+  class XmlNotWellFormed < StandardError; end
 
   ##
   # Error when there is no connection to the host and port.
-  class NoConnection < Exception; end
+  class NoConnection < StandardError; end
 
   ##
   # Authentication Error (wrong password/jid combination). Used for Clients and Components
-  class AuthenticationError < Exception; end
+  class AuthenticationError < StandardError; end
 
   ##
   # Raised when the application tries to send a stanza that might be rejected by the server because it's too long.
-  class StanzaTooBig < Exception; end
+  class StanzaTooBig < StandardError; end
 
   ##
   # This class is in charge of handling the network connection to the XMPP server.
