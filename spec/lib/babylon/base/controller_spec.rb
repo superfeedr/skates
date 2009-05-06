@@ -181,11 +181,6 @@ describe Babylon::Base::Controller do
       @view = Babylon::Base::View.new("path_to_a_file", {})
     end
     
-    it "should display a INFO message to the Babylon log" do
-      Babylon.logger.should_receive(:info)
-      @controller.__send__(:render_for_file, "path_to_a_file")
-    end
-    
     it "should instantiate a new view, with the file provided and the hashed_variables" do
       Babylon::Base::View.should_receive(:new).with("path_to_a_file",an_instance_of(Hash)).and_return(@view)
       @controller.__send__(:render_for_file, "path_to_a_file")

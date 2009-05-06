@@ -7,30 +7,33 @@ module Babylon
     ## 
     # Prepares the Application to run.
     def self.prepare(env)
+      # Load the configuration
+      config_file = File.open('config/config.yaml')
+      Babylon.config = YAML.load(config_file)[Babylon.environment]
+      
       # Add an outputter to the logger
       Babylon.logger.add(Log4r::FileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false))
       
-      # Requiring all models
-      Dir.glob('app/models/*.rb').each { |f| require f }
-
-      # Requiring all stanzas
-      Dir.glob('app/stanzas/*.rb').each { |f| require f }
-
-      # Load the controllers
-      Dir.glob('app/controllers/*_controller.rb').each {|f| require f }
-
+      # Requiring all models, stanza, controllers
+      ['app/models/*.rb', 'app/stanzas/*.rb', 'app/controllers/*_controller.rb'].each do |dir|
+        Runner.require_directory(dir)
+      end
+      
       # Create the router
       Babylon.router = Babylon::StanzaRouter.new
       
       # Evaluate routes defined with the new DSL router.
       require 'config/routes.rb'
-      
-      config_file = File.open('config/config.yaml')
-      
+            
       # Caching views
       Babylon.cache_views
       
-      Babylon.config = YAML.load(config_file)[Babylon.environment]
+    end
+    
+    ##
+    # Convenience method to require files in a given directory
+    def self.require_directory(path)
+      Dir.glob(path).each { |f| require f }
     end
     
     ##
@@ -46,7 +49,7 @@ module Babylon
       EventMachine.epoll
       EventMachine.run do
         
-        prepare(env)
+        Runner.prepare(env)
         
         case Babylon.config["application_type"] 
         when "client"
@@ -70,20 +73,20 @@ module Babylon
     # Adding a connection observer. These observer will receive on_connected and on_disconnected events.
     def self.add_connection_observer(observer)
       @@observers ||= Array.new 
-      if observer.superclass == Babylon::Base::Controller
-        @@observers.push(observer) unless @@observers.include? observer
+      if observer.ancestors.include? Babylon::Base::Controller
         Babylon.logger.debug("Added #{observer} to the list of Connection Observers")
+        @@observers.push(observer) unless @@observers.include? observer
       else
         Babylon.logger.error("Observer can only be Babylon::Base::Controller")
+        false
       end
     end
-    
     
     ## 
     # Will be called by the connection class once it is connected to the server.
     # It "plugs" the router and then calls on_connected on the various observers.
     def self.on_connected(connection)
-      Babylon.router.connected(connection) if Babylon.router
+      Babylon.router.connected(connection)
       connection_observers.each do |observer|
         Babylon.router.execute_route(observer, "on_connected")
       end
@@ -105,6 +108,9 @@ module Babylon
     def self.on_stanza(stanza)
       begin
         Babylon.router.route(stanza)
+      rescue Babylon::NotConnected
+        Babylon.logger.fatal("#{$!.class} => #{$!.inspect}\n#{$!.backtrace.join("\n")}")
+        EventMachine::stop_event_loop
       rescue
         Babylon.logger.error("#{$!.class} => #{$!.inspect}\n#{$!.backtrace.join("\n")}")
       end

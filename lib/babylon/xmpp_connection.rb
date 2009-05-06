@@ -114,24 +114,20 @@ module Babylon
     ## 
     # Sends the Nokogiri::XML data (after converting to string) on the stream. Eventually it displays this data for debugging purposes.
     def send_xml(xml)
-      raise NotConnected unless @connected
-      return if xml.blank?
-      begin
-        if xml.is_a? Nokogiri::XML::NodeSet
-          xml.each do |element|
-            send_chunk(element.to_s)
-          end
-        else
-          send_chunk(xml.to_s)
+      if xml.is_a? Nokogiri::XML::NodeSet
+        xml.each do |element|
+          send_chunk(element.to_s)
         end
-      rescue
-        Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
+      else
+        send_chunk(xml.to_s)
       end
     end
 
     private
 
     def send_chunk(string)
+      raise NotConnected unless @connected
+      return if string.blank?
       raise StanzaTooBig if string.length > XmppConnection.max_stanza_size
       Babylon.logger.debug("SENDING : " + string)
       send_data string
