@@ -35,11 +35,7 @@ module Babylon
       stanza = nil
       stanza = Kernel.const_get(action_name.capitalize).new(xml_stanza) if xml_stanza
       controller = controller_name.new(stanza) 
-      begin 
-        controller.perform(action_name) 
-      rescue 
-        Babylon.logger.error("#{$!.class} => #{$!} IN #{controller_name}::#{action_name}\n#{$!.backtrace.join("\n")}") 
-      end 
+      controller.perform(action_name) 
       connection.send_xml(controller.evaluate)
     end
     

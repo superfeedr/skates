@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 
 describe Babylon::Base::Controller do
-
+  
   before(:each) do
     Babylon.views.stub!(:[]).and_return("") # Stubbing read for view
   end
@@ -90,7 +90,7 @@ describe Babylon::Base::Controller do
       end
     end
     
-    describe " with an :action option" do
+    describe "with an :action option" do
       it "should call render with the file name corresponding to the action given as option" do
         action = :unsubscribe
         @controller.should_receive(:default_template_name).with("#{action}")
@@ -98,7 +98,7 @@ describe Babylon::Base::Controller do
       end
     end
     
-    describe " with a file option" do
+    describe "with a file option" do
       it "should call render_for_file with the correct path if an option file is provided" do
         file = "myfile"
         @controller.should_receive(:render_for_file)
@@ -106,13 +106,13 @@ describe Babylon::Base::Controller do
       end
     end
     
-    it "should render twice when called twice" do
+    it "should not render twice when called twice" do
       @controller.render
       @controller.should_not_receive(:render_for_file)
       @controller.render      
     end
   end
-
+  
   describe ".assigns" do
     
     before(:each) do
@@ -143,7 +143,21 @@ describe Babylon::Base::Controller do
       @controller.assigns.should == vars.merge("stanza" => @stanza)
     end
   end
-
+  
+  describe ".evaluate" do
+    before(:each) do
+      @controller = Babylon::Base::Controller.new()
+    end
+    
+    it "should evaluate the view" do
+      view = mock(Babylon::Base::View)
+      response = "hello"
+      @controller.instance_variable_set("@view", view)
+      view.should_receive(:evaluate).and_return(response)
+      @controller.evaluate.should == response
+    end
+  end
+  
   describe ".view_path" do
     it "should return complete file path to the file given in param" do
       @controller = Babylon::Base::Controller.new()
