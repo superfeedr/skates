@@ -8,18 +8,16 @@ This framework can use both an XMPP Component (XEP-0114) and an XMPP Client (and
 
 == FEATURES/PROBLEMS:
 
-Please report/request them at the Lighthouse : http://github.com/julien51/babylon/issues
+Please link "report/request here.":http://github.com/julien51/babylon/issues
 
 The current version is a good candidate for version 0.1. We will probably not add any important features before that release, but we need some help with the tests and documentation.
 
 == ROADMAP :
 
-- Improve the Client Connection to support other authentication than PLAIN SASL
 - Implement the ServerConnection for S2S
 - Implement templates for disco-info... and common XEPs
 - Delete route priorities? And rely on the order only? (As Rails does)
 - Review doc
-- Write more spec
 - Write tests
 - Evangelize!
 
@@ -27,8 +25,10 @@ You can help with at least one of these points, don't turn your back on Babylon!
 
 == DOCUMENTATION :
 
-You can find it on our Rubyforge page : http://babylon.rubyforge.org/
-Feel free to fork the github repo and add some documnetation if you think anything is missing. You can't be a bad coder, a bad tester and a bad documenter at the same time ;)
+You can find it on our "Rubyforge page":http://babylon.rubyforge.org/
+Feel free to fork the "github":http://github.com/julien51/babylon/tree/master repo and add some documentation if you think anything is missing. 
+
+__You can't be a bad coder, a bad tester and a bad documenter at the same time ;)__
 
 == SYNOPSIS :
 
@@ -39,21 +39,19 @@ You can build applications directly with Babylon, or you can use the Babylon::Cl
 1. Install the gem
 2. The app contains a generator that will "build" a scaffold for your application. 
     
-    $> babylon application <myapp>
+    $> babylon application __myapp__
 
 3. Use the generator or write your own controllers : 
 
-    $> babylon controller messages echo:10://stream:message[@type='chat']/strea:body,subscribed:0://stream:presence[@type='subscribe']
+    $> babylon controller __messages__ __echo__:__10__:__//stream:message[@type='chat']/body__,__subscribed__:__0__:__//stream:presence[@type='subscribe']__
 
-(Don't forget namespaces into your xpath.)
-
-This will generate a "MessagesController" class with 2 methods : echo and subscribed. 
+This will generate a __MessagesController__ class with 2 methods : __echo__ and __subscribed__. 
  - "echo" will be called when the component receives message stanzas of type 'chat', 
  - "subscribed" will be called for presence stanzas of type 'subscribe'. 
 10 and 0 are the priority : useful when a stanza matches 2 XPath.  
 
-Each of these actions will be called with stanza objects. You have to define your own objects in stanzas/echo.rb and stanzas/subscribed.rb
-By defining them, you can choose which elements and attributes you want to have access to. These attributes will be populated upon instantiation of the Stanza objects.
+Each of these actions will be called with stanza objects. You have to define your own objects in __stanzas/echo.rb__ and __stanzas/subscribed.rb__
+By implementing them, you can choose which elements and attributes you want to have access to. These attributes will be populated upon instantiation of the Stanza objects.
 
 This will also generate 2 'views' used to build your responses stanzas. 
 
@@ -61,7 +59,7 @@ And finally, this will write 2 routes in the config/routes.rb
 
 4. Customize your controllers, stanzas and views!
 
-5. Make sure that the XMPP settings are correct in config/config.yaml. !!! You need to have a Jabber Component, regular clients will NOT work!!!
+5. Make sure that the XMPP settings are correct in config/config.yaml. 
 
 6. And finally start the component :
     
