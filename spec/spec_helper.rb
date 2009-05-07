@@ -1,22 +1,12 @@
-require "rubygems"
-require "spec"
-
-# gem install redgreen for colored test output
-begin require "redgreen" unless ENV['TM_CURRENT_LINE']; rescue LoadError; end
-
-path = File.expand_path(File.dirname(__FILE__) + "/../lib/")
-$LOAD_PATH.unshift(path) unless $LOAD_PATH.include?(path)
-
-require File.dirname(__FILE__) + "/../lib/babylon" unless defined? Babylon
+require File.dirname(__FILE__) + "/../lib/babylon"
 
 # #
 # Deactivate the logging
-Babylon.logger.level = Log4r::FATAL
+Babylon.logger.level = Log4r::ERROR
 
 Babylon.environment = "test"
 
 module BabylonSpecHelper
-
   ##
   # Load configuration from a local config file
   def babylon_config
@@ -41,23 +31,5 @@ module BabylonSpecHelper
         }
       })
     end
-  end
-end
-
-# Stub for EventMachineConnection
-module EventMachine
-
-  def EventMachine.stop_event_loop
-    # Do nothing
-  end
-
-  def EventMachine.connect(host, port, handler, params)
-    klass = if (handler and handler.is_a?(Class))
-      raise ArgumentError, 'must provide module or subclass of EventMachine::Connection' unless Connection > handler
-      handler
-    else
-      Class.new( Connection ) {handler and include handler}
-    end
-    c = klass.new nil, params
   end
 end

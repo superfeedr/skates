@@ -127,7 +127,6 @@ describe Babylon::XmppParser do
     end
   end
 
-
   describe ".end_element" do
     before(:each) do
       @doc = Nokogiri::XML::Document.new

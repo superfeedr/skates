@@ -54,7 +54,6 @@ module Babylon
       end
     end
     
-    
     ##
     # Clears the characters buffer
     def clear_characters_buffer

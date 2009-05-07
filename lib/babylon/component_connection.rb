@@ -82,6 +82,5 @@ module Babylon
       handshake
     end
     
-    
   end
 end

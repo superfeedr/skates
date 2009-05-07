@@ -1,6 +1,4 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/../../em_mock'
-require "fileutils"
 
 describe Babylon::Runner do 
 

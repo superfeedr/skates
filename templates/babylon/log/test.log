@@ -82,3 +82,263 @@ FATAL BABYLON: MEMORY: 20248
 FATAL BABYLON: MEMORY: 20248
 FATAL BABYLON: MEMORY: 20248
 FATAL BABYLON: MEMORY: 20248
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: CONNECTION ERROR : Spec::Mocks::MockExpectationError => EventMachine expected :connect with ("myhost.com", 1234, #<Babylon::XmppConnection:0x1c6ade4 @buffer="", @jid="jid@server", @port=1234, @handler=#<Spec::Mocks::Mock:0xe3620a @name=Object>, @host="myhost.com", @connected=false, @parser=#<Babylon::XmppParser:0x1c6ad08 @elem=nil, @buffer="", @doc=nil, @callback=#<Method: Babylon::XmppConnection#receive_stanza>, @parser=#<Nokogiri::XML::SAX::PushParser:0x1c6aca4>>, @password="password">, hash_including(:handler=>#<Spec::Mocks::Mock:0xe3620a @name=Object>)) but received it with ("myhost.com", 1234, Babylon::XmppConnection, {"handler"=>#<Spec::Mocks::Mock:0xe3620a @name=Object>, "port"=>1234, "jid"=>"jid@server", "host"=>"myhost.com", "password"=>"password"})
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: Observer can only be Babylon::Base::Controller
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError
+ERROR BABYLON: CONNECTION ERROR : RuntimeError => RuntimeError

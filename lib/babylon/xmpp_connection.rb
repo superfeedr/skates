@@ -1,5 +1,5 @@
 module Babylon
-
+  
   ## 
   # Connection Exception
   class NotConnected < StandardError; end
@@ -48,11 +48,14 @@ module Babylon
       Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]} with #{handler.inspect} as connection handler") # Very low level Logging
       begin
         EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
-      rescue
+      rescue RuntimeError
         Babylon.logger.error("CONNECTION ERROR : #{$!.class} => #{$!}") # Very low level Logging
+        raise NotConnected
       end
     end
 
+    ##
+    # Called when the connection is completed.
     def connection_completed
       @connected = true
       Babylon.logger.debug("CONNECTED") # Very low level Logging
@@ -72,15 +75,14 @@ module Babylon
 
     ## 
     # Instantiate the Handler (called internally by EventMachine)
-    def initialize(params)
-      super()
+    def initialize(params = {})
       @connected = false
-      @jid = params["jid"]
-      @password = params["password"]
-      @host = params["host"]
-      @port = params["port"]
-      @handler = params["handler"]
-      @buffer = "" 
+      @jid       = params["jid"]
+      @password  = params["password"]
+      @host      = params["host"]
+      @port      = params["port"]
+      @handler   = params["handler"]
+      @buffer    = "" 
     end
     
     ##
