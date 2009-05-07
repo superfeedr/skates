@@ -27,6 +27,7 @@ describe Babylon::Base::View do
           xml.body("salut") 
        end
       eoxml
+      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
     end
         
     it "should read the template file" do
@@ -53,14 +54,10 @@ describe Babylon::Base::View do
     end
     
     it "should be able to access context's variables" do
-      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
       @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
-      @xml_string = <<-eoxml
-       message(:to => a, :from => b, :type => :chat) do
-         body(c[:d]) 
-       end
-      eoxml
-      @view.evaluate.to_s.should == "<message type=\"chat\" to=\"you\" from=\"me\">\n  <body>salut</body>\n</message>"
+      @view.instance_variable_get("@a").should == "a"
+      @view.instance_variable_get("@b").should == 123
+      @view.instance_variable_get("@c").should == {:e=>"123", :d=>"d"}
     end
   end
   

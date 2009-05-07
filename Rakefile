@@ -82,10 +82,8 @@ begin
   Spec::Rake::SpecTask.new('spec') do |spec|
     spec.spec_files = FileList['spec/**/*.rb']
     spec.verbose = true
-    spec.warning = true
+    spec.warning = false
     spec.rcov = true
-    spec.rcov_opts = []
-    spec.rcov_opts = ['--exclude', 'spec']
   end
 rescue LoadError
   task :spec do

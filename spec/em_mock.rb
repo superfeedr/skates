@@ -1,7 +1,11 @@
 ## 
 # Mock for EventMachine
 module EventMachine
-  
+
+  def self.mock?
+    true
+  end
+
   ##
   # Mock for the Connection Class
   class Connection
@@ -15,13 +19,13 @@ module EventMachine
       end
     end
   end
-  
+
   ##
   # Stub for run
   def self.run(proc)
     proc.call
   end
-  
+
   ##
   # Stub for epoll
   def self.epoll; end
@@ -35,5 +39,4 @@ module EventMachine
   def self.connect(host, port, handler, params)
     handler.new(params)
   end
-  
 end
