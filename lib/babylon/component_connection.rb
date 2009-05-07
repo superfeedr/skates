@@ -36,7 +36,7 @@ module Babylon
     def receive_stanza(stanza)
       case @state
       when :connected # Most frequent case
-          super # Can be dispatched
+          super(stanza) # Can be dispatched
           
       when :wait_for_stream
         if stanza.name == "stream:stream" && stanza.attributes['id']

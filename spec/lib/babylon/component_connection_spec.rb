@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../em_mock'
 
 describe Babylon::ComponentConnection do
 
@@ -7,17 +8,23 @@ describe Babylon::ComponentConnection do
   before(:each) do
     @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com"}
     @component = Babylon::ComponentConnection.connect(@params, handler_mock) 
-    @component.stub!(:send_data).and_return(true) 
+    @component.stub!(:send_xml).and_return(true) 
   end
 
-  describe ".connection_completed" do
+  describe "initialize" do
+    it "should set the state to :wait_for_stream" do
+      @component.instance_variable_get("@state").should == :wait_for_stream
+    end
+  end
+
+  describe "connection_completed" do
     it "should send a <stream> element that initiates the communication" do
       @component.should_receive(:send_xml).with("<?xml version=\"1.0\"?>\n<stream:stream xmlns=\"jabber:component:accept\" xmlns:stream=\"http://etherx.jabber.org/streams\" to=\"jid@server\">\n  ")
       @component.connection_completed
     end
   end
 
-  describe ".receive_stanza" do
+  describe "receive_stanza" do
 
     before(:each) do
       @component.instance_variable_set("@connected", true)
@@ -29,7 +36,7 @@ describe Babylon::ComponentConnection do
       before(:each) do
         @component.instance_variable_set("@state", :connected)
       end
-      it "should call the receive_stanza on super"
+      it "should call the receive_stanza on super" 
     end
 
     describe "when waiting for stream" do
@@ -105,13 +112,13 @@ describe Babylon::ComponentConnection do
 
   end
 
-  describe ".stream_namespace" do
+  describe "stream_namespace" do
     it "should return jabber:component:accept" do
       @component.stream_namespace.should == 'jabber:component:accept'
     end
   end
 
-  describe ".handshake" do
+  describe "handshake" do
     it "should build a handshake Element with the password and the id of the stanza" do
       @component.connection_completed
       doc = Nokogiri::XML::Document.new
@@ -122,7 +129,7 @@ describe Babylon::ComponentConnection do
       stanza["id"] = "1234"
       @component.__send__(:handshake, stanza).xpath("//handshake").first.content.should == Digest::SHA1::hexdigest(stanza.attributes['id'].content + @params["password"])
     end
-
+    
   end
 
 end
