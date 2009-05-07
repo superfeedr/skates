@@ -25,35 +25,35 @@ module Babylon
       return super(params, handler) if params["host"] && params["port"]
 
       begin
-        begin
-          srv = []
-          Resolv::DNS.open { |dns|
-            # If ruby version is too old and SRV is unknown, this will raise a NameError
-            # which is caught below
-            host_from_jid = params["jid"].split("/").first.split("@").last
-            Babylon.logger.debug("RESOLVING: _xmpp-client._tcp.#{host_from_jid} (SRV)")
-            srv = dns.getresources("_xmpp-client._tcp.#{host_from_jid}", Resolv::DNS::Resource::IN::SRV)
-          }
-          # Sort SRV records: lowest priority first, highest weight first
-          srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
-          # And now, for each record, let's try to connect.
-          srv.each { |record|
-            begin
-              params["host"] = record.target.to_s
-              params["port"] = Integer(record.port)
-              super(params, handler)
-              # Success
-              break
-            rescue SocketError, Errno::ECONNREFUSED
-              # Try next SRV record
-            end
-          }
-        rescue NameError
-          Babylon.logger.debug "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
-        end
+        srv = []
+        Resolv::DNS.open { |dns|
+          # If ruby version is too old and SRV is unknown, this will raise a NameError
+          # which is caught below
+          host_from_jid = params["jid"].split("/").first.split("@").last
+          Babylon.logger.debug("RESOLVING: _xmpp-client._tcp.#{host_from_jid} (SRV)")
+          srv = dns.getresources("_xmpp-client._tcp.#{host_from_jid}", Resolv::DNS::Resource::IN::SRV)
+        }
+        # Sort SRV records: lowest priority first, highest weight first
+        srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
+        # And now, for each record, let's try to connect.
+        srv.each { |record|
+          begin
+            params["host"] = record.target.to_s
+            params["port"] = Integer(record.port)
+            super(params, handler)
+            # Success
+            break
+          rescue NotConnected
+            # Try next SRV record
+          end
+        }
+      rescue NameError
+        Babylon.logger.debug "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
       end
     end
 
+    ##
+    # Builds the stream stanza for this client
     def stream_stanza
       doc = Nokogiri::XML::Document.new
       stream = Nokogiri::XML::Node.new("stream", doc)
@@ -80,7 +80,6 @@ module Babylon
     # Called upon stanza reception
     # Marked as connected when the client has been SASLed, authenticated, biund to a resource and when the session has been created
     def receive_stanza(stanza)
-      begin
         case @state
         when :connected
           super # Can be dispatched
@@ -97,12 +96,12 @@ module Babylon
 
         when :wait_for_auth_mechanisms
           if stanza.name == "stream:features"
-            if stanza.at("startls") # we shall start tls
+            if stanza.at("starttls") # we shall start tls
               doc = Nokogiri::XML::Document.new
               starttls = Nokogiri::XML::Node.new("starttls", doc)
               doc.add_child(starttls)
               starttls.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-tls")
-              send_xml(starttls)
+              send_xml(starttls.to_s)
               @state = :wait_for_proceed
             elsif stanza.at("mechanisms") # tls is ok
               if stanza.at("mechanisms").children.map() { |m| m.text }.include? "PLAIN"
@@ -112,7 +111,7 @@ module Babylon
                 auth['mechanism'] = "PLAIN"
                 auth.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-sasl")
                 auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
-                send_xml(auth)
+                send_xml(auth.to_s)
                 @state = :wait_for_success
               end
             end
@@ -141,7 +140,7 @@ module Babylon
               iq = Nokogiri::XML::Node.new("iq", doc)
               doc.add_child(iq)
               iq["type"] = "set"
-              iq["id"] = "#{@binding_iq_id}"
+              iq["id"] = binding_iq_id.to_s
               bind = Nokogiri::XML::Node.new("bind", doc)
               bind.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-bind")
               iq.add_child(bind)
@@ -152,36 +151,36 @@ module Babylon
                 resource.content = "babylon_client_#{binding_iq_id}"
               end
               bind.add_child(resource)
-              send_xml(iq)
+              send_xml(iq.to_s)
               @state = :wait_for_confirmed_binding
             end
           end
 
         when :wait_for_confirmed_binding
-          if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @binding_iq_id
+          if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  binding_iq_id
             if stanza.at("jid")
               @jid = stanza.at("jid").text
             end
+            # And now, we must initiate the session
+            @session_iq_id = Integer(rand(10000))
+            doc = Nokogiri::XML::Document.new
+            iq = Nokogiri::XML::Node.new("iq", doc)
+            doc.add_child(iq)
+            iq["type"] = "set"
+            iq["id"] = session_iq_id.to_s
+            session = Nokogiri::XML::Node.new("session", doc)
+            session.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-session")
+            iq.add_child(session)
+            send_xml(iq.to_s)
+            @state = :wait_for_confirmed_session
           end
-          # And now, we must initiate the session
-          @session_iq_id = Integer(rand(10000))
-          doc = Nokogiri::XML::Document.new
-          iq = Nokogiri::XML::Node.new("iq", doc)
-          doc.add_child(iq)
-          iq["type"] = "set"
-          iq["id"] = "#{@session_iq_id}"
-          session = Nokogiri::XML::Node.new("session", doc)
-          session.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-session")
-          iq.add_child(session)
-          send_xml(iq)
-          @state = :wait_for_confirmed_session
 
         when :wait_for_confirmed_session
-          if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  @session_iq_id && stanza.at("session")
+          if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) == session_iq_id
             # And now, send a presence!
             doc = Nokogiri::XML::Document.new
             presence = Nokogiri::XML::Node.new("presence", doc)
-            send_xml(presence)
+            send_xml(presence.to_s)
             begin
               @handler.on_connected(self) if @handler and @handler.respond_to?("on_connected")
             rescue
@@ -196,9 +195,6 @@ module Babylon
           @parser.reset
           send_xml stream_stanza
         end
-      rescue
-        Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
-      end
     end
 
     ##
