@@ -3,7 +3,6 @@ module Babylon
   # ComponentConnection is in charge of the XMPP connection itself.
   # Upon stanza reception, and depending on the status (connected... etc), this component will handle or forward the stanzas.
   class ComponentConnection < XmppConnection
-    require 'digest/sha1'
     
     ##
     # Creates a new ComponentConnection and waits for data in the stream

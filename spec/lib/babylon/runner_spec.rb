@@ -17,8 +17,8 @@ describe Babylon::Runner do
     end
 
     it "should add the environment log file as an outputter to babylon's default log" do
-      @logger = Log4r::FileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false)
-      Log4r::FileOutputter.should_receive(:new).with("test", :filename => "log/test.log", :trunc => false).and_return(@logger)
+      @logger = Log4r::RollingFileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false)
+      Log4r::RollingFileOutputter.should_receive(:new).with("test", :filename => "log/test.log", :trunc => false).and_return(@logger)
       Babylon.logger.should_receive(:add).with(@logger)
       Babylon::Runner.prepare("test")
     end

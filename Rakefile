@@ -9,7 +9,7 @@ begin
     gem.email = "julien.genestoux@gmail.com"
     gem.homepage = "http://github.com/julien51/babylon"
     gem.authors = ["julien Genestoux"]
-    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine", "templater", "daemons"]
+    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine", "templater", "daemons", "optparse", "digest/sha1", "base64", "resolv"]
     gem.executables = "babylon"
     gem.files = [ "bin/babylon", 
                   "lib/babylon.rb", 

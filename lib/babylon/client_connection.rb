@@ -5,9 +5,6 @@ module Babylon
   # So far, SASL Plain authenticationonly is supported
   # Upon stanza reception, and depending on the status (connected... etc), this component will handle or forward the stanzas.
   class ClientConnection < XmppConnection
-    require 'digest/sha1'
-    require 'base64'
-    require 'resolv'
 
     attr_reader :binding_iq_id, :session_iq_id
 

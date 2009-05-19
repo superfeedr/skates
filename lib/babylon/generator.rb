@@ -1,5 +1,3 @@
-require "templater"
-
 module Babylon
   module Generator
     extend Templater::Manifold
