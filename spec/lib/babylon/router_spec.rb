@@ -24,7 +24,8 @@ describe Babylon::Route do
     it "should check the stanza with Xpath" do
       mock_stanza = mock(Object)
       route = Babylon::Route.new("controller" => "bar", "action" => "bar", "xpath" => "//message")
-      mock_stanza.should_receive(:xpath).with(route.xpath, instance_of(Babylon::XpathHelper)).and_return([])
+      route.router = mock(Babylon::Router, :namespaces => [])
+      mock_stanza.should_receive(:xpath).with(route.xpath, route.router.namespaces).and_return([])
       route.accepts?(mock_stanza)
     end
   end
@@ -135,7 +136,7 @@ describe Babylon::StanzaRouter do
     before(:each) do
       @dsl = Babylon::Router::DSL.new 
       Babylon::Router::DSL.stub!(:new).and_return(@dsl) 
-      @routes = [mock(Babylon::Route, :is_a? => true), mock(Babylon::Route, :is_a? => true), mock(Babylon::Route, :is_a? => true)]
+      @routes = [mock(Babylon::Route, :is_a? => true, :router= => true), mock(Babylon::Route, :is_a? => true, :router= => true), mock(Babylon::Route, :is_a? => true, :router= => true)]
       @router.stub!(:sort)
       @dsl.stub!(:routes).and_return(@routes)
     end

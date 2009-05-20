@@ -12,7 +12,9 @@ module Babylon
       Babylon.config = YAML.load(config_file)[Babylon.environment]
       
       # Add an outputter to the logger
-      Babylon.logger.add(Log4r::FileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false))
+      log_file = Log4r::RollingFileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false)
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")
+      Babylon.logger.add(log_file)
       
       # Requiring all models, stanza, controllers
       ['app/models/*.rb', 'app/stanzas/*.rb', 'app/controllers/*_controller.rb'].each do |dir|

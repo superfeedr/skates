@@ -7,6 +7,11 @@ require 'nokogiri'
 require 'yaml'
 require 'fileutils'
 require 'sax-machine'
+require 'digest/sha1'
+require 'base64'
+require 'resolv'
+require "templater"
+
 
 require 'babylon/xmpp_connection'
 require 'babylon/xmpp_parser'

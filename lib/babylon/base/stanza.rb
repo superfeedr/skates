@@ -1,5 +1,3 @@
-require "sax-machine"
-
 module Babylon
   module Base
     ##
