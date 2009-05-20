@@ -13,7 +13,7 @@ module Babylon
       
       # Add an outputter to the logger
       log_file = Log4r::RollingFileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false)
-      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "[%l] %d :: %m", :date_pattern => "%a %d %b %H:%M %p %Y")
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")
       Babylon.logger.add(log_file)
       
       # Requiring all models, stanza, controllers
