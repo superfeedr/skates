@@ -53,15 +53,15 @@ module Babylon
     # Builds the stream stanza for this client
     def stream_stanza
       doc = Nokogiri::XML::Document.new
-      stream = Nokogiri::XML::Node.new("stream", doc)
+      stream = Nokogiri::XML::Node.new("stream:stream", doc)
       doc.add_child(stream)
-      stream.add_namespace(nil, stream_namespace())
-      stream.add_namespace("stream", "http://etherx.jabber.org/streams")
+      stream["xmlns"] = stream_namespace
+      stream["xmlns:stream"] = "http://etherx.jabber.org/streams"
       stream["to"] = jid.split("/").first.split("@").last
       stream["version"] = "1.0"
       paste_content_here = Nokogiri::XML::Node.new("paste_content_here", doc)
       stream.add_child(paste_content_here)
-      doc.to_xml.split('<stream:paste_content_here/>').first
+      doc.to_xml.split('<paste_content_here/>').first
     end
 
     ##
@@ -97,7 +97,7 @@ module Babylon
               doc = Nokogiri::XML::Document.new
               starttls = Nokogiri::XML::Node.new("starttls", doc)
               doc.add_child(starttls)
-              starttls.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-tls")
+              starttls["xmlns"] = "urn:ietf:params:xml:ns:xmpp-tls"
               send_xml(starttls.to_s)
               @state = :wait_for_proceed
             elsif stanza.at("mechanisms") # tls is ok
@@ -106,7 +106,7 @@ module Babylon
                 auth = Nokogiri::XML::Node.new("auth", doc)
                 doc.add_child(auth)
                 auth['mechanism'] = "PLAIN"
-                auth.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-sasl")
+                auth["xmlns"] = "urn:ietf:params:xml:ns:xmpp-sasl"
                 auth.content = Base64::encode64([jid, jid.split("@").first, @password].join("\000")).gsub(/\s/, '')
                 send_xml(auth.to_s)
                 @state = :wait_for_success
@@ -139,7 +139,7 @@ module Babylon
               iq["type"] = "set"
               iq["id"] = binding_iq_id.to_s
               bind = Nokogiri::XML::Node.new("bind", doc)
-              bind.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-bind")
+              bind["xmlns"] = "urn:ietf:params:xml:ns:xmpp-bind"
               iq.add_child(bind)
               resource = Nokogiri::XML::Node.new("resource", doc)
               if jid.split("/").size == 2 
@@ -166,7 +166,7 @@ module Babylon
             iq["type"] = "set"
             iq["id"] = session_iq_id.to_s
             session = Nokogiri::XML::Node.new("session", doc)
-            session.add_namespace(nil, "urn:ietf:params:xml:ns:xmpp-session")
+            session["xmlns"] = "urn:ietf:params:xml:ns:xmpp-session"
             iq.add_child(session)
             send_xml(iq.to_s)
             @state = :wait_for_confirmed_session

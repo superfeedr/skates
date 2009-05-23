@@ -131,7 +131,7 @@ describe Babylon::ClientConnection do
           end
                     
           it "should send authentication" do
-            @client.should_receive(:send_xml).with("<auth xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\" mechanism=\"PLAIN\">amlkQHNlcnZlci50bGQAamlkAHBhc3N3b3Jk</auth>")
+            @client.should_receive(:send_xml).with("<auth mechanism=\"PLAIN\" xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\">amlkQHNlcnZlci50bGQAamlkAHBhc3N3b3Jk</auth>")
             @client.receive_stanza(@stanza)
           end
         end

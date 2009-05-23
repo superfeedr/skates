@@ -89,7 +89,7 @@ module Babylon
     def add_namespaces_and_attributes_to_current_node(attrs) 
       (attrs.size / 2).times do |i|
         name, value = attrs[2 * i], attrs[2 * i + 1]
-        # TODO : FIX namespaces :they give a lot of problems with XPath
+        # TODO : FIX namespaces :they give a lot of problems with Nokogiri
         # if name == "xmlns"
         #   @elem.add_namespace(nil, value)
         # elsif name =~ /\Axmlns:/

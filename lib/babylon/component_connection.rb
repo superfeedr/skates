@@ -18,14 +18,14 @@ module Babylon
     def connection_completed
       super
       doc = Nokogiri::XML::Document.new 
-      stream = Nokogiri::XML::Node.new("stream", doc)
-      stream.add_namespace(nil, stream_namespace)
-      stream.add_namespace("stream", "http://etherx.jabber.org/streams")
+      stream = Nokogiri::XML::Node.new("stream:stream", doc)
+      stream["xmlns"] = stream_namespace
+      stream["xmlns:stream"] = "http://etherx.jabber.org/streams"
       stream["to"] = jid
       doc.add_child(stream)
       paste_content_here= Nokogiri::XML::Node.new("paste_content_here", doc)
       stream.add_child(paste_content_here)
-      start, stop = doc.to_xml.split('<stream:paste_content_here/>')
+      start, stop = doc.to_xml.split('<paste_content_here/>')
       send_xml(start)
     end
 
