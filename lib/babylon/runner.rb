@@ -13,7 +13,14 @@ module Babylon
       
       # Add an outputter to the logger
       log_file = Log4r::RollingFileOutputter.new("#{Babylon.environment}", :filename => "log/#{Babylon.environment}.log", :trunc => false)
-      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")
+      case Babylon.environment
+      when "production"
+        log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+      when "development"
+        log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+      else
+        log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+      end
       Babylon.logger.add(log_file)
       
       # Requiring all models, stanza, controllers
@@ -76,10 +83,14 @@ module Babylon
     def self.add_connection_observer(observer)
       @@observers ||= Array.new 
       if observer.ancestors.include? Babylon::Base::Controller
-        Babylon.logger.debug("Added #{observer} to the list of Connection Observers")
+        Babylon.logger.debug {
+          "Added #{observer} to the list of Connection Observers"
+        }
         @@observers.push(observer) unless @@observers.include? observer
       else
-        Babylon.logger.error("Observer can only be Babylon::Base::Controller")
+        Babylon.logger.error {
+          "Observer can only be Babylon::Base::Controller"
+        }
         false
       end
     end
@@ -111,10 +122,14 @@ module Babylon
       begin
         Babylon.router.route(stanza)
       rescue Babylon::NotConnected
-        Babylon.logger.fatal("#{$!.class} => #{$!.inspect}\n#{$!.backtrace.join("\n")}")
+        Babylon.logger.fatal {
+          "#{$!.class} => #{$!.inspect}\n#{$!.backtrace.join("\n")}"
+        }
         EventMachine::stop_event_loop
       rescue
-        Babylon.logger.error("#{$!.class} => #{$!.inspect}\n#{$!.backtrace.join("\n")}")
+        Babylon.logger.error {
+          "#{$!.class} => #{$!.inspect}\n#{$!.backtrace.join("\n")}"
+        }
       end
     end
     

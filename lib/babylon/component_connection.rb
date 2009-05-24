@@ -52,7 +52,9 @@ module Babylon
           begin
             @handler.on_connected(self) if @handler and @handler.respond_to?("on_connected")
           rescue
-            Babylon.logger.error("on_connected failed : #{$!}\n#{$!.backtrace.join("\n")}")
+            Babylon.logger.error {
+              "on_connected failed : #{$!}\n#{$!.backtrace.join("\n")}"
+            }
           end
           @state = :connected
         elsif stanza.name == "stream:error"

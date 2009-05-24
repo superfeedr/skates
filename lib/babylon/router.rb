@@ -31,7 +31,9 @@ module Babylon
     # Executes the route for the given xml_stanza, by instantiating the controller_name, calling action_name and sending 
     # the result to the connection
     def execute_route(controller_name, action_name, xml_stanza = nil)
-      Babylon.logger.info("ROUTING TO #{controller_name}::#{action_name}") 
+      Babylon.logger.info {
+        "ROUTING TO #{controller_name}::#{action_name}"
+      }
       stanza = nil
       stanza = Kernel.const_get(action_name.capitalize).new(xml_stanza) if xml_stanza
       controller = controller_name.new(stanza) 

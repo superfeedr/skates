@@ -45,11 +45,15 @@ module Babylon
     # It passes itself (as handler) and the configuration
     # This can very well be overwritten by subclasses.
     def self.connect(params, handler)
-      Babylon.logger.debug("CONNECTING TO #{params["host"]}:#{params["port"]} with #{handler.inspect} as connection handler") # Very low level Logging
+      Babylon.logger.debug {
+        "CONNECTING TO #{params["host"]}:#{params["port"]} with #{handler.inspect} as connection handler" # Very low level Logging
+      }
       begin
         EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
       rescue RuntimeError
-        Babylon.logger.error("CONNECTION ERROR : #{$!.class} => #{$!}") # Very low level Logging
+        Babylon.logger.error {
+          "CONNECTION ERROR : #{$!.class} => #{$!}" # Very low level Logging
+        }
         raise NotConnected
       end
     end
@@ -58,18 +62,24 @@ module Babylon
     # Called when the connection is completed.
     def connection_completed
       @connected = true
-      Babylon.logger.debug("CONNECTED") # Very low level Logging
+      Babylon.logger.debug {
+        "CONNECTED"
+      } # Very low level Logging
     end
 
     ##
     # Called when the connection is terminated and stops the event loop
     def unbind()
       @connected = false
-      Babylon.logger.debug("DISCONNECTED") # Very low level Logging
+      Babylon.logger.debug {
+        "DISCONNECTED"
+      } # Very low level Logging
       begin
         @handler.on_disconnected() if @handler and @handler.respond_to?("on_disconnected")
       rescue
-        Babylon.logger.error("on_disconnected failed : #{$!}\n#{$!.backtrace.join("\n")}")
+        Babylon.logger.error {
+          "on_disconnected failed : #{$!}\n#{$!.backtrace.join("\n")}"
+        }
       end
     end
 
@@ -94,12 +104,16 @@ module Babylon
     ##
     # Called when a full stanza has been received and returns it to the central router to be sent to the corresponding controller.
     def receive_stanza(stanza)
-      Babylon.logger.debug("PARSED : #{stanza.to_xml}")
+      Babylon.logger.debug {
+        "PARSED : #{stanza.to_xml}"
+      }
       # If not handled by subclass (for authentication)
       case stanza.name
       when "stream:error"
         if !stanza.children.empty? and stanza.children.first.name == "xml-not-well-formed"
-          Babylon.logger.error("DISCONNECTED DUE TO MALFORMED STANZA")
+          Babylon.logger.error {
+            "DISCONNECTED DUE TO MALFORMED STANZA"
+          }
           raise XmlNotWellFormed
         end
         # In any case, we need to close the connection.
@@ -108,7 +122,9 @@ module Babylon
         begin
           @handler.on_stanza(stanza) if @handler and @handler.respond_to?("on_stanza")
         rescue
-          Babylon.logger.error("on_stanza failed : #{$!}\n#{$!.backtrace.join("\n")}")
+          Babylon.logger.error {
+            "on_stanza failed : #{$!}\n#{$!.backtrace.join("\n")}"
+          }
         end
       end 
     end 
@@ -131,7 +147,9 @@ module Babylon
       raise NotConnected unless @connected
       return if string.blank?
       raise StanzaTooBig if string.length > XmppConnection.max_stanza_size
-      Babylon.logger.debug("SENDING : " + string)
+      Babylon.logger.debug {
+        "SENDING : " + string
+      }
       send_data string
     end
 
@@ -139,10 +157,14 @@ module Babylon
     # receive_data is called when data is received. It is then passed to the parser. 
     def receive_data(data)
       begin
-        Babylon.logger.debug("RECEIVED : #{data}")
+        # Babylon.logger.debug {
+        #   "RECEIVED : #{data}"
+        # }
         @parser.push(data) 
       rescue
-        Babylon.logger.error("#{$!}\n#{$!.backtrace.join("\n")}")
+        Babylon.logger.error {
+          "#{$!}\n#{$!.backtrace.join("\n")}"
+        }
       end
     end
   end

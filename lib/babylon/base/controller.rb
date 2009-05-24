@@ -21,7 +21,9 @@ module Babylon
         begin
           self.send(@action_name)
         rescue
-          Babylon.logger.error("#{$!}:\n#{$!.backtrace.join("\n")}")
+          Babylon.logger.error {
+            "#{$!}:\n#{$!.backtrace.join("\n")}"
+          }
         end
         self.render
       end
@@ -86,9 +88,13 @@ module Babylon
       ##
       # Creates the view and "evaluates" it to build the XML for the stanza
       def render_for_file(file)
-        Babylon.logger.info("RENDERING : #{file}")
+        Babylon.logger.info {
+          "RENDERING : #{file}"
+        }
         @view = Babylon::Base::View.new(file, assigns)
-        Babylon.logger.info(" ")
+        Babylon.logger.info {
+          " "
+        }
       end
       
     end

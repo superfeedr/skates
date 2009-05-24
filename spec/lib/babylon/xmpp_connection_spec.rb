@@ -62,14 +62,9 @@ describe Babylon::XmppConnection do
       @connection.post_init
       @connection.instance_variable_get("@parser").should == parser
     end
-    
   end
   
   describe "connection_completed" do
-    it "should write a log message" do
-      Babylon.logger.should_receive(:debug).with("CONNECTED")
-      @connection.connection_completed
-    end
     it "should set @connected to true" do
       @connection.connection_completed
       @connection.instance_variable_get("@connected").should be_true
@@ -77,11 +72,6 @@ describe Babylon::XmppConnection do
   end
   
   describe "unbind" do
-    it "should write a log message, and call on_disconnected" do
-      Babylon.logger.should_receive(:debug).with("DISCONNECTED")
-      handler_mock.should_receive(:on_disconnected)
-      @connection.unbind
-    end
     it "should set @connected to false" do
       @connection.connection_completed
       @connection.unbind
@@ -93,11 +83,6 @@ describe Babylon::XmppConnection do
     
     before(:each) do
       @doc = Nokogiri::XML::Document.new
-    end
-    
-    it "should write a log message for debug" do
-      Babylon.logger.should_receive(:debug).with(/PARSED/)
-      @connection.receive_stanza(Nokogiri::XML::Node.new("node", @doc))
     end
     
     describe "with an stanza that starts with stream:error" do
@@ -118,10 +103,6 @@ describe Babylon::XmppConnection do
            @error_stanza.add_child(@xml_not_well_formed_stanza)
          end
       
-        it "should write an error to the log and raise an error" do
-          Babylon.logger.should_receive(:error).with(/DISCONNECTED DUE TO MALFORMED STANZA/)
-          lambda {@connection.receive_stanza(@error_stanza)}.should raise_error(Babylon::XmlNotWellFormed)
-        end
       end
     end
     
@@ -204,12 +185,6 @@ describe Babylon::XmppConnection do
   describe "receive_data" do
     before(:each) do
       @connection.instance_variable_get("@parser").stub!(:push).and_return(true)
-    end
-    
-    it "should show a message on the log" do
-      data = "<hello>hello world!</hello>"
-      Babylon.logger.should_receive(:debug).with("RECEIVED : #{data}")
-      @connection.__send__(:receive_data, data)
     end
     
     it "should push the received data to the parser" do

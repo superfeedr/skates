@@ -27,7 +27,9 @@ module Babylon
           # If ruby version is too old and SRV is unknown, this will raise a NameError
           # which is caught below
           host_from_jid = params["jid"].split("/").first.split("@").last
-          Babylon.logger.debug("RESOLVING: _xmpp-client._tcp.#{host_from_jid} (SRV)")
+          Babylon.logger.debug {
+            "RESOLVING: _xmpp-client._tcp.#{host_from_jid} (SRV)"
+          }
           srv = dns.getresources("_xmpp-client._tcp.#{host_from_jid}", Resolv::DNS::Resource::IN::SRV)
         }
         # Sort SRV records: lowest priority first, highest weight first
@@ -45,7 +47,9 @@ module Babylon
           end
         }
       rescue NameError
-        Babylon.logger.debug "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
+        Babylon.logger.debug {
+          "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
+        }
       end
     end
 
@@ -181,7 +185,9 @@ module Babylon
             begin
               @handler.on_connected(self) if @handler and @handler.respond_to?("on_connected")
             rescue
-              Babylon.logger.error("on_connected failed : #{$!}\n#{$!.backtrace.join("\n")}")
+              Babylon.logger.error {
+                "on_connected failed : #{$!}\n#{$!.backtrace.join("\n")}"
+              }
             end
             @state = :connected
           end
