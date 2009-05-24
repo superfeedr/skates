@@ -146,7 +146,7 @@ module Babylon
     def send_chunk(string)
       raise NotConnected unless @connected
       return if string.blank?
-      raise StanzaTooBig if string.length > XmppConnection.max_stanza_size
+      raise StanzaTooBig, "Stanza Too Big (#{string.length} vs. #{XmppConnection.max_stanza_size})\n #{string}" if string.length > XmppConnection.max_stanza_size
       Babylon.logger.debug {
         "SENDING : " + string
       }
