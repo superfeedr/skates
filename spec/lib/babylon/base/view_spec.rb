@@ -49,7 +49,7 @@ describe Babylon::Base::View do
     
     it "should call eval on the view file" do
       Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
-      @view.should_receive(:eval).with(@xml_string)
+      @view.should_receive(:eval).with(@xml_string, an_instance_of(Binding), @view_template, 1)
       @view.evaluate
     end
     

@@ -25,7 +25,7 @@ module Babylon
         raise ViewFileNotFound unless Babylon.views[@view_template] 
         builder = Nokogiri::XML::Builder.new 
         builder.stream do |xml|
-          eval(Babylon.views[@view_template]) 
+          eval(Babylon.views[@view_template], binding, @view_template, 1)
         end
         builder.doc.root.children # we output the document built 
       end 
