@@ -101,15 +101,25 @@ describe Babylon::StanzaRouter do
       @mock_controller.stub!(:perform).with(@action)
     end
 
-    it "should instantiate the route's stanza" do
-      Kernel.should_receive(:const_get).with(@action.capitalize).and_return(Babylon::Base::Stanza) 
-      Babylon::Base::Stanza.should_receive(:new).with(@xml).and_return(@mock_stanza)
-      @router.execute_route(@controller, @action, @xml)
+    describe "when the Stanza class exists" do
+      it "should instantiate the route's stanza " do
+        Kernel.should_receive(:const_get).with(@action.capitalize).and_return(Babylon::Base::Stanza) 
+        Babylon::Base::Stanza.should_receive(:new).with(@xml).and_return(@mock_stanza)
+        @router.execute_route(@controller, @action, @xml)
+      end
+      
+      it "should instantiate the route's controller" do
+        @controller.should_receive(:new).with(@mock_stanza).and_return(@mock_controller)
+        @router.execute_route(@controller, @action, @xml)
+      end
     end
-
-    it "should instantiate the route's controller" do
-      @controller.should_receive(:new).and_return(@mock_controller)
-      @router.execute_route(@controller, @action, @xml)
+    
+    describe "when the stanza class doesn't exist" do
+      it "should instantiate the route's controller with the xml" do
+        Kernel.should_receive(:const_get).with(@action.capitalize).and_raise(NameError) 
+        @controller.should_receive(:new).with(@xml).and_return(@mock_controller)
+        @router.execute_route(@controller, @action, @xml)
+      end
     end
 
     it "should call perform on the controller with the action's name" do
