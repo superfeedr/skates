@@ -12,7 +12,7 @@ begin
 
     gem.add_dependency('eventmachine')
     gem.add_dependency('log4r')
-    gem.add_dependency('nokogiri', "> 1.3.0")
+    gem.add_dependency('nokogiri', ">= 1.3.0")
     gem.add_dependency('eventmachine')
     gem.add_dependency('julien51-sax-machine')
     gem.add_dependency('templater')
