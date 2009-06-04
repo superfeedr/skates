@@ -80,7 +80,7 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<eventmachine>, [">= 0"])
       s.add_runtime_dependency(%q<log4r>, [">= 0"])
-      s.add_runtime_dependency(%q<nokogiri>, ["> 1.3.0"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 1.3.0"])
       s.add_runtime_dependency(%q<eventmachine>, [">= 0"])
       s.add_runtime_dependency(%q<julien51-sax-machine>, [">= 0"])
       s.add_runtime_dependency(%q<templater>, [">= 0"])
@@ -88,7 +88,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<eventmachine>, [">= 0"])
       s.add_dependency(%q<log4r>, [">= 0"])
-      s.add_dependency(%q<nokogiri>, ["> 1.3.0"])
+      s.add_dependency(%q<nokogiri>, [">= 1.3.0"])
       s.add_dependency(%q<eventmachine>, [">= 0"])
       s.add_dependency(%q<julien51-sax-machine>, [">= 0"])
       s.add_dependency(%q<templater>, [">= 0"])
@@ -97,7 +97,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<eventmachine>, [">= 0"])
     s.add_dependency(%q<log4r>, [">= 0"])
-    s.add_dependency(%q<nokogiri>, ["> 1.3.0"])
+    s.add_dependency(%q<nokogiri>, [">= 1.3.0"])
     s.add_dependency(%q<eventmachine>, [">= 0"])
     s.add_dependency(%q<julien51-sax-machine>, [">= 0"])
     s.add_dependency(%q<templater>, [">= 0"])
