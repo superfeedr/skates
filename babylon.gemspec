@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["julien Genestoux"]
-  s.date = %q{2009-05-31}
+  s.date = %q{2009-06-04}
   s.default_executable = %q{babylon}
   s.email = %q{julien.genestoux@gmail.com}
   s.executables = ["babylon"]
@@ -78,8 +78,29 @@ Gem::Specification.new do |s|
     s.specification_version = 2
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<eventmachine>, [">= 0"])
+      s.add_runtime_dependency(%q<log4r>, [">= 0"])
+      s.add_runtime_dependency(%q<nokogiri>, ["> 1.3.0"])
+      s.add_runtime_dependency(%q<eventmachine>, [">= 0"])
+      s.add_runtime_dependency(%q<julien51-sax-machine>, [">= 0"])
+      s.add_runtime_dependency(%q<templater>, [">= 0"])
+      s.add_runtime_dependency(%q<daemons>, [">= 0"])
     else
+      s.add_dependency(%q<eventmachine>, [">= 0"])
+      s.add_dependency(%q<log4r>, [">= 0"])
+      s.add_dependency(%q<nokogiri>, ["> 1.3.0"])
+      s.add_dependency(%q<eventmachine>, [">= 0"])
+      s.add_dependency(%q<julien51-sax-machine>, [">= 0"])
+      s.add_dependency(%q<templater>, [">= 0"])
+      s.add_dependency(%q<daemons>, [">= 0"])
     end
   else
+    s.add_dependency(%q<eventmachine>, [">= 0"])
+    s.add_dependency(%q<log4r>, [">= 0"])
+    s.add_dependency(%q<nokogiri>, ["> 1.3.0"])
+    s.add_dependency(%q<eventmachine>, [">= 0"])
+    s.add_dependency(%q<julien51-sax-machine>, [">= 0"])
+    s.add_dependency(%q<templater>, [">= 0"])
+    s.add_dependency(%q<daemons>, [">= 0"])
   end
 end
