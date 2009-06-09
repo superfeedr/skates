@@ -45,7 +45,7 @@ describe Babylon::ClientConnection do
       
       it "should sort the srv records" do
         @client = Babylon::ClientConnection.connect(@params, handler_mock) 
-        @srv.map(&:target).should == ["xmpp2.server.tld", "xmpp.server.tld", "xmpp3.server.tld"]
+        @srv.map {|srv| srv.target }.should == ["xmpp2.server.tld", "xmpp.server.tld", "xmpp3.server.tld"]
       end
       
       it "should try to connect to each record until one of the them actually connects" 
