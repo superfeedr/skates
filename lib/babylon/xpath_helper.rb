@@ -5,7 +5,7 @@ module Babylon
 
     # Match nodes of the given name with the given namespace URI.
     def namespace(set, name, nsuri)
-      set.find_all.each do |n|
+      set.find_all do |n|
         n.name == name && n.namespaces.values.include?(nsuri)
       end
     end
