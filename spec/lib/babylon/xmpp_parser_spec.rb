@@ -212,6 +212,13 @@ describe Babylon::XmppParser do
       # TODO: FIX NAMESPACES @element.namespaces.values.should == ["http://www.w3.org/2005/Atom", "http://namespace.com"]
       @element.namespaces.values.should == []
     end
+    
+    it "should escape characters correctly" do
+      @attrs = ["url", "http://api.flickr.com/services/feeds/photos_public.gne?id=49724566@N00&amp;lang=en-us&amp;format=atom"]
+      @parser.__send__(:add_namespaces_and_attributes_to_current_node, @attrs)
+      @element["url"].should == "http://api.flickr.com/services/feeds/photos_public.gne?id=49724566@N00&lang=en-us&format=atom"
+    end
+    
   end
   
   describe "a communication with an XMPP Client" do

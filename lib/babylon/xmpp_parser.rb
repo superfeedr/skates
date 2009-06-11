@@ -95,6 +95,8 @@ module Babylon
         # elsif name =~ /\Axmlns:/
         #   @elem.add_namespace(name.gsub("xmlns:", ""), value)
         # else
+        
+        #
           @elem.set_attribute name, Babylon.decode_xml(value)
         # end
       end
