@@ -9,6 +9,18 @@ module Babylon
       attr_reader :view_template 
       
       ##
+      # Used to 'include' another view inside an existing view. 
+      # The caller needs to pass the context in which the partial will be rendered
+      # Render must be called with :partial as well (other options will be supported later). The partial vale should be a relative path
+      # to another file view, from the calling view.
+      def render(xml, options = {})
+        # First, we need to identify the partial file path, based on the @view_template path.
+        partial_path = (@view_template.split("/")[0..-2] + options[:partial].split("/")).join("/").gsub(".xml.builder", "") + ".xml.builder"
+        raise ViewFileNotFound unless Babylon.views[partial_path] 
+        eval(Babylon.views[partial_path], binding, partial_path, 1)
+      end
+      
+      ##
       # Instantiate a new view with the various varibales passed in assigns and the path of the template to render.
       def initialize(path = "", assigns = {}) 
         @view_template = path 

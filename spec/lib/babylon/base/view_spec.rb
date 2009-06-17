@@ -61,4 +61,26 @@ describe Babylon::Base::View do
     end
   end
   
+  describe "render" do
+    before(:each) do
+      @view_template = "/a/path/to/a/view/file"
+      @view = Babylon::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @xml_string = <<-eoxml
+        xml.message(:to => "you", :from => "me", :type => :chat) do |message|
+          message.body("salut") 
+          render(message, {:partial => "partial"})
+       end
+      eoxml
+      @partial_string = <<-eoxml
+        xml.title("hello word")
+      eoxml
+      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)      
+      Babylon.views.stub!(:[]).with("/a/path/to/a/view/partial.xml.builder").and_return(@partial_string)      
+    end
+    
+    it "should render the partial in the right context" do
+      @view.evaluate.xpath("//message/title").text.should == "hello word"
+    end
+  end
+  
 end
