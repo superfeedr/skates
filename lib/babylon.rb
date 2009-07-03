@@ -10,7 +10,8 @@ require 'sax-machine'
 require 'digest/sha1'
 require 'base64'
 require 'resolv'
-require "templater"
+require 'templater'
+require 'cgi'
 
 
 require 'babylon/xmpp_connection'
@@ -20,7 +21,7 @@ require 'babylon/client_connection'
 require 'babylon/router'
 require 'babylon/runner'
 require 'babylon/generator'
-require "babylon/xpath_helper"
+require 'babylon/xpath_helper'
 require 'babylon/base/controller'
 require 'babylon/base/view'
 require 'babylon/base/stanza'
@@ -100,17 +101,7 @@ module Babylon
   ##
   # Decodes XML special characters.
   def self.decode_xml(str)
-    entities = {
-      'lt'    => '<',
-      'gt'    => '>',
-      '#38'   => '&',
-      'amp'   => '&',
-      'quot'  => '"',
-      '#13'   => "\r",
-    } 
-    entities.keys.inject(str) { |string, key|
-      string.gsub(/&#{key};/, entities[key])
-    } 
+    CGI.unescapeHTML(str)
   end
   
 end

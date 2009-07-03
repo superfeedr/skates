@@ -85,21 +85,32 @@ module Babylon
     private
     
     ##
-    # Adds namespaces and attributes. Nokogiri passes them as a array of [name, value, name, value]...
+    # Adds namespaces and attributes. Nokogiri passes them as a array of [[name, value], [name, value]]...
     def add_namespaces_and_attributes_to_current_node(attrs) 
-      (attrs.size / 2).times do |i|
-        name, value = attrs[2 * i], attrs[2 * i + 1]
-        # TODO : FIX namespaces :they give a lot of problems with Nokogiri
-        # if name == "xmlns"
-        #   @elem.add_namespace(nil, value)
-        # elsif name =~ /\Axmlns:/
-        #   @elem.add_namespace(name.gsub("xmlns:", ""), value)
-        # else
-        
-        #
-          @elem.set_attribute name, Babylon.decode_xml(value)
-        # end
+      attrs.each  {|pair| set_attribute(pair[0], pair[1])}
+    end
+    
+    def set_attribute(key, value)
+      if key =~ /^xmlns/
+        set_namespace(key, value)
+      else
+        set_normal_attribute(key, value)
       end
     end
+    
+    def set_normal_attribute(key, value)
+      @elem.set_attribute key, Babylon.decode_xml(value)
+    end
+    
+    def set_namespace(key, value)
+      if key.include? ':'
+        @elem.add_namespace(key.split(':').last, value)
+      else
+        @elem.add_namespace(nil, value)
+      end
+    end
+    
+    
+    
   end 
 end 
