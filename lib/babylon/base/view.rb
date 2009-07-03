@@ -16,7 +16,7 @@ module Babylon
       def render(xml, options = {})
         # First, we need to identify the partial file path, based on the @view_template path.
         partial_path = (@view_template.split("/")[0..-2] + options[:partial].split("/")).join("/").gsub(".xml.builder", "") + ".xml.builder"
-        raise ViewFileNotFound unless Babylon.views[partial_path] 
+        raise ViewFileNotFound, "No such file #{partial_path}" unless Babylon.views[partial_path] 
         eval(Babylon.views[partial_path], binding, partial_path, 1)
       end
       
@@ -34,7 +34,7 @@ module Babylon
       # "Loads" the view file, and uses the Nokogiri Builder to build the XML stanzas that will be sent. 
       def evaluate 
         return if @view_template == ""
-        raise ViewFileNotFound unless Babylon.views[@view_template] 
+        raise ViewFileNotFound, "No such file #{@view_template}" unless Babylon.views[@view_template] 
         builder = Nokogiri::XML::Builder.new 
         builder.stream do |xml|
           eval(Babylon.views[@view_template], binding, @view_template, 1)
