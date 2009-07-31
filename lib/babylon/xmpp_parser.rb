@@ -44,6 +44,7 @@ module Babylon
       @doc ||= Nokogiri::XML::Document.new
       @elem ||= @doc # If we have no current element, then, we take the doc
       @elem = @elem.add_child(Nokogiri::XML::Element.new(qname, @doc))
+      
       add_namespaces_and_attributes_to_current_node(attributes)
       
       if @elem.name == "stream:stream"
@@ -85,19 +86,18 @@ module Babylon
     private
     
     ##
-    # Adds namespaces and attributes. Nokogiri passes them as a array of [[name, value], [name, value]]...
+    # Adds namespaces and attributes. Nokogiri passes them as a array of [[ns_name, ns_url], [ns_name, ns_url]..., key, value, key, value]...
     def add_namespaces_and_attributes_to_current_node(attrs) 
-      attrs.each  {|pair| set_attribute(pair[0], pair[1])}
-    end
-    
-    def set_attribute(key, value)
-      if key =~ /^xmlns/
-        set_namespace(key, value)
-      else
-        set_normal_attribute(key, value)
+      # Namespaces
+      attrs.select {|k| k.is_a? Array}.each do |pair|
+        set_namespace(pair[0], pair[1])
+      end
+      # Attributes
+      attrs.select {|k| k.is_a? String}.in_groups_of(2) do |pair|
+        set_normal_attribute(pair[0], pair[1])
       end
     end
-    
+        
     def set_normal_attribute(key, value)
       @elem.set_attribute key, Babylon.decode_xml(value)
     end

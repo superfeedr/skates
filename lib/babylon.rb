@@ -3,6 +3,7 @@ $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname
 
 require 'eventmachine'
 require 'log4r'
+require 'activesupport'
 require 'nokogiri'
 require 'yaml'
 require 'fileutils'
@@ -12,7 +13,6 @@ require 'base64'
 require 'resolv'
 require 'templater'
 require 'cgi'
-
 
 require 'babylon/xmpp_connection'
 require 'babylon/xmpp_parser'

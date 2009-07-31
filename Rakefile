@@ -17,7 +17,7 @@ begin
     gem.add_dependency('julien51-sax-machine')
     gem.add_dependency('templater')
     gem.add_dependency('daemons')
-    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine", "templater", "daemons", "optparse", "digest/sha1", "base64", "resolv"]
+    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine", "templater", "daemons", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
     gem.executables = "babylon"
     gem.files = [ "bin/babylon", 
                   "lib/babylon.rb", 
