@@ -157,9 +157,9 @@ module Babylon
     # receive_data is called when data is received. It is then passed to the parser. 
     def receive_data(data)
       begin
-        # Babylon.logger.debug {
-        #   "RECEIVED : #{data}"
-        # }
+        Babylon.logger.debug {
+          "RECEIVED : #{data}"
+        }
         @parser.push(data) 
       rescue
         Babylon.logger.error {
