@@ -91,6 +91,7 @@ module Babylon
       # Namespaces
       attrs.select {|k| k.is_a? Array}.each do |pair|
         # set_namespace(pair[0], pair[1])
+        set_normal_attribute(pair[0], pair[1])
       end
       # Attributes
       attrs.select {|k| k.is_a? String}.in_groups_of(2) do |pair|
