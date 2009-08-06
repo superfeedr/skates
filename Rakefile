@@ -12,12 +12,11 @@ begin
 
     gem.add_dependency('eventmachine')
     gem.add_dependency('log4r')
-    gem.add_dependency('nokogiri', ">= 1.3.0")
-    gem.add_dependency('eventmachine')
-    gem.add_dependency('julien51-sax-machine')
+    gem.add_dependency('nokogiri', ">= 1.3.3")
+    gem.add_dependency('julien51-sax-machine', ">= 0.0.20")
     gem.add_dependency('templater')
     gem.add_dependency('daemons')
-    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "sax-machine", "templater", "daemons", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
+    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "julien51-sax-machine", "templater", "daemons", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
     gem.executables = "babylon"
     gem.files = [ "bin/babylon", 
                   "lib/babylon.rb", 
