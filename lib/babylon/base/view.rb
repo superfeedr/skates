@@ -13,18 +13,22 @@ module Babylon
       # The caller needs to pass the context in which the partial will be rendered
       # Render must be called with :partial as well (other options will be supported later). The partial vale should be a relative path
       # to another file view, from the calling view.
+      # You can also use :locals => {:name => value} to use defined locals in your embedded views.
       def render(xml, options = {})
         # First, we need to identify the partial file path, based on the @view_template path.
         partial_path = (@view_template.split("/")[0..-2] + options[:partial].split("/")).join("/").gsub(".xml.builder", "") + ".xml.builder"
         raise ViewFileNotFound, "No such file #{partial_path}" unless Babylon.views[partial_path] 
+        saved_locals = @locals
+        @locals = options[:locals]
         eval(Babylon.views[partial_path], binding, partial_path, 1)
+        @locals = saved_locals # Re-assign the previous locals to be 'clean'
       end
       
       ##
       # Instantiate a new view with the various varibales passed in assigns and the path of the template to render.
       def initialize(path = "", assigns = {}) 
         @view_template = path 
-        
+        @locals = {}
         assigns.each do |key, value| 
           instance_variable_set(:"@#{key}", value) 
         end 
@@ -41,6 +45,14 @@ module Babylon
         end
         builder.doc.root.children # we output the document built 
       end 
+      
+      ##
+      # Used to macth locals variables
+      def method_missing(sym, *args, &block)
+        raise NameError, "undefined local variable or method `#{sym}' for #{self}" unless @locals[sym]
+        @locals[sym]
+      end
+      
     end 
   end 
 end

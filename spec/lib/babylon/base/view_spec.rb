@@ -68,11 +68,12 @@ describe Babylon::Base::View do
       @xml_string = <<-eoxml
         xml.message(:to => "you", :from => "me", :type => :chat) do |message|
           message.body("salut") 
-          render(message, {:partial => "partial"})
+          render(message, {:partial => "partial", :locals => {:subtitle => "bonjour monde"}})
        end
       eoxml
       @partial_string = <<-eoxml
         xml.title("hello word")
+        xml.subtitle(subtitle)
       eoxml
       Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)      
       Babylon.views.stub!(:[]).with("/a/path/to/a/view/partial.xml.builder").and_return(@partial_string)      
@@ -81,6 +82,11 @@ describe Babylon::Base::View do
     it "should render the partial in the right context" do
       @view.evaluate.xpath("//message/title").text.should == "hello word"
     end
+    
+    it "should allocate the locals variables" do
+      @view.evaluate.xpath("//message/subtitle").text.should == "bonjour monde"
+    end
+    
   end
   
 end
