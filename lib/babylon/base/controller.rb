@@ -71,6 +71,16 @@ module Babylon
         @view.evaluate if @view
       end
       
+      def render_and_evaluate(options = {})
+        render(options)
+        evaluate
+      end
+      
+      def render_evaluate_and_send(options)
+        response = render_and_evaluate(options)
+        Babylon.router.connection.send_xml response 
+      end
+      
       protected
       
       ##
