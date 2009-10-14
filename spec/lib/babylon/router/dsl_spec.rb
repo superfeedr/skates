@@ -25,10 +25,10 @@ describe Babylon::Router::DSL do
     end }.should raise_error(/destination/)
   end
 
-  it "creates a route with the specified xpath, controller and action" do
+  it "creates a route with the specified xpath, controller, action and priority" do
     Babylon.router.draw do
       xpath("//test"
-      ).to(:controller => "controller", :action => "action")
+      ).to(:controller => "controller", :action => "action").priority(5)
     end
     routes = Babylon.router.instance_variable_get("@routes")
     routes.length.should == 1
