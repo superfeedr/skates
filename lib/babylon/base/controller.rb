@@ -50,16 +50,19 @@ module Babylon
         return if @view and !options[:force] # Avoid double rendering, if we have already attached a view
         
         if options == {} # default rendering
-          result = render(:file => default_template_name)
+          render(:file => default_template_name)
+
+        elsif action_name = options[:action]
+          result = render(:file => default_template_name(action_name.to_s))
+
         elsif options[:file]
           file = options[:file]
           if file =~ /^\// # Render from view root
-            result = render_for_file(File.join("app", "views", "#{file}.xml.builder"))
+            @view = render_for_file(File.join("app", "views", "#{file}.xml.builder"))
           else
-            result = render_for_file(view_path(file)) 
+            @view = render_for_file(view_path(file)) 
           end
-        elsif action_name = options[:action]
-          result = render(:file => default_template_name(action_name.to_s))
+
         elsif options[:nothing]
           @view = Babylon::Base::View.new()
         end
@@ -101,10 +104,7 @@ module Babylon
         Babylon.logger.info {
           "RENDERING : #{file}"
         }
-        @view = Babylon::Base::View.new(file, assigns)
-        Babylon.logger.info {
-          " "
-        }
+        Babylon::Base::View.new(file, assigns)
       end
       
     end
