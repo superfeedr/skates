@@ -65,6 +65,8 @@ And finally, this will write 2 routes in the config/routes.rb
     
     script/component
 
+7. We running in production, you may run the script/component too, but with something like runit to deamonize the process.
+
 === To use the Connection Classes only (Client or Component), you can just call the following :
 
 Skates::ClientConnection.connect(params, handler) 
