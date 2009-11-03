@@ -14,3 +14,5 @@ Skates::Runner::run(ARGV[0] || "development") do
   # Run the initializers, too. This is done here since some initializers might need EventMachine to be started.
   Dir.glob('config/initializers/*.rb').each { |f| require f }
 end
+# Run the destructors, too. They're called when the app exits.
+Dir.glob('config/destructors/*.rb').each { |f| require f }

@@ -38,6 +38,9 @@ module Skates
       empty_directory :initializers_directory do |d|
         d.destination = "#{application_name}/config/initializers"
       end
+      empty_directory :destructors_directory do |d|
+        d.destination = "#{application_name}/config/destructors"
+      end
       empty_directory :tmp_directory do |d|
         d.destination = "#{application_name}/tmp"
       end 
