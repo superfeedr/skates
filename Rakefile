@@ -15,8 +15,7 @@ begin
     gem.add_dependency('nokogiri', ">= 1.3.3")
     gem.add_dependency('julien51-sax-machine', ">= 0.0.20")
     gem.add_dependency('templater')
-    gem.add_dependency('daemons')
-    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "julien51-sax-machine", "templater", "daemons", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
+    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "julien51-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
     gem.executables = "skates"
     gem.files = [ "bin/skates", 
                   "lib/skates.rb", 
