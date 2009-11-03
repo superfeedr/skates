@@ -10,9 +10,9 @@ begin
     gem.homepage = "http://github.com/julien51/skates"
     gem.authors = ["julien Genestoux"]
 
-    gem.add_dependency('eventmachine')
+    gem.add_dependency('eventmachine', ">= 0.12.10")
     gem.add_dependency('log4r')
-    gem.add_dependency('nokogiri', ">= 1.3.3")
+    gem.add_dependency('nokogiri', ">= 1.4.0")
     gem.add_dependency('julien51-sax-machine', ">= 0.0.20")
     gem.add_dependency('templater')
     gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "julien51-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
