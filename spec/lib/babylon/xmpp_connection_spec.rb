@@ -1,26 +1,26 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/../../em_mock'
 
-describe Babylon::XmppConnection do
+describe Skates::XmppConnection do
   
-  include BabylonSpecHelper
+  include SkatesSpecHelper
   
   before(:each) do
     @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com"}
-    @connection = Babylon::XmppConnection.connect(@params, handler_mock)
+    @connection = Skates::XmppConnection.connect(@params, handler_mock)
   end
   
   describe "connect" do    
     it "should connect EventMachine and return it" do
-      EventMachine.should_receive(:connect).with(@params["host"], @params["port"], Babylon::XmppConnection, hash_including("handler" => handler_mock)).and_return(@connection)
-      Babylon::XmppConnection.connect(@params, handler_mock).should == @connection
+      EventMachine.should_receive(:connect).with(@params["host"], @params["port"], Skates::XmppConnection, hash_including("handler" => handler_mock)).and_return(@connection)
+      Skates::XmppConnection.connect(@params, handler_mock).should == @connection
     end
     
     it "should rescue Connection Errors" do
-      EventMachine.stub!(:connect).with(@params["host"], @params["port"], Babylon::XmppConnection, hash_including("handler" => handler_mock)).and_raise(RuntimeError)
+      EventMachine.stub!(:connect).with(@params["host"], @params["port"], Skates::XmppConnection, hash_including("handler" => handler_mock)).and_raise(RuntimeError)
       lambda {
-        Babylon::XmppConnection.connect(@params, handler_mock)
-      }.should raise_error(Babylon::NotConnected)
+        Skates::XmppConnection.connect(@params, handler_mock)
+      }.should raise_error(Skates::NotConnected)
     end
 
   end
@@ -57,8 +57,8 @@ describe Babylon::XmppConnection do
   
   describe "post_init" do
     it "assigne a new parser" do
-      parser = Babylon::XmppParser.new(@connection.method(:receive_stanza))
-      Babylon::XmppParser.should_receive(:new).and_return(parser)
+      parser = Skates::XmppParser.new(@connection.method(:receive_stanza))
+      Skates::XmppParser.should_receive(:new).and_return(parser)
       @connection.post_init
       @connection.instance_variable_get("@parser").should == parser
     end
@@ -121,15 +121,15 @@ describe Babylon::XmppConnection do
       @connection.instance_variable_set("@connected", false)
       lambda {
         @connection.__send__(:send_chunk, "hello world")
-      }.should raise_error(Babylon::NotConnected)
+      }.should raise_error(Skates::NotConnected)
     end
     
     it "should raise an error if the stanza size is above the limit" do
       @connection.instance_variable_set("@connected", true)
-      string = "a" * (Babylon::XmppConnection.max_stanza_size + 1)
+      string = "a" * (Skates::XmppConnection.max_stanza_size + 1)
       lambda {
         @connection.__send__(:send_chunk, string)
-      }.should raise_error(Babylon::StanzaTooBig)
+      }.should raise_error(Skates::StanzaTooBig)
     end
     
     it "should return if the string is blank" do

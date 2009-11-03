@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Babylon::XpathHelper do
+describe Skates::XpathHelper do
   describe "namespace method" do
     before do
       @doc = Nokogiri::XML(<<-eoxml)
@@ -11,15 +11,15 @@ describe Babylon::XpathHelper do
     end
 
     it "matches nodes of the given name with the given namespace URI" do
-      @doc.xpath("//iq/*[namespace(., 'query', 'http://jabber.org/protocol/disco#info')]", Babylon::XpathHelper.new).length.should == 1
+      @doc.xpath("//iq/*[namespace(., 'query', 'http://jabber.org/protocol/disco#info')]", Skates::XpathHelper.new).length.should == 1
     end
 
     it "does not match a namespace URI if the node names differ" do
-      @doc.xpath("//iq/*[namespace(., 'que', 'http://jabber.org/protocol/disco#info')]", Babylon::XpathHelper.new).length.should == 0
+      @doc.xpath("//iq/*[namespace(., 'que', 'http://jabber.org/protocol/disco#info')]", Skates::XpathHelper.new).length.should == 0
     end
 
     it "does not match a node if the namespace URIs differ" do
-      @doc.xpath("//iq/*[namespace(., 'query', 'http://jabber.org/protocol/disco#inf')]", Babylon::XpathHelper.new).length.should == 0
+      @doc.xpath("//iq/*[namespace(., 'query', 'http://jabber.org/protocol/disco#inf')]", Skates::XpathHelper.new).length.should == 0
     end
   end
 end

@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Babylon::XmppParser do
+describe Skates::XmppParser do
 
   before(:each) do
     @last_stanza = ""
     @proc = mock(Proc, :call => true)
-    @parser = Babylon::XmppParser.new(@proc)
+    @parser = Skates::XmppParser.new(@proc)
   end
 
   describe ".reset" do
@@ -228,7 +228,7 @@ describe Babylon::XmppParser do
       @proc = Proc.new { |stanza|
         @stanzas << stanza 
       }
-      @parser = Babylon::XmppParser.new(@proc)
+      @parser = Skates::XmppParser.new(@proc)
     end
       
     it "should parse the right information" do

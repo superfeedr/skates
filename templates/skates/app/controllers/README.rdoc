@@ -1,0 +1,13 @@
+= Skates::Base::Controller
+
+== Usage :
+
+Please see Skates rdoc.
+
+== Example 
+
+    class MyController < Skates::Base::Controller  
+        def my_action
+            // Do something great!
+        end
+    end

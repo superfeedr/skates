@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/../../em_mock'
 
-describe Babylon::ComponentConnection do
+describe Skates::ComponentConnection do
 
-  include BabylonSpecHelper
+  include SkatesSpecHelper
 
   before(:each) do
     @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com"}
-    @component = Babylon::ComponentConnection.connect(@params, handler_mock) 
+    @component = Skates::ComponentConnection.connect(@params, handler_mock) 
     @component.stub!(:send_xml).and_return(true) 
   end
 
@@ -98,7 +98,7 @@ describe Babylon::ComponentConnection do
 
       describe "if we receive a stream:error" do
         it "should raise an Authentication Error" do
-          lambda {@component.receive_stanza(Nokogiri::XML::Node.new("stream:error", @doc))}.should raise_error(Babylon::AuthenticationError)
+          lambda {@component.receive_stanza(Nokogiri::XML::Node.new("stream:error", @doc))}.should raise_error(Skates::AuthenticationError)
         end
       end
 

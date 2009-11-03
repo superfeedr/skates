@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/../../em_mock'
 
-describe Babylon::ClientConnection do
+describe Skates::ClientConnection do
   
-  include BabylonSpecHelper
+  include SkatesSpecHelper
 
   before(:each) do
     @params = {"jid" => "jid@server.tld", "password" => "password", "port" => 1234, "host" => "myhost.com"}
-    @client = Babylon::ClientConnection.connect(@params, handler_mock) 
+    @client = Skates::ClientConnection.connect(@params, handler_mock) 
     @client.stub!(:send_xml).and_return(true) 
   end
   
@@ -20,7 +20,7 @@ describe Babylon::ClientConnection do
   describe "connect" do
     it "should not try to resolve the dns if both the port and host are provided" do
       Resolv::DNS.should_not_receive(:open)
-      @client = Babylon::ClientConnection.connect(@params, handler_mock) 
+      @client = Skates::ClientConnection.connect(@params, handler_mock) 
     end
     
     describe "when host and port are not provided" do
@@ -40,11 +40,11 @@ describe Babylon::ClientConnection do
       it "should get resources assiated with _xmpp-client._tcp.host.tld}" do
         Resolv::DNS.should_receive(:open).and_yield(@mock_dns)
         @mock_dns.should_receive(:getresources).with("_xmpp-client._tcp.server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
-        @client = Babylon::ClientConnection.connect(@params, handler_mock) 
+        @client = Skates::ClientConnection.connect(@params, handler_mock) 
       end
       
       it "should sort the srv records" do
-        @client = Babylon::ClientConnection.connect(@params, handler_mock) 
+        @client = Skates::ClientConnection.connect(@params, handler_mock) 
         @srv.map {|srv| srv.target }.should == ["xmpp2.server.tld", "xmpp.server.tld", "xmpp3.server.tld"]
       end
       
@@ -172,14 +172,14 @@ describe Babylon::ClientConnection do
           @stanza.add_child(Nokogiri::XML::Node.new("bad-auth", @doc))
           lambda {
             @client.receive_stanza(@stanza)
-          }.should raise_error(Babylon::AuthenticationError)
+          }.should raise_error(Skates::AuthenticationError)
         end
         
         it "should raise AuthenticationError if stanza has not-authorized" do
           @stanza.add_child(Nokogiri::XML::Node.new("not-authorized", @doc))
           lambda {
             @client.receive_stanza(@stanza)
-          }.should raise_error(Babylon::AuthenticationError)
+          }.should raise_error(Skates::AuthenticationError)
         end
       end
     end
@@ -202,7 +202,7 @@ describe Babylon::ClientConnection do
           
           it "should send_xml with the bind iq" do
             @client.should_receive(:binding_iq_id).twice.and_return(123)
-            @client.should_receive(:send_xml).with("<iq type=\"set\" id=\"123\">\n  <bind xmlns=\"urn:ietf:params:xml:ns:xmpp-bind\">\n    <resource>babylon_client_123</resource>\n  </bind>\n</iq>")
+            @client.should_receive(:send_xml).with("<iq type=\"set\" id=\"123\">\n  <bind xmlns=\"urn:ietf:params:xml:ns:xmpp-bind\">\n    <resource>skates_client_123</resource>\n  </bind>\n</iq>")
             @client.receive_stanza(@stanza)
           end
           

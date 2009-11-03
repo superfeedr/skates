@@ -1,16 +1,16 @@
-require File.dirname(__FILE__) + "/../lib/babylon"
+require File.dirname(__FILE__) + "/../lib/skates"
 
 # #
 # Deactivate the logging
-Babylon.logger.level = Log4r::FATAL
+Skates.logger.level = Log4r::FATAL
 
-Babylon.environment = "test"
+Skates.environment = "test"
 
-if !defined? BabylonSpecHelper
-  module BabylonSpecHelper
+if !defined? SkatesSpecHelper
+  module SkatesSpecHelper
     ##
     # Load configuration from a local config file
-    def babylon_config
+    def skates_config
       @config ||= YAML.load(File.read(File.join(File.dirname(__FILE__), "config.yaml")))
     end
 

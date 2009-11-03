@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
- 
-require 'rubygems'
-require 'babylon'
-
-Babylon::Generator.run_cli(Dir.pwd, 'babylon_app', "0.1", ARGV)

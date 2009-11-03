@@ -1,14 +1,14 @@
-= Babylon
+= Skates
 
 == DESCRIPTION:
 
-Babylon is a framework to build XMPP Applications in Ruby. The framework uses EventMachine to handle network connections.
+Skates is a framework to build XMPP Applications in Ruby. The framework uses EventMachine to handle network connections.
 
 This framework can use both an XMPP Component (XEP-0114) and an XMPP Client (and XMPP Servers should come soon). However, we strongly discourage any production application using a regular client.
 
 == FEATURES/PROBLEMS:
 
-Please link "report/request here.":http://github.com/julien51/babylon/issues
+Please link "report/request here.":http://github.com/julien51/skates/issues
 
 The current version is a good candidate for version 0.1. We will probably not add any important features before that release, but we need some help with the tests and documentation.
 
@@ -21,29 +21,29 @@ The current version is a good candidate for version 0.1. We will probably not ad
 - Write tests
 - Evangelize!
 
-You can help with at least one of these points, don't turn your back on Babylon!
+You can help with at least one of these points, don't turn your back on Skates!
 
 == DOCUMENTATION :
 
-You can find it on our "Rubyforge page":http://babylon.rubyforge.org/
-Feel free to fork the "github":http://github.com/julien51/babylon/tree/master repo and add some documentation if you think anything is missing. 
+You can find it on our "Rubyforge page":http://skates.rubyforge.org/
+Feel free to fork the "github":http://github.com/julien51/skates/tree/master repo and add some documentation if you think anything is missing. 
 
 __You can't be a bad coder, a bad tester and a bad documenter at the same time ;)__
 
 == SYNOPSIS :
 
-You can build applications directly with Babylon, or you can use the Babylon::ClientConnection and Babylon::ComponentConnection to create simple apps, but you will then have to handle stanza routing and creation yourself. You can also use these classes in external gems.
+You can build applications directly with Skates, or you can use the Skates::ClientConnection and Skates::ComponentConnection to create simple apps, but you will then have to handle stanza routing and creation yourself. You can also use these classes in external gems.
 
-=== To create an Application with Babylon: 
+=== To create an Application with Skates: 
 
 1. Install the gem
 2. The app contains a generator that will "build" a scaffold for your application. 
     
-    $> babylon application __myapp__
+    $> skates application __myapp__
 
 3. Use the generator or write your own controllers : 
 
-    $> babylon controller __messages__ __echo__:__10__:__//stream:message[@type='chat']/body__,__subscribed__:__0__:__//stream:presence[@type='subscribe']__
+    $> skates controller __messages__ __echo__:__10__:__//stream:message[@type='chat']/body__,__subscribed__:__0__:__//stream:presence[@type='subscribe']__
 
 This will generate a __MessagesController__ class with 2 methods : __echo__ and __subscribed__. 
  - "echo" will be called when the component receives message stanzas of type 'chat', 
@@ -67,9 +67,9 @@ And finally, this will write 2 routes in the config/routes.rb
 
 === To use the Connection Classes only (Client or Component), you can just call the following :
 
-Babylon::ClientConnection.connect(params, handler) 
+Skates::ClientConnection.connect(params, handler) 
 or,
-Babylon::ComponentConnection.connect(params, handler) 
+Skates::ComponentConnection.connect(params, handler) 
 
 where params is a hash for all the necessary information to connect, and handler is an object that will receive the callbacks. Right now 3 callbacks are supported:
 
@@ -79,11 +79,11 @@ on_connected(connection), on_disconnected and on_stanza(stanza)
 
 Feel free to pull, branch, improve and commit the {code|specs|tests|docs} : we will merge it if it's a step ahead!
 
-Babylon's edge versions are located at Github : http://github.com/julien51/babylon/tree/master
+Skates's edge versions are located at Github : http://github.com/julien51/skates/tree/master
 
 == REQUIREMENTS :
 
-Gems : Eventmachine, nokogiri (please, use build from the guthub repo, since 1.2.3 is not supported by Babylon), YAML, log4r, sax-machine, templater, daemons
+Gems : Eventmachine, nokogiri (please, use build from the guthub repo, since 1.2.3 is not supported by Skates), YAML, log4r, sax-machine, templater, daemons
 
 == LICENSE:
 

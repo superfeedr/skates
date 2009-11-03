@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe Babylon::Base::Controller do
+describe Skates::Base::Controller do
   
   before(:each) do
-    Babylon.views.stub!(:[]).and_return("") # Stubbing read for view
+    Skates.views.stub!(:[]).and_return("") # Stubbing read for view
   end
   
   describe ".initialize" do
@@ -13,14 +13,14 @@ describe Babylon::Base::Controller do
     
     it "should have a stanza instance" do
       stanza = mock(Object)
-      c = Babylon::Base::Controller.new(stanza)
+      c = Skates::Base::Controller.new(stanza)
       
       c.instance_variables.should be_include "@stanza"
       c.instance_variable_get("@stanza").should == stanza
     end
     
     it "should not be rendered yet" do
-      c = Babylon::Base::Controller.new(@params)
+      c = Skates::Base::Controller.new(@params)
       c.rendered.should_not be_true
     end
   end
@@ -29,7 +29,7 @@ describe Babylon::Base::Controller do
     before(:each) do
       @action = :subscribe
       params = {:stanza => "<hello>world</hello>"}
-      @controller = Babylon::Base::Controller.new(params)
+      @controller = Skates::Base::Controller.new(params)
       @controller.class.send(:define_method, @action) do # Defining the action method
         # Do something
       end
@@ -51,7 +51,7 @@ describe Babylon::Base::Controller do
     
     it "should write an error to the log in case of failure of the action" do
       @controller.stub!(:send).with(@action).and_raise(StandardError)
-      Babylon.logger.should_receive(:error)
+      Skates.logger.should_receive(:error)
       @controller.perform(@action) do
         # Do something
       end
@@ -67,7 +67,7 @@ describe Babylon::Base::Controller do
   
   describe ".render" do
     before(:each) do
-      @controller = Babylon::Base::Controller.new({})
+      @controller = Skates::Base::Controller.new({})
       @controller.action_name = :subscribe
     end
     
@@ -116,8 +116,8 @@ describe Babylon::Base::Controller do
   describe ".assigns" do
     
     before(:each) do
-      @stanza = mock(Babylon::Base::Stanza)
-      @controller = Babylon::Base::Controller.new(@stanza)
+      @stanza = mock(Skates::Base::Stanza)
+      @controller = Skates::Base::Controller.new(@stanza)
     end
     
     it "should be a hash" do
@@ -131,7 +131,7 @@ describe Babylon::Base::Controller do
     
     it "should return an hash containing all instance variables defined in the action" do
       vars = {"a" => 1, "b" => "b", "c" => { "d" => 4}}
-      class MyController < Babylon::Base::Controller
+      class MyController < Skates::Base::Controller
         def do_something
           @a = 1
           @b = "b"
@@ -146,11 +146,11 @@ describe Babylon::Base::Controller do
   
   describe ".evaluate" do
     before(:each) do
-      @controller = Babylon::Base::Controller.new()
+      @controller = Skates::Base::Controller.new()
     end
     
     it "should evaluate the view" do
-      view = mock(Babylon::Base::View)
+      view = mock(Skates::Base::View)
       response = "hello"
       @controller.instance_variable_set("@view", view)
       view.should_receive(:evaluate).and_return(response)
@@ -160,15 +160,15 @@ describe Babylon::Base::Controller do
   
   describe ".view_path" do
     it "should return complete file path to the file given in param" do
-      @controller = Babylon::Base::Controller.new()
+      @controller = Skates::Base::Controller.new()
       file_name = "myfile"
-      @controller.__send__(:view_path, file_name).should == File.join("app/views", "#{"Babylon::Base::Controller".gsub("Controller","").downcase}", file_name)
+      @controller.__send__(:view_path, file_name).should == File.join("app/views", "#{"Skates::Base::Controller".gsub("Controller","").downcase}", file_name)
     end
   end
   
   describe ".default_template_name" do
     before(:each) do
-      @controller = Babylon::Base::Controller.new()
+      @controller = Skates::Base::Controller.new()
     end
     
     it "should return the view file name if a file is given in param" do
@@ -184,7 +184,7 @@ describe Babylon::Base::Controller do
   describe ".render_for_file" do
     
     before(:each) do
-      @controller = Babylon::Base::Controller.new()
+      @controller = Skates::Base::Controller.new()
       @block = Proc.new {
         # Do something
       }
@@ -192,11 +192,11 @@ describe Babylon::Base::Controller do
         # Do something
       end
       @controller.perform(:action, &@block) 
-      @view = Babylon::Base::View.new("path_to_a_file", {})
+      @view = Skates::Base::View.new("path_to_a_file", {})
     end
     
     it "should instantiate a new view, with the file provided and the hashed_variables" do
-      Babylon::Base::View.should_receive(:new).with("path_to_a_file",an_instance_of(Hash)).and_return(@view)
+      Skates::Base::View.should_receive(:new).with("path_to_a_file",an_instance_of(Hash)).and_return(@view)
       @controller.__send__(:render_for_file, "path_to_a_file")
     end
     

@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'daemons'
+require 'optparse'
+
+# default options
+command          = "run"
+environment      = "development"
+name             = "#{Dir.pwd.split("/").last}"
+
+ARGV.options do |o|
+  script_name = File.basename($0)
+  
+  o.set_summary_indent('  ')
+  o.banner =    "Usage: script/#{script_name} [OPTIONS]"
+  o.define_head "Runs the Skates Application."
+  o.separator   ""
+  o.separator   "Arguments :" 
+  
+  o.on("-c", "--command=[run|start|stop|restart]", String,
+       "The command you'd like to execute",
+       "Default: #{command}")   { |command| }
+  o.on("-e", "--environment=env", String,
+       "The environment to run the application (you should have defined the argument into config/config.yaml)",
+       "Default: #{environment}") { |environment| }
+  o.on("-n", "--name=app_name", String,
+       "Name of your application. The pid_file will be name after this.",
+       "Default: #{name}") { |name| }
+  
+  o.separator ""
+
+  o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
+  
+  o.parse!
+end
+
+
+options = {
+  :ARGV       => [command, '--', environment],
+  :app_name   => name,
+  :dir        => "../tmp/pids/",
+  :multiple   => false,
+  :backtrace  => true
+}
+$app_name = options[:app_name]
+Daemons.run(File.dirname(__FILE__) + '/../config/boot.rb', options)

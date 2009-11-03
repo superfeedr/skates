@@ -4,10 +4,10 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "babylon"
-    gem.summary = %Q{Babylon is a framework to create EventMachine based XMPP External Components in Ruby.}
+    gem.name = "skates"
+    gem.summary = %Q{Skates is a framework to create EventMachine based XMPP External Components in Ruby.}
     gem.email = "julien.genestoux@gmail.com"
-    gem.homepage = "http://github.com/julien51/babylon"
+    gem.homepage = "http://github.com/julien51/skates"
     gem.authors = ["julien Genestoux"]
 
     gem.add_dependency('eventmachine')
@@ -17,38 +17,38 @@ begin
     gem.add_dependency('templater')
     gem.add_dependency('daemons')
     gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "julien51-sax-machine", "templater", "daemons", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
-    gem.executables = "babylon"
-    gem.files = [ "bin/babylon", 
-                  "lib/babylon.rb", 
-                  "lib/babylon/base/controller.rb", 
-                  "lib/babylon/base/view.rb", 
-                  "lib/babylon/base/stanza.rb", 
-                  "lib/babylon/client_connection.rb", 
-                  "lib/babylon/component_connection.rb", 
-                  "lib/babylon/router/dsl.rb", 
-                  "lib/babylon/router.rb", 
-                  "lib/babylon/runner.rb", 
-                  "lib/babylon/generator.rb", 
-                  "lib/babylon/xmpp_connection.rb", 
-                  "lib/babylon/xmpp_parser.rb", 
-                  "lib/babylon/xpath_helper.rb", 
+    gem.executables = "skates"
+    gem.files = [ "bin/skates", 
+                  "lib/skates.rb", 
+                  "lib/skates/base/controller.rb", 
+                  "lib/skates/base/view.rb", 
+                  "lib/skates/base/stanza.rb", 
+                  "lib/skates/client_connection.rb", 
+                  "lib/skates/component_connection.rb", 
+                  "lib/skates/router/dsl.rb", 
+                  "lib/skates/router.rb", 
+                  "lib/skates/runner.rb", 
+                  "lib/skates/generator.rb", 
+                  "lib/skates/xmpp_connection.rb", 
+                  "lib/skates/xmpp_parser.rb", 
+                  "lib/skates/xpath_helper.rb", 
                   "LICENSE", 
                   "Rakefile", 
                   "README.rdoc", 
-                  "templates/babylon/app/controllers/controller.rb", 
-                  "templates/babylon/app/views/view.rb", 
-                  "templates/babylon/app/stanzas/stanza.rb", 
-                  "templates/babylon/config/boot.rb", 
-                  "templates/babylon/config/config.yaml", 
-                  "templates/babylon/config/dependencies.rb", 
-                  "templates/babylon/config/routes.rb", 
-                  "templates/babylon/script/component",
-                  "templates/babylon/log/test.log",
-                  "templates/babylon/log/development.log",
-                  "templates/babylon/log/production.log",
-                  "templates/babylon/tmp/pids/README"
+                  "templates/skates/app/controllers/controller.rb", 
+                  "templates/skates/app/views/view.rb", 
+                  "templates/skates/app/stanzas/stanza.rb", 
+                  "templates/skates/config/boot.rb", 
+                  "templates/skates/config/config.yaml", 
+                  "templates/skates/config/dependencies.rb", 
+                  "templates/skates/config/routes.rb", 
+                  "templates/skates/script/component",
+                  "templates/skates/log/test.log",
+                  "templates/skates/log/development.log",
+                  "templates/skates/log/production.log",
+                  "templates/skates/tmp/pids/README"
                   ]
-    gem.rubyforge_project = 'babylon'
+    gem.rubyforge_project = 'skates'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
@@ -57,7 +57,7 @@ end
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = 'Babylon : a framework to create EventMachine based XMPP External Components in Ruby.'
+  rdoc.title = 'Skates : a framework to create EventMachine based XMPP External Components in Ruby.'
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
   rdoc.options << '--line-numbers'
@@ -127,7 +127,7 @@ begin
         )
 
         host = "#{config['username']}@rubyforge.org"
-        remote_dir = "/var/www/gforge-projects/babylon"
+        remote_dir = "/var/www/gforge-projects/skates"
         local_dir = 'rdoc'
 
         Rake::SshDirPublisher.new(host, remote_dir, local_dir).upload

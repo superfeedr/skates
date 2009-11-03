@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+ 
+require 'rubygems'
+require 'skates'
+
+Skates::Generator.run_cli(Dir.pwd, 'skates_app', "0.1", ARGV)

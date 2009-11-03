@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe Babylon::Base::View do
+describe Skates::Base::View do
   describe ".initialize" do
     
     before(:each) do
-      @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @view = Skates::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
     end
     
     it "should assign @view_template to path" do
@@ -21,40 +21,40 @@ describe Babylon::Base::View do
   describe ".evaluate" do
     before(:each) do
       @view_template = "/a/path/to/a/view/file"
-      @view = Babylon::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @view = Skates::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
         xml.message(:to => "you", :from => "me", :type => :chat) do
           xml.body("salut") 
        end
       eoxml
-      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
+      Skates.views.stub!(:[]).with(@view_template).and_return(@xml_string)
     end
         
     it "should read the template file" do
-      Babylon.views.should_receive(:[]).twice.with(@view_template).and_return(@xml_string)
+      Skates.views.should_receive(:[]).twice.with(@view_template).and_return(@xml_string)
       @view.evaluate
     end
     
     it "should raise an error if the view file couldn't be found" do
-      Babylon.views.stub!(:[]).with(@view_template).and_raise(nil)
+      Skates.views.stub!(:[]).with(@view_template).and_raise(nil)
       lambda {
         @view.evaluate
-      }.should raise_error(Babylon::Base::ViewFileNotFound)
+      }.should raise_error(Skates::Base::ViewFileNotFound)
     end
     
     it "should return a Nokogiri NodeSet" do
-      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
+      Skates.views.stub!(:[]).with(@view_template).and_return(@xml_string)
       @view.evaluate.should be_an_instance_of(Nokogiri::XML::NodeSet)
     end
     
     it "should call eval on the view file" do
-      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)
+      Skates.views.stub!(:[]).with(@view_template).and_return(@xml_string)
       @view.should_receive(:eval).with(@xml_string, an_instance_of(Binding), @view_template, 1)
       @view.evaluate
     end
     
     it "should be able to access context's variables" do
-      @view = Babylon::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @view = Skates::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @view.instance_variable_get("@a").should == "a"
       @view.instance_variable_get("@b").should == 123
       @view.instance_variable_get("@c").should == {:e=>"123", :d=>"d"}
@@ -64,7 +64,7 @@ describe Babylon::Base::View do
   describe "render" do
     before(:each) do
       @view_template = "/a/path/to/a/view/file"
-      @view = Babylon::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @view = Skates::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
         xml.message(:to => "you", :from => "me", :type => :chat) do |message|
           message.body("salut") 
@@ -75,8 +75,8 @@ describe Babylon::Base::View do
         xml.title("hello word")
         xml.subtitle(subtitle)
       eoxml
-      Babylon.views.stub!(:[]).with(@view_template).and_return(@xml_string)      
-      Babylon.views.stub!(:[]).with("/a/path/to/a/view/partial.xml.builder").and_return(@partial_string)      
+      Skates.views.stub!(:[]).with(@view_template).and_return(@xml_string)      
+      Skates.views.stub!(:[]).with("/a/path/to/a/view/partial.xml.builder").and_return(@partial_string)      
     end
     
     it "should render the partial in the right context" do

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Babylon::Route do
+describe Skates::Route do
   before(:each) do
     @controller = "bar"
     @action     = "bar"
@@ -10,31 +10,31 @@ describe Babylon::Route do
 
   describe ".initialize" do
     it "should raise an exception if no controller is specified" do
-      lambda { Babylon::Route.new("action" => @action, "xpath" => @xpath) }.should raise_error(/controller/)
+      lambda { Skates::Route.new("action" => @action, "xpath" => @xpath) }.should raise_error(/controller/)
     end
     it "should raise an exception if no action is specified" do
-      lambda { Babylon::Route.new("controller" => @controller, "xpath" => @xpath) }.should raise_error(/action/)
+      lambda { Skates::Route.new("controller" => @controller, "xpath" => @xpath) }.should raise_error(/action/)
     end
     it "should raise an exception if no xpath is specified" do
-      lambda { Babylon::Route.new("action" => @action, "controller" => @controller) }.should raise_error(/xpath/)
+      lambda { Skates::Route.new("action" => @action, "controller" => @controller) }.should raise_error(/xpath/)
     end
   end
 
   describe ".accepts?" do
     it "should check the stanza with Xpath" do
       mock_stanza = mock(Object)
-      route = Babylon::Route.new("controller" => "bar", "action" => "bar", "xpath" => "//message")
-      mock_stanza.should_receive(:xpath).with(route.xpath, instance_of(Babylon::XpathHelper)).and_return([])
+      route = Skates::Route.new("controller" => "bar", "action" => "bar", "xpath" => "//message")
+      mock_stanza.should_receive(:xpath).with(route.xpath, instance_of(Skates::XpathHelper)).and_return([])
       route.accepts?(mock_stanza)
     end
   end
 end
 
 
-describe Babylon::StanzaRouter do 
+describe Skates::StanzaRouter do 
 
   before(:each) do
-    @router = Babylon::StanzaRouter.new
+    @router = Skates::StanzaRouter.new
   end
 
   describe "initialize" do
@@ -55,7 +55,7 @@ describe Babylon::StanzaRouter do
     before(:each) do
       @xml = mock(Nokogiri::XML::Node)
       3.times do |t|
-        @router.routes << mock(Babylon::Route, :accepts? => false)
+        @router.routes << mock(Skates::Route, :accepts? => false)
       end
     end
 
@@ -68,7 +68,7 @@ describe Babylon::StanzaRouter do
 
     describe "if one route is found" do 
       before(:each) do
-        @accepting_route = mock(Babylon::Route, :accepts? => true, :action => "action", :controller => "controller", :xpath => "xpath")
+        @accepting_route = mock(Skates::Route, :accepts? => true, :action => "action", :controller => "controller", :xpath => "xpath")
         @router.routes << @accepting_route
       end
 
@@ -89,13 +89,13 @@ describe Babylon::StanzaRouter do
   describe "execute_route" do
     before(:each) do
       @action = "action"
-      @controller = Babylon::Base::Controller
+      @controller = Skates::Base::Controller
       @xml = mock(Nokogiri::XML::Node)
-      @mock_stanza = mock(Babylon::Base::Stanza)
-      @mock_controller = mock(Babylon::Base::Controller, {:new => true, :evaluate => "hello world"})
-      Kernel.stub!(:const_get).with(@action.capitalize).and_return(Babylon::Base::Stanza) 
-      Babylon::Base::Stanza.stub!(:new).with(@xml).and_return(@mock_stanza)
-      @connection = mock(Babylon::XmppConnection, :send_xml => true)
+      @mock_stanza = mock(Skates::Base::Stanza)
+      @mock_controller = mock(Skates::Base::Controller, {:new => true, :evaluate => "hello world"})
+      Kernel.stub!(:const_get).with(@action.capitalize).and_return(Skates::Base::Stanza) 
+      Skates::Base::Stanza.stub!(:new).with(@xml).and_return(@mock_stanza)
+      @connection = mock(Skates::XmppConnection, :send_xml => true)
       @router.stub!(:connection).and_return(@connection)
       @controller.stub!(:new).and_return(@mock_controller)
       @mock_controller.stub!(:perform).with(@action)
@@ -103,8 +103,8 @@ describe Babylon::StanzaRouter do
 
     describe "when the Stanza class exists" do
       it "should instantiate the route's stanza " do
-        Kernel.should_receive(:const_get).with(@action.capitalize).and_return(Babylon::Base::Stanza) 
-        Babylon::Base::Stanza.should_receive(:new).with(@xml).and_return(@mock_stanza)
+        Kernel.should_receive(:const_get).with(@action.capitalize).and_return(Skates::Base::Stanza) 
+        Skates::Base::Stanza.should_receive(:new).with(@xml).and_return(@mock_stanza)
         @router.execute_route(@controller, @action, @xml)
       end
       
@@ -135,7 +135,7 @@ describe Babylon::StanzaRouter do
 
   describe "purge_routes!" do
     it "should delete all routes" do
-      @router.instance_variable_set("@routes", [mock(Babylon::Route), mock(Babylon::Route)])
+      @router.instance_variable_set("@routes", [mock(Skates::Route), mock(Skates::Route)])
       @router.purge_routes!
       @router.routes.should == []
     end
@@ -143,15 +143,15 @@ describe Babylon::StanzaRouter do
   
   describe "draw" do
     before(:each) do
-      @dsl = Babylon::Router::DSL.new 
-      Babylon::Router::DSL.stub!(:new).and_return(@dsl) 
-      @routes = [mock(Babylon::Route, :is_a? => true), mock(Babylon::Route, :is_a? => true), mock(Babylon::Route, :is_a? => true)]
+      @dsl = Skates::Router::DSL.new 
+      Skates::Router::DSL.stub!(:new).and_return(@dsl) 
+      @routes = [mock(Skates::Route, :is_a? => true), mock(Skates::Route, :is_a? => true), mock(Skates::Route, :is_a? => true)]
       @router.stub!(:sort)
       @dsl.stub!(:routes).and_return(@routes)
     end
     
     it "shoudl instantiate a new DSL" do
-      Babylon::Router::DSL.should_receive(:new).and_return(@dsl) 
+      Skates::Router::DSL.should_receive(:new).and_return(@dsl) 
       @router.draw {}
     end
     
@@ -167,7 +167,7 @@ describe Babylon::StanzaRouter do
     end
     
     it "should raise an error if one of the routes is not valid" do
-      @dsl.should_receive(:routes).and_return([mock(Babylon::Route, :is_a? => false)])
+      @dsl.should_receive(:routes).and_return([mock(Skates::Route, :is_a? => false)])
       lambda {
         @router.draw {}
       }.should raise_error()
