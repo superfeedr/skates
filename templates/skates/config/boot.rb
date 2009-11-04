@@ -10,7 +10,7 @@ require File.dirname(__FILE__) + "/dependencies"
 
 
 # Start the App
-Skates::Runner::run(ARGV[0] || "development") do
+Skates::Runner::run(SKATES_ENV || "development") do
   # Run the initializers, too. This is done here since some initializers might need EventMachine to be started.
   Dir.glob('config/initializers/*.rb').each { |f| require f }
 end

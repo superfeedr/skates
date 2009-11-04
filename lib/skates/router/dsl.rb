@@ -1,5 +1,8 @@
 module Skates
   module Router
+    ##
+    # We use this class to assert the ordering of the router DSL
+    class OutOfOrder < StandardError; end
 
     # Creates a simple DSL for stanza routing.
     class DSL
@@ -17,7 +20,9 @@ module Skates
 
       # Set the priority of the last created route.
       def priority(n)
-        set(:priority, n)
+        route = @routes.last
+        raise OutOfOrder unless route.is_a?(Route) # check that this is in the right order
+        route.priority = n
         self
       end
 
@@ -33,23 +38,15 @@ module Skates
 
       # Map a route to a specific controller and action.
       def to(params)
-        set(:controller, params[:controller])
-        set(:action, params[:action])
+        last = @routes.pop
+        last["controller"] = params[:controller]
+        last["action"] = params[:action]
         # We now have all the properties we really need to create a route.
-        route = Route.new(@routes.pop)
-        @routes << route
+        @routes << Route.new(last)
         self
       end
 
       protected
-      # We do this magic, or crap depending on your perspective, because we don't know whether we're setting values on a 
-      # Hash or a Route. We can't create the Route until we have a controller and action.
-      def set(property, value)
-        last = @routes.last
-        last[property.to_s] = value if last.is_a?(Hash)
-        last.send("#{property.to_s}=", value) if last.is_a?(Route)
-      end
-
       def disco_for(type, node = nil)
         str = "//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco##{type.to_s}')"
         str += " and @node = '#{node}'" if node

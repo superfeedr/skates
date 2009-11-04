@@ -13,7 +13,7 @@ ARGV.options do |o|
   
   o.set_summary_indent('  ')
   o.banner =    "Usage: script/#{script_name} [OPTIONS]"
-  o.define_head "Runs the Babylon Application."
+  o.define_head "Runs the Skates Application."
   o.separator   ""
   o.separator   "Arguments :" 
   
@@ -31,6 +31,6 @@ ARGV.options do |o|
   o.parse!
 end
 
-$appname = OPTIONS[:name]
-BABYLON_ENV = OPTIONS[:environment]
+$appname        = OPTIONS[:name]
+SKATES_ENV      = OPTIONS[:environment]
 require File.dirname(__FILE__) + '/../config/boot.rb'
