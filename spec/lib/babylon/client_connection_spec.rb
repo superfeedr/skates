@@ -18,7 +18,43 @@ describe Skates::ClientConnection do
   end
   
   describe "connect" do
-
+  end
+  
+  describe "when resolving the hostname" do
+    before(:each) do
+      @params.delete("host")
+      @params.delete("port")
+      @srv = [
+        mock(Resolv::DNS::Resource, :priority => 10, :target => "12.13.14.15", :port => 1234),
+        mock(Resolv::DNS::Resource, :priority => 3, :target => "12.13.14.16", :port => 4567),
+        mock(Resolv::DNS::Resource, :priority => 100, :target => "12.13.14.17", :port => 8910)
+        ]
+      @mock_dns = mock(Object)
+      Resolv::DNS.stub!(:open).and_yield(@mock_dns)
+      @mock_dns.stub!(:getresources).and_return(@srv)
+    end
+    
+    it "should get resources assiated with _xmpp-client._tcp.host.tld}" do
+      Resolv::DNS.should_receive(:open).and_yield(@mock_dns)
+      @mock_dns.should_receive(:getresources).with("_xmpp-client._tcp.server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
+      Skates::ClientConnection.resolve("server.tld") 
+    end
+    
+    it "should call the block with the highest priority" do
+      Skates::ClientConnection.resolve("xmpp.server.tld") do |params|
+        params["host"].should == "12.13.14.16"
+        params["port"].should == 4567
+        true
+      end 
+    end
+    
+    it "should call the block as many times as needed if they're not connecting" do
+      conn = mock(Skates::ClientConnection, :_connect => false)
+      conn.should_receive(:_connect).exactly(3).times
+      Skates::ClientConnection.resolve("xmpp.server.tld") do |ip, port|
+        conn._connect(ip, port)
+      end
+    end
   end
   
   describe "stream_stanza" do

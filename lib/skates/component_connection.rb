@@ -77,6 +77,28 @@ module Skates
       'jabber:component:accept'
     end
     
+    ##
+    # Resolution for Components, based on SRV records
+    def self.resolve(host, &block)
+      Resolv::DNS.open { |dns|
+        # If ruby version is too old and SRV is unknown, this will raise a NameError
+        # which is caught below
+        Skates.logger.debug {
+          "RESOLVING: #{host} "
+        }
+        found = false
+        records = dns.getresources(host, Resolv::DNS::Resource::IN::A)
+        records.each do |record|
+          ip = record.address.to_s
+          if block.call({"host" => ip}) 
+            found = true
+            break
+          end
+        end
+        block.call(false) unless found # bleh, we couldn't resolve to any valid. Too bad.
+      }
+    end
+    
     private
     
     def handshake(stanza)

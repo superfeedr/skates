@@ -24,8 +24,32 @@ module Skates
       super(params, handler)
     end
 
-    def self.srv_for_host(host)
-      "_xmpp-client._tcp.#{host}"
+    ##
+    # Resolution for clients, based on SRV records
+    def self.resolve(host, &block)
+      Resolv::DNS.open { |dns|
+        # If ruby version is too old and SRV is unknown, this will raise a NameError
+        # which is caught below
+        Skates.logger.debug {
+          "RESOLVING: #{srv_for_host(host)} (SRV)"
+        }
+        begin
+          srv = dns.getresources("_xmpp-client._tcp.#{host}", Resolv::DNS::Resource::IN::SRV)
+          # Sort SRV records: lowest priority first, highest weight first
+          srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
+          # And now, for each record, let's try to connect.
+          srv.each { |record|
+            ip    = record.target.to_s
+            port  = Integer(record.port)
+            break if block.call({"host" => ip, "port" => port}) 
+          }
+          block.call(false) # bleh, we couldn't resolve to any valid. Too bad.
+        rescue NameError
+          Skates.logger.debug {
+            "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
+          }
+        end
+      }
     end
 
     ##

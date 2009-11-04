@@ -132,4 +132,13 @@ describe Skates::ComponentConnection do
     
   end
 
+  describe "when resolving" do
+    it "should resolve records" do
+      Skates::ComponentConnection.resolve("xmpp2.superfeedr.com") do |res|
+        res["host"].should == "173.45.226.99"
+        true
+      end
+    end
+  end
+
 end

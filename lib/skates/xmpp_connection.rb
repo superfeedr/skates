@@ -32,30 +32,7 @@ module Skates
     # This will the host asynscrhonously and calls the block for each IP:Port pair.
     # if the block returns true, no other record will be tried. If it returns false, the block will be called with the next pair.
     def self.resolve(host, &block)
-      begin
-        srv = []
-        Resolv::DNS.open { |dns|
-          # If ruby version is too old and SRV is unknown, this will raise a NameError
-          # which is caught below
-          Skates.logger.debug {
-            "RESOLVING: #{srv_for_host(host)} (SRV)"
-          }
-          srv = dns.getresources(srv_for_host(host), Resolv::DNS::Resource::IN::SRV)
-        }
-        # Sort SRV records: lowest priority first, highest weight first
-        srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
-        # And now, for each record, let's try to connect.
-        srv.each { |record|
-          ip    = record.target.to_s
-          port  = Integer(record.port)
-          break if block.call({"host" => ip, "port" => port})
-        }
-        block.call(false) # bleh, we couldn't resolve to any valid. Too bad.
-      rescue NameError
-        Skates.logger.debug {
-          "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
-        }
-      end
+      block.call(false)
     end
     
     ##
@@ -79,15 +56,20 @@ module Skates
         params["port"] = params["port"] ? params["port"].to_i : 5222 
         _connect(params, handler)
       else
-        resolve(params["host"]) do |ip, port|
-          begin
-            params["host"] = ip
-            params["port"] = port
-            _connect(params, handler)
-            true # connected! Yay!
-          rescue NotConnected
-            # It will try the next pair of ip/port
-            false
+        resolve(params["host"]) do |host_info|
+          if host_info
+            begin
+              _connect(params.merge(host_info), handler)
+              true # connected! Yay!
+            rescue NotConnected
+              # It will try the next pair of ip/port
+              false
+            end
+          else
+            Skates.logger.error {
+              "Sorry, we couldn't resolve #{srv_for_host(params["host"])} to any host that accept XMPP connections. Please provide a params[\"host\"]."
+            }
+            EM.stop_event_loop
           end
         end
       end
