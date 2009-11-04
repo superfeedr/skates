@@ -6,8 +6,8 @@ describe Skates::ClientConnection do
   include SkatesSpecHelper
 
   before(:each) do
-    @params = {"jid" => "jid@server.tld", "password" => "password", "port" => 1234, "host" => "myhost.com"}
-    @client = Skates::ClientConnection.connect(@params, handler_mock) 
+    @params = {"jid" => "jid@server.tld", "password" => "password"}
+    @client = Skates::ClientConnection.connect(@params.merge({"host" => "0.0.0.0", "port" => 5222}), handler_mock) 
     @client.stub!(:send_xml).and_return(true) 
   end
   
@@ -18,37 +18,26 @@ describe Skates::ClientConnection do
   end
   
   describe "connect" do
-    it "should not try to resolve the dns if both the port and host are provided" do
-      Resolv::DNS.should_not_receive(:open)
-      @client = Skates::ClientConnection.connect(@params, handler_mock) 
+    
+    it "should not try to resolve the dns if a host IP has been provided" do
+      @params["host"] = "123.123.123.123"
+      Skates::ClientConnection.should_not_receive(:resolve)
+      Skates::ClientConnection.connect(@params, handler_mock) 
     end
     
-    describe "when host and port are not provided" do
-      before(:each) do
-        @params.delete("host")
-        @params.delete("port")
-        @srv = [
-          mock(Resolv::DNS::Resource, :priority => 10, :target => "xmpp.server.tld", :port => 1234),
-          mock(Resolv::DNS::Resource, :priority => 3, :target => "xmpp2.server.tld", :port => 4567),
-          mock(Resolv::DNS::Resource, :priority => 100, :target => "xmpp3.server.tld", :port => 8910)
-          ]
-        @mock_dns = mock(Object)
-        Resolv::DNS.stub!(:open).and_yield(@mock_dns)
-        @mock_dns.stub!(:getresources).with("_xmpp-client._tcp.server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
+    describe "when a host is provided, which is not an IP" do
+      it "should resolve it" do
+        @params["host"] = "domain.tld"
+        Skates::ClientConnection.should_receive(:resolve)
+        Skates::ClientConnection.connect(@params, handler_mock) 
       end
-      
-      it "should get resources assiated with _xmpp-client._tcp.host.tld}" do
-        Resolv::DNS.should_receive(:open).and_yield(@mock_dns)
-        @mock_dns.should_receive(:getresources).with("_xmpp-client._tcp.server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
-        @client = Skates::ClientConnection.connect(@params, handler_mock) 
+    end
+    
+    describe "when no host is provided, and no port either" do
+      it "should resolve the host to an IP" do
+        Skates::ClientConnection.should_receive(:resolve)
+        Skates::ClientConnection.connect(@params, handler_mock) 
       end
-      
-      it "should sort the srv records" do
-        @client = Skates::ClientConnection.connect(@params, handler_mock) 
-        @srv.map {|srv| srv.target }.should == ["xmpp2.server.tld", "xmpp.server.tld", "xmpp3.server.tld"]
-      end
-      
-      it "should try to connect to each record until one of the them actually connects" 
     end
   end
   

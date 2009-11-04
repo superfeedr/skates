@@ -16,40 +16,27 @@ module Skates
     end
 
     ##
-    # Connects the ClientConnection based on SRV records for the jid's domain, if no host or port has been specified.
-    # In any case, we give priority to the specified host and port.
+    # Connects the ClientConnection based on SRV records for the jid's domain, if no host has been provided.
+    # It will not resolve if params["host"] is an IP.
+    # And it will always use 
     def self.connect(params, handler = nil)
-      return super(params, handler) if params["host"] && params["port"]
-
-      begin
-        srv = []
-        Resolv::DNS.open { |dns|
-          # If ruby version is too old and SRV is unknown, this will raise a NameError
-          # which is caught below
-          host_from_jid = params["jid"].split("/").first.split("@").last
-          Skates.logger.debug {
-            "RESOLVING: _xmpp-client._tcp.#{host_from_jid} (SRV)"
-          }
-          srv = dns.getresources("_xmpp-client._tcp.#{host_from_jid}", Resolv::DNS::Resource::IN::SRV)
-        }
-        # Sort SRV records: lowest priority first, highest weight first
-        srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
-        # And now, for each record, let's try to connect.
-        srv.each { |record|
+      host = params["host"] ? params["host"] : params["jid"].split("/").first.split("@").last 
+      if host =~ /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ 
+        params["host"] = host
+        params["port"] = params["port"] ? params["port"].to_i : 5222 
+        super(params, handler)
+      else
+        resolve(host) do |ip, port|
           begin
-            params["host"] = record.target.to_s
-            params["port"] = Integer(record.port)
+            params["host"] = ip
+            params["port"] = port
             super(params, handler)
-            # Success
-            break
+            true # connected! Yay!
           rescue NotConnected
-            # Try next SRV record
+            # It will try the next pair of ip/port
+            false
           end
-        }
-      rescue NameError
-        Skates.logger.debug {
-          "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
-        }
+        end
       end
     end
 

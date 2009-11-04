@@ -29,6 +29,35 @@ module Skates
     @@max_stanza_size = 65535
     
     ##
+    # This will the host asynscrhonously and calls the block for each IP:Port pair.
+    # if the block returns true, no other record will be tried. If it returns false, the block will be called with the next pair.
+    def self.resolve(host, &block)
+      begin
+        srv = []
+        Resolv::DNS.open { |dns|
+          # If ruby version is too old and SRV is unknown, this will raise a NameError
+          # which is caught below
+          Skates.logger.debug {
+            "RESOLVING: _xmpp-client._tcp.#{host} (SRV)"
+          }
+          srv = dns.getresources("_xmpp-client._tcp.#{host}", Resolv::DNS::Resource::IN::SRV)
+        }
+        # Sort SRV records: lowest priority first, highest weight first
+        srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
+        # And now, for each record, let's try to connect.
+        srv.each { |record|
+          ip    = record.target.to_s
+          port  = Integer(record.port)
+          break if block.call(ip, port)
+        }
+      rescue NameError
+        Skates.logger.debug {
+          "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
+        }
+      end
+    end
+    
+    ##
     # Maximum Stanza size. Default is 65535
     def self.max_stanza_size
       @@max_stanza_size
