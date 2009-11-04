@@ -6,7 +6,7 @@ describe Skates::ComponentConnection do
   include SkatesSpecHelper
 
   before(:each) do
-    @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com"}
+    @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "0.0.0.0"}
     @component = Skates::ComponentConnection.connect(@params, handler_mock) 
     @component.stub!(:send_xml).and_return(true) 
   end

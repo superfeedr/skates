@@ -7,22 +7,47 @@ describe Skates::XmppConnection do
   
   before(:each) do
     @params = {"jid" => "jid@server", "password" => "password", "port" => 1234, "host" => "myhost.com"}
-    @connection = Skates::XmppConnection.connect(@params, handler_mock)
+    @connection = Skates::XmppConnection._connect(@params, handler_mock)
   end
   
-  describe "connect" do    
+  describe "_connect" do    
     it "should connect EventMachine and return it" do
       EventMachine.should_receive(:connect).with(@params["host"], @params["port"], Skates::XmppConnection, hash_including("handler" => handler_mock)).and_return(@connection)
-      Skates::XmppConnection.connect(@params, handler_mock).should == @connection
+      Skates::XmppConnection._connect(@params, handler_mock).should == @connection
     end
     
     it "should rescue Connection Errors" do
       EventMachine.stub!(:connect).with(@params["host"], @params["port"], Skates::XmppConnection, hash_including("handler" => handler_mock)).and_raise(RuntimeError)
       lambda {
-        Skates::XmppConnection.connect(@params, handler_mock)
+        Skates::XmppConnection._connect(@params, handler_mock)
       }.should raise_error(Skates::NotConnected)
     end
 
+  end
+  
+  describe "connect" do
+    describe "connect" do
+      it "should not try to resolve the dns if a host IP has been provided" do
+        @params["host"] = "123.123.123.123"
+        Skates::XmppConnection.should_not_receive(:resolve)
+        Skates::XmppConnection.connect(@params, handler_mock) 
+      end
+
+      describe "when a host is provided, which is not an IP" do
+        it "should resolve it" do
+          @params["host"] = "domain.tld"
+          Skates::XmppConnection.should_receive(:resolve)
+          Skates::XmppConnection.connect(@params, handler_mock) 
+        end
+      end
+
+      describe "when no host is provided, and no port either" do
+        it "should resolve the host to an IP" do
+          Skates::XmppConnection.should_receive(:resolve)
+          Skates::XmppConnection.connect(@params, handler_mock) 
+        end
+      end
+    end
   end
   
   describe "initialize" do
@@ -210,23 +235,23 @@ describe Skates::XmppConnection do
     
     it "should get resources assiated with _xmpp-client._tcp.host.tld}" do
       Resolv::DNS.should_receive(:open).and_yield(@mock_dns)
-      @mock_dns.should_receive(:getresources).with("_xmpp-client._tcp.server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
+      @mock_dns.should_receive(:getresources).with("server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
       Skates::XmppConnection.resolve("server.tld") 
     end
     
     it "should call the block with the highest priority" do
-      Skates::XmppConnection.resolve("xmpp.server.tld") do |ip, port|
-        ip.should == "12.13.14.16"
-        port.should == 4567
+      Skates::XmppConnection.resolve("xmpp.server.tld") do |params|
+        params["host"].should == "12.13.14.16"
+        params["port"].should == 4567
         true
       end 
     end
     
     it "should call the block as many times as needed if they're not connecting" do
-      conn = mock(Skates::XmppConnection, :connect => false)
-      conn.should_receive(:connect).exactly(3).times
+      conn = mock(Skates::XmppConnection, :_connect => false)
+      conn.should_receive(:_connect).exactly(3).times
       Skates::XmppConnection.resolve("xmpp.server.tld") do |ip, port|
-        conn.connect(ip, port)
+        conn._connect(ip, port)
       end
     end
     

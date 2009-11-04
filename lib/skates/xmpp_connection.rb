@@ -38,9 +38,9 @@ module Skates
           # If ruby version is too old and SRV is unknown, this will raise a NameError
           # which is caught below
           Skates.logger.debug {
-            "RESOLVING: _xmpp-client._tcp.#{host} (SRV)"
+            "RESOLVING: #{srv_for_host(host)} (SRV)"
           }
-          srv = dns.getresources("_xmpp-client._tcp.#{host}", Resolv::DNS::Resource::IN::SRV)
+          srv = dns.getresources(srv_for_host(host), Resolv::DNS::Resource::IN::SRV)
         }
         # Sort SRV records: lowest priority first, highest weight first
         srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
@@ -48,8 +48,9 @@ module Skates
         srv.each { |record|
           ip    = record.target.to_s
           port  = Integer(record.port)
-          break if block.call(ip, port)
+          break if block.call({"host" => ip, "port" => port})
         }
+        block.call(false) # bleh, we couldn't resolve to any valid. Too bad.
       rescue NameError
         Skates.logger.debug {
           "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
@@ -74,16 +75,21 @@ module Skates
     # It passes itself (as handler) and the configuration
     # This can very well be overwritten by subclasses.
     def self.connect(params, handler)
-      Skates.logger.debug {
-        "CONNECTING TO #{params["host"]}:#{params["port"]} with #{handler.inspect} as connection handler" # Very low level Logging
-      }
-      begin
-        EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
-      rescue RuntimeError
-        Skates.logger.error {
-          "CONNECTION ERROR : #{$!.class} => #{$!}" # Very low level Logging
-        }
-        raise NotConnected
+      if params["host"] =~ /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ 
+        params["port"] = params["port"] ? params["port"].to_i : 5222 
+        _connect(params, handler)
+      else
+        resolve(params["host"]) do |ip, port|
+          begin
+            params["host"] = ip
+            params["port"] = port
+            _connect(params, handler)
+            true # connected! Yay!
+          rescue NotConnected
+            # It will try the next pair of ip/port
+            false
+          end
+        end
       end
     end
 
@@ -196,6 +202,26 @@ module Skates
         }
       end
     end
+  
+    def self.srv_for_host(host)
+      "#{host}"
+    end
+  
+    def self._connect(params, handler)
+      Skates.logger.debug {
+        "CONNECTING TO #{params["host"]}:#{params["port"]} with #{handler.inspect} as connection handler" # Very low level Logging
+      }
+      begin
+        EventMachine.connect(params["host"], params["port"], self, params.merge({"handler" => handler}))
+      rescue RuntimeError
+        Skates.logger.error {
+          "CONNECTION ERROR : #{$!.class} => #{$!}" # Very low level Logging
+        }
+        raise NotConnected
+      end
+      
+    end
+    
   end
 
 end

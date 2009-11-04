@@ -20,24 +20,12 @@ module Skates
     # It will not resolve if params["host"] is an IP.
     # And it will always use 
     def self.connect(params, handler = nil)
-      host = params["host"] ? params["host"] : params["jid"].split("/").first.split("@").last 
-      if host =~ /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/ 
-        params["host"] = host
-        params["port"] = params["port"] ? params["port"].to_i : 5222 
-        super(params, handler)
-      else
-        resolve(host) do |ip, port|
-          begin
-            params["host"] = ip
-            params["port"] = port
-            super(params, handler)
-            true # connected! Yay!
-          rescue NotConnected
-            # It will try the next pair of ip/port
-            false
-          end
-        end
-      end
+      params["host"] ||= params["jid"].split("/").first.split("@").last 
+      super(params, handler)
+    end
+
+    def self.srv_for_host(host)
+      "_xmpp-client._tcp.#{host}"
     end
 
     ##

@@ -4,6 +4,11 @@ module Skates
   # Upon stanza reception, and depending on the status (connected... etc), this component will handle or forward the stanzas.
   class ComponentConnection < XmppConnection
     
+    def self.connect(params, handler)
+      params["host"] ||= params["jid"]
+      super(params, handler)
+    end
+    
     ##
     # Creates a new ComponentConnection and waits for data in the stream
     def initialize(params)

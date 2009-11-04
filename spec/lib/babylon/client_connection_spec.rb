@@ -18,27 +18,7 @@ describe Skates::ClientConnection do
   end
   
   describe "connect" do
-    
-    it "should not try to resolve the dns if a host IP has been provided" do
-      @params["host"] = "123.123.123.123"
-      Skates::ClientConnection.should_not_receive(:resolve)
-      Skates::ClientConnection.connect(@params, handler_mock) 
-    end
-    
-    describe "when a host is provided, which is not an IP" do
-      it "should resolve it" do
-        @params["host"] = "domain.tld"
-        Skates::ClientConnection.should_receive(:resolve)
-        Skates::ClientConnection.connect(@params, handler_mock) 
-      end
-    end
-    
-    describe "when no host is provided, and no port either" do
-      it "should resolve the host to an IP" do
-        Skates::ClientConnection.should_receive(:resolve)
-        Skates::ClientConnection.connect(@params, handler_mock) 
-      end
-    end
+
   end
   
   describe "stream_stanza" do
