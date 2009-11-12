@@ -1,0 +1,456 @@
+11/11 18:44 (27097) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27097) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27097) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27097) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27097) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27097) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27097) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27097) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:44 (27097) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:44 (27097) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:44 (27097) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:44 (27097) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f38204 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f32278 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTED
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f2e344 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f2b090 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTED
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f27468 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTED
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f20320 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTED
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f1aab0 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f15ab0 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f0f674 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f09530 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f03be4 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f00a0c @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTED
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80b932ac @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: RESOLVING: xmpp2.superfeedr.com 
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b891f8 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b7b3dc @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: RESOLVING: server.tld (SRV)
+11/11 18:44 (27097) [DEBUG] :: Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! 
+undefined method `call' for nil:NilClass : ./spec/lib/skates/../../../lib/skates/client_connection.rb:44:in `resolve'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:41:in `each'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:41:in `resolve'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `call'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:113:in `invoke'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:112:in `message_received'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:157:in `open'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:30:in `resolve'
+./spec/lib/skates/client_connection_spec.rb:40
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `execute'
+/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:37:in `execute'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:207:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:103:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:23:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/options.rb:127:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/command_line.rb:9:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/bin/spec:4
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b699ac @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+11/11 18:44 (27097) [DEBUG] :: Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! 
+undefined method `[]' for false:FalseClass : ./spec/lib/skates/client_connection_spec.rb:45
+./spec/lib/skates/../../../lib/skates/client_connection.rb:46:in `call'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:46:in `resolve'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `call'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:113:in `invoke'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:110:in `message_received'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:157:in `open'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:30:in `resolve'
+./spec/lib/skates/client_connection_spec.rb:44
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `execute'
+/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:37:in `execute'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:207:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:103:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:23:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/options.rb:127:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/command_line.rb:9:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/bin/spec:4
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b4fc64 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b34c48 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b2cafc @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTED
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81291a68 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8127eaf8 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81275174 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8125b42c @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81249768 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8123d990 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81234b24 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8122fe1c @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81221c90 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8121bf48 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8120d880 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811f9e34 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811f20a8 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811e8e40 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811e4ae8 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811db858 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811d7410 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811d0048 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811cba98 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811c6f70 @name=Object> as connection handler
+11/11 18:44 (27097) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811c083c @name=Object> as connection handler
+11/11 18:44 (27098) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27098) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27098) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27098) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27098) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27098) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27098) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27099) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27099) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27099) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27099) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27099) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27099) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27099) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27100) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27100) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27100) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27100) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27100) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27100) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27100) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27101) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27101) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27101) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27101) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27101) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27101) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27101) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27102) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27102) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27102) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27102) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27102) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27102) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27102) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27103) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27103) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27103) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27103) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27103) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27103) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27103) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27104) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27104) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27104) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27104) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27104) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27104) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27104) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27105) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27105) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27105) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27105) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27105) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27105) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27105) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27106) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27106) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27106) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27106) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27106) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27106) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27106) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:44 (27107) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:44 (27107) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27107) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27107) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27107) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27107) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:44 (27107) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27108) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27108) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27108) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27108) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27108) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27108) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27108) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27109) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27109) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27109) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27109) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27109) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27109) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27109) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27110) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27110) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27110) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27110) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27110) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27110) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27110) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27111) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27111) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27111) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27111) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27111) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27111) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27111) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27112) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27112) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27112) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27112) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27112) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27112) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27112) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27113) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27113) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27113) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27113) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27113) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27113) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27113) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27114) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27114) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27114) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27114) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27114) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27114) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27114) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27115) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27115) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27115) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27115) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27115) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27115) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27115) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27116) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27116) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27116) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27116) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27116) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27116) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27116) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27117) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27117) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27117) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27117) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27117) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27117) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27117) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27118) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27118) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27118) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27118) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27118) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27118) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27118) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27119) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27119) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27119) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27119) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27119) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27119) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27119) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27120) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27120) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27120) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27120) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27120) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27120) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27120) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27121) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27121) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27121) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27121) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27121) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27121) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27121) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27122) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27122) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27122) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27122) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27122) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27122) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27122) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27123) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27123) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27123) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27123) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27123) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27123) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27123) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27124) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27124) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27124) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27124) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27124) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27124) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27124) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27125) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27125) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27125) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27125) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27125) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27125) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27125) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27126) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27126) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27126) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27126) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27126) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27126) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27126) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27127) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27127) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27127) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27127) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27127) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27127) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27127) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27128) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27128) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27128) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27128) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27128) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27128) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27128) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27129) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27129) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27129) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27129) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27129) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27129) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27129) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27130) [ERROR] :: Observer can only be Skates::Base::Controller
+11/11 18:45 (27130) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27130) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27130) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27130) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27130) [DEBUG] :: Added MyController to the list of Connection Observers
+11/11 18:45 (27130) [DEBUG] :: Added MyObserver to the list of Connection Observers
+11/11 18:45 (27130) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:45 (27130) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:45 (27130) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:45 (27130) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:45 (27130) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f496a8 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f468a4 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTED
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f41f0c @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f3af2c @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTED
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f36be8 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTED
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f2fe4c @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTED
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f2beb4 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f293d0 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f23bc4 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f1ee94 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f19908 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f14d2c @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTED
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x80f0b9e8 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: RESOLVING: xmpp2.superfeedr.com 
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80f05818 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80f01c04 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: RESOLVING: server.tld (SRV)
+11/11 18:45 (27130) [DEBUG] :: Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! 
+undefined method `call' for nil:NilClass : ./spec/lib/skates/../../../lib/skates/client_connection.rb:44:in `resolve'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:41:in `each'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:41:in `resolve'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `call'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:113:in `invoke'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:112:in `message_received'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:157:in `open'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:30:in `resolve'
+./spec/lib/skates/client_connection_spec.rb:40
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `execute'
+/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:37:in `execute'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:207:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:103:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:23:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/options.rb:127:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/command_line.rb:9:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/bin/spec:4
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b80bac @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+11/11 18:45 (27130) [DEBUG] :: Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! 
+undefined method `[]' for false:FalseClass : ./spec/lib/skates/client_connection_spec.rb:45
+./spec/lib/skates/../../../lib/skates/client_connection.rb:46:in `call'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:46:in `resolve'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `call'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:162:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:158:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/message_expectation.rb:113:in `invoke'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:110:in `message_received'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/mocks/proxy.rb:157:in `open'
+./spec/lib/skates/../../../lib/skates/client_connection.rb:30:in `resolve'
+./spec/lib/skates/client_connection_spec.rb:44
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:40:in `execute'
+/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_methods.rb:37:in `execute'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:207:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:205:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/example/example_group_methods.rb:103:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:23:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/options.rb:127:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/lib/spec/runner/command_line.rb:9:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.2.8/bin/spec:4
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b6dd68 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b50920 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x80b482d4 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTED
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8129aa00 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8128ff9c @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8127dd10 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8126b78c @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81257958 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x812428c8 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8123c4dc @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x812342dc @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8122bd08 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81220868 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81218348 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8120a2c0 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811f9128 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811f0348 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811e76d0 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811e3abc @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811da458 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811d5138 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811cec84 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811cadf0 @name=Object> as connection handler
+11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811c3258 @name=Object> as connection handler

@@ -17,9 +17,7 @@ describe Skates::Runner do
     end
 
     it "should add the environment log file as an outputter to skates's default log" do
-      @logger = Log4r::RollingFileOutputter.new("#{Skates.environment}", :filename => "log/#{Skates.environment}.log", :trunc => false)
-      Log4r::RollingFileOutputter.should_receive(:new).with("test", :filename => "log/test.log", :trunc => false).and_return(@logger)
-      Skates.logger.should_receive(:add).with(@logger)
+      Skates.should_receive(:reopen_logs)  
       Skates::Runner.prepare("test")
     end
 

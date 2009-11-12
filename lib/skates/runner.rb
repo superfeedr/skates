@@ -11,17 +11,7 @@ module Skates
       config_file = File.open('config/config.yaml')
       Skates.config = YAML.load(config_file)[Skates.environment]
       
-      # Add an outputter to the logger
-      log_file = Log4r::RollingFileOutputter.new("#{Skates.environment}", :filename => "log/#{Skates.environment}.log", :trunc => false)
-      case Skates.environment
-      when "production"
-        log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
-      when "development"
-        log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
-      else
-        log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
-      end
-      Skates.logger.add(log_file)
+      Skates.reopen_logs
       
       # Requiring all models, stanza, controllers
       ['app/models/*.rb', 'app/stanzas/*.rb', 'app/controllers/*_controller.rb'].each do |dir|

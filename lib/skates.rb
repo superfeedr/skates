@@ -80,10 +80,30 @@ module Skates
   # Returns a shared logger for this component.
   def self.logger
     unless self.class_variable_defined?("@@logger")
-      @@logger = Log4r::Logger.new("Skates")
-      @@logger.add(Log4r::Outputter.stdout) if Skates.environment == "development"
+      reopen_logs
     end
     @@logger
+  end
+  
+  ##
+  # Re-opens the logs
+  # In "development" environment, the log will be on stdout
+  def self.reopen_logs
+    # Open a new logger
+    logger = Log4r::Logger.new("Skates") 
+    logger.add(Log4r::Outputter.stdout) if Skates.environment == "development"
+    log_file = Log4r::RollingFileOutputter.new("#{Skates.environment}", :filename => "log/#{Skates.environment}.log", :trunc => false)
+    case Skates.environment
+    when "production"
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+    when "development"
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+    else
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+    end
+    logger.add(log_file)
+    # Set up the variable.
+    @@logger = logger
   end
 
   ##
