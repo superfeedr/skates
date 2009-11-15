@@ -16,7 +16,8 @@ module Skates
       include SAXMachine
       
       def initialize(xml = nil)
-        parse(xml.to_s)
+        @xml = xml
+        parse(xml.to_xml)
       end
     end
   end
