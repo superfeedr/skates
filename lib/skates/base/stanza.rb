@@ -14,6 +14,7 @@ module Skates
     #
     class Stanza
       include SAXMachine
+      attr_reader :xml
       
       def initialize(xml = nil)
         @xml = xml
