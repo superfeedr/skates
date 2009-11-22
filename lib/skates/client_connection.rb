@@ -20,7 +20,7 @@ module Skates
     # It will not resolve if params["host"] is an IP.
     # And it will always use 
     def self.connect(params, handler = nil)
-      params["host"] ||= params["jid"].split("/").first.split("@").last 
+      params["host"] ||= "_xmpp-client._tcp." + params["jid"].split("/").first.split("@").last 
       super(params, handler)
     end
 
@@ -30,20 +30,45 @@ module Skates
       Resolv::DNS.open { |dns|
         # If ruby version is too old and SRV is unknown, this will raise a NameError
         # which is caught below
-        Skates.logger.debug {
-          "RESOLVING: #{srv_for_host(host)} (SRV)"
-        }
         begin
-          srv = dns.getresources("_xmpp-client._tcp.#{host}", Resolv::DNS::Resource::IN::SRV)
+          found = false
+          
+          Skates.logger.debug {
+            "RESOLVING: #{host} (SRV)"
+          }
+          srv = dns.getresources(host, Resolv::DNS::Resource::IN::SRV)
           # Sort SRV records: lowest priority first, highest weight first
           srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
+          Skates.logger.debug {
+            "Found #{srv.count} SRV records for : #{host} : #{srv.inspect}"
+          }
           # And now, for each record, let's try to connect.
           srv.each { |record|
+            Skates.logger.debug {
+              "Trying connection with : #{record.target.to_s}:#{record.port}"
+            }
             ip    = record.target.to_s
             port  = Integer(record.port)
-            break if block.call({"host" => ip, "port" => port}) 
+            if block.call({"host" => ip, "port" => port}) 
+              found = true
+              break
+            end
           }
-          block.call(false) # bleh, we couldn't resolve to any valid. Too bad.
+          if !found
+            # We failover to solving A record with default port.
+            Skates.logger.debug {
+              "RESOLVING: #{host} (A record)"
+            }
+            records = dns.getresources(host, Resolv::DNS::Resource::IN::A)
+            records.each do |record|
+              ip = record.address.to_s
+              if block.call({"host" => ip,  "port" => Integer(Skates.config["port"]) || 5222}) 
+                found = true
+                break
+              end
+            end
+            block.call(false) unless found# bleh, we couldn't resolve to host that accept connections. Too bad.
+          end
         rescue NameError
           Skates.logger.debug {
             "Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! \n#{$!} : #{$!.backtrace.join("\n")}"
