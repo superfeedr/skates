@@ -13,7 +13,7 @@ begin
     gem.add_dependency('eventmachine', ">= 0.12.10")
     gem.add_dependency('log4r')
     gem.add_dependency('superfeedr-nokogiri', ">= 1.4.0")
-    gem.add_dependency('julien51-sax-machine', ">= 0.0.20.2")
+    gem.add_dependency('julien51-sax-machine', ">= 0.0.22")
     gem.add_dependency('templater')
     gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "superfeedr-nokogiri", "julien51-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
     gem.executables = "skates"
