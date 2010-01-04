@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/julien51/skates}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "superfeedr-nokogiri", "superfeedr-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
+  s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "superfeedr-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv", "activesupport"]
   s.rubyforge_project = %q{skates}
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Skates is a framework to create EventMachine based XMPP External Components in Ruby.}
@@ -82,20 +82,20 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<eventmachine>, [">= 0.12.10"])
       s.add_runtime_dependency(%q<log4r>, [">= 0"])
-      s.add_runtime_dependency(%q<superfeedr-nokogiri>, [">= 1.4.0"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 1.4.1"])
       s.add_runtime_dependency(%q<superfeedr-sax-machine>, [">= 0.0.22"])
       s.add_runtime_dependency(%q<templater>, [">= 0"])
     else
       s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
       s.add_dependency(%q<log4r>, [">= 0"])
-      s.add_dependency(%q<superfeedr-nokogiri>, [">= 1.4.0"])
+      s.add_dependency(%q<nokogiri>, [">= 1.4.1"])
       s.add_dependency(%q<superfeedr-sax-machine>, [">= 0.0.22"])
       s.add_dependency(%q<templater>, [">= 0"])
     end
   else
     s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
     s.add_dependency(%q<log4r>, [">= 0"])
-    s.add_dependency(%q<superfeedr-nokogiri>, [">= 1.4.0"])
+    s.add_dependency(%q<nokogiri>, [">= 1.4.1"])
     s.add_dependency(%q<superfeedr-sax-machine>, [">= 0.0.22"])
     s.add_dependency(%q<templater>, [">= 0"])
   end
