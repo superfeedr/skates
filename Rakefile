@@ -19,6 +19,7 @@ begin
     gem.executables = "skates"
     gem.files = [ "bin/skates", 
                   "lib/skates.rb", 
+                  "lib/skates/ext/array.rb", 
                   "lib/skates/base/controller.rb", 
                   "lib/skates/base/view.rb", 
                   "lib/skates/base/stanza.rb", 

@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
      "lib/skates/base/view.rb",
      "lib/skates/client_connection.rb",
      "lib/skates/component_connection.rb",
+     "lib/skates/ext/array.rb",
      "lib/skates/generator.rb",
      "lib/skates/router.rb",
      "lib/skates/router/dsl.rb",
