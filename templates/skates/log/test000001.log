@@ -454,3 +454,145 @@ undefined method `[]' for false:FalseClass : ./spec/lib/skates/client_connection
 11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811cec84 @name=Object> as connection handler
 11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811cadf0 @name=Object> as connection handler
 11/11 18:45 (27130) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811c3258 @name=Object> as connection handler
+23/01 09:52 (72805) [ERROR] :: Observer can only be Skates::Base::Controller
+23/01 09:52 (72805) [DEBUG] :: Added MyController to the list of Connection Observers
+23/01 09:52 (72805) [DEBUG] :: Added MyController to the list of Connection Observers
+23/01 09:52 (72805) [DEBUG] :: Added MyController to the list of Connection Observers
+23/01 09:52 (72805) [DEBUG] :: Added MyController to the list of Connection Observers
+23/01 09:52 (72805) [DEBUG] :: Added MyController to the list of Connection Observers
+23/01 09:52 (72805) [DEBUG] :: Added MyObserver to the list of Connection Observers
+23/01 09:52 (72805) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+23/01 09:52 (72805) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+23/01 09:52 (72805) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+23/01 09:52 (72805) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+23/01 09:52 (72805) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x81214900 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x81211bc4 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x8120d27c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x8120633c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811fdee4 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811f715c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811ef8e4 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811e8f94 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811e0538 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811d93f0 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811d14d4 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811c8c1c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811bc278 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: RESOLVING: xmpp2.superfeedr.com 
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81198490 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811917a8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: RESOLVING: server.tld (SRV)
+23/01 09:52 (72805) [DEBUG] :: Found 3 SRV records for : server.tld : [#<Spec::Mocks::Mock:0x8118c71c @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x8118e814 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x81189a80 @name=Resolv::DNS::Resource>]
+23/01 09:52 (72805) [DEBUG] :: Trying connection with : 12.13.14.16:4567
+23/01 09:52 (72805) [DEBUG] :: Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! 
+undefined method `call' for nil:NilClass : /Users/julien/repos/skates/lib/skates/client_connection.rb:52:in `resolve'
+/Users/julien/repos/skates/lib/skates/client_connection.rb:46:in `each'
+/Users/julien/repos/skates/lib/skates/client_connection.rb:46:in `resolve'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:178:in `call'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:178:in `eval_block'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:169:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:165:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:165:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:120:in `invoke'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/proxy.rb:127:in `invoke_expectation'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/proxy.rb:111:in `message_received'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/proxy.rb:177:in `open'
+/Users/julien/repos/skates/lib/skates/client_connection.rb:30:in `resolve'
+/Users/julien/repos/skates/spec/lib/skates/client_connection_spec.rb:40
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `execute'
+/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:37:in `execute'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:214:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:103:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:23:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/options.rb:152:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/command_line.rb:9:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/bin/spec:5
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8117894c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+23/01 09:52 (72805) [DEBUG] :: Found 3 SRV records for : xmpp.server.tld : [#<Spec::Mocks::Mock:0x81172ee8 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x811751ac @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x8116f310 @name=Resolv::DNS::Resource>]
+23/01 09:52 (72805) [DEBUG] :: Trying connection with : 12.13.14.16:4567
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81169e60 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+23/01 09:52 (72805) [DEBUG] :: Found 3 SRV records for : xmpp.server.tld : [#<Spec::Mocks::Mock:0x8116665c @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x81167d90 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x811646e0 @name=Resolv::DNS::Resource>]
+23/01 09:52 (72805) [DEBUG] :: Trying connection with : 12.13.14.16:4567
+23/01 09:52 (72805) [DEBUG] :: Trying connection with : 12.13.14.15:1234
+23/01 09:52 (72805) [DEBUG] :: Trying connection with : 12.13.14.17:8910
+23/01 09:52 (72805) [DEBUG] :: RESOLVING: xmpp.server.tld (A record)
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8114f2b8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81147c98 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81142090 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8113ba9c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81135de0 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81130a5c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81129b80 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811256e8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8111fd88 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811198ac @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8110fe60 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81107788 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810ff204 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810f6e88 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810f360c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810eec38 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810ea908 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810e6dbc @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810e2f64 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810df3f0 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810db318 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810d7934 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810d3adc @name=Object> as connection handler
+23/01 09:52 (72805) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+23/01 09:52 (72805) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+23/01 09:52 (72805) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+23/01 09:52 (72805) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+23/01 09:52 (72805) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+23/01 09:52 (72805) [INFO] :: RENDERING : app/views/skates::base::/action.xml.builder
+23/01 09:52 (72805) [INFO] :: RENDERING : path_to_a_file
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810acf68 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810acf68 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810aa4d4 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810aa4d4 @name=Object> as connection handler
+23/01 09:52 (72805) [ERROR] :: CONNECTION ERROR : RuntimeError => RuntimeError
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a6d98 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO 123.123.123.123:1234 with #<Spec::Mocks::Mock:0x810a6d98 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a3cd8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a0f4c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x8109e350 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x8109aa98 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81098b58 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81096c18 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81094cd8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81092d48 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812d8030 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812ce300 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812c8194 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812babe8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTED
+23/01 09:52 (72805) [DEBUG] :: DISCONNECTED
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812b182c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: PARSED : <stream:error/>
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812ac188 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: PARSED : <message/>
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812a7c78 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812a13dc @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x8129b6f8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81298de0 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: SENDING : hello world
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81295c6c @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812917e8 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x8128e0c0 @name=Object> as connection handler
+23/01 09:52 (72805) [DEBUG] :: RECEIVED : <hello>hello world!</hello>

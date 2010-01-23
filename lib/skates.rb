@@ -3,7 +3,6 @@ $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname
 
 require 'eventmachine'
 require 'log4r'
-require 'activesupport'
 require 'nokogiri'
 require 'yaml'
 require 'fileutils'
@@ -14,6 +13,7 @@ require 'resolv'
 require 'templater'
 require 'cgi'
 
+require 'skates/ext/array.rb'
 require 'skates/xmpp_connection'
 require 'skates/xmpp_parser'
 require 'skates/component_connection'
