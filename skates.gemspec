@@ -84,20 +84,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<eventmachine>, [">= 0.12.10"])
       s.add_runtime_dependency(%q<log4r>, [">= 0"])
       s.add_runtime_dependency(%q<nokogiri>, [">= 1.4.1"])
-      s.add_runtime_dependency(%q<superfeedr-sax-machine>, [">= 0.0.29"])
+      s.add_runtime_dependency(%q<superfeedr-sax-machine>, [">= 0.0.23"])
       s.add_runtime_dependency(%q<templater>, [">= 0"])
     else
       s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
       s.add_dependency(%q<log4r>, [">= 0"])
       s.add_dependency(%q<nokogiri>, [">= 1.4.1"])
-      s.add_dependency(%q<superfeedr-sax-machine>, [">= 0.0.29"])
+      s.add_dependency(%q<superfeedr-sax-machine>, [">= 0.0.23"])
       s.add_dependency(%q<templater>, [">= 0"])
     end
   else
     s.add_dependency(%q<eventmachine>, [">= 0.12.10"])
     s.add_dependency(%q<log4r>, [">= 0"])
     s.add_dependency(%q<nokogiri>, [">= 1.4.1"])
-    s.add_dependency(%q<superfeedr-sax-machine>, [">= 0.0.29"])
+    s.add_dependency(%q<superfeedr-sax-machine>, [">= 0.0.23"])
     s.add_dependency(%q<templater>, [">= 0"])
   end
 end
