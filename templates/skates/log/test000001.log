@@ -1,0 +1,142 @@
+05/02 00:53 (19500) [ERROR] :: Observer can only be Skates::Base::Controller
+05/02 00:53 (19500) [DEBUG] :: Added MyController to the list of Connection Observers
+05/02 00:53 (19500) [DEBUG] :: Added MyController to the list of Connection Observers
+05/02 00:53 (19500) [DEBUG] :: Added MyController to the list of Connection Observers
+05/02 00:53 (19500) [DEBUG] :: Added MyController to the list of Connection Observers
+05/02 00:53 (19500) [DEBUG] :: Added MyController to the list of Connection Observers
+05/02 00:53 (19500) [DEBUG] :: Added MyObserver to the list of Connection Observers
+05/02 00:53 (19500) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+05/02 00:53 (19500) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+05/02 00:53 (19500) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+05/02 00:53 (19500) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+05/02 00:53 (19500) [INFO] :: ROUTING TO Skates::Base::Controller::action with Spec::Mocks::Mock
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x81210274 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x8120b5e4 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x81204780 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811fc8c8 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811f6324 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811ed8a0 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811e4ae8 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811ddb08 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811d4904 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811cd424 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811c14d0 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811b9c08 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:1234 with #<Spec::Mocks::Mock:0x811b1a6c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: RESOLVING: xmpp2.superfeedr.com 
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811ad0e8 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811a98f8 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: RESOLVING: server.tld (SRV)
+05/02 00:53 (19500) [DEBUG] :: Found 3 SRV records for : server.tld : [#<Spec::Mocks::Mock:0x811a2f08 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x811a4dbc @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x811a19b4 @name=Resolv::DNS::Resource>]
+05/02 00:53 (19500) [DEBUG] :: Trying connection with : 12.13.14.16:4567
+05/02 00:53 (19500) [DEBUG] :: Resolv::DNS does not support SRV records. Please upgrade to ruby-1.8.3 or later! 
+undefined method `call' for nil:NilClass : /Users/julien/repos/skates/lib/skates/client_connection.rb:52:in `resolve'
+/Users/julien/repos/skates/lib/skates/client_connection.rb:46:in `each'
+/Users/julien/repos/skates/lib/skates/client_connection.rb:46:in `resolve'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:178:in `call'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:178:in `eval_block'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:169:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:165:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:165:in `invoke_with_yield'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/message_expectation.rb:120:in `invoke'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/proxy.rb:127:in `invoke_expectation'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/proxy.rb:111:in `message_received'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/mocks/proxy.rb:177:in `open'
+/Users/julien/repos/skates/lib/skates/client_connection.rb:30:in `resolve'
+/Users/julien/repos/skates/spec/lib/skates/client_connection_spec.rb:40
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `execute'
+/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:37:in `execute'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:214:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:103:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:23:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/options.rb:152:in `run_examples'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/lib/spec/runner/command_line.rb:9:in `run'
+/Library/Ruby/Gems/1.8/gems/rspec-1.3.0/bin/spec:5
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81198b20 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+05/02 00:53 (19500) [DEBUG] :: Found 3 SRV records for : xmpp.server.tld : [#<Spec::Mocks::Mock:0x81194138 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x81195f60 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x8119202c @name=Resolv::DNS::Resource>]
+05/02 00:53 (19500) [DEBUG] :: Trying connection with : 12.13.14.16:4567
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811856b0 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: RESOLVING: xmpp.server.tld (SRV)
+05/02 00:53 (19500) [DEBUG] :: Found 3 SRV records for : xmpp.server.tld : [#<Spec::Mocks::Mock:0x8117cc54 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x811817b8 @name=Resolv::DNS::Resource>, #<Spec::Mocks::Mock:0x8117acd8 @name=Resolv::DNS::Resource>]
+05/02 00:53 (19500) [DEBUG] :: Trying connection with : 12.13.14.16:4567
+05/02 00:53 (19500) [DEBUG] :: Trying connection with : 12.13.14.15:1234
+05/02 00:53 (19500) [DEBUG] :: Trying connection with : 12.13.14.17:8910
+05/02 00:53 (19500) [DEBUG] :: RESOLVING: xmpp.server.tld (A record)
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8116bf08 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8116890c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x811613a0 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8115c3c8 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81153764 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8114df58 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81147b1c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8113eb5c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81139378 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81131524 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8112bcdc @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81125b84 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8112079c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8111c1ec @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81116184 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x8110b34c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x81100a3c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810f7f2c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810f081c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810ebd44 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810e7dc0 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810e4648 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 0.0.0.0:5222 with #<Spec::Mocks::Mock:0x810e0818 @name=Object> as connection handler
+05/02 00:53 (19500) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+05/02 00:53 (19500) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+05/02 00:53 (19500) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+05/02 00:53 (19500) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+05/02 00:53 (19500) [INFO] :: RENDERING : app/views/skates::base::/subscribe.xml.builder
+05/02 00:53 (19500) [INFO] :: RENDERING : app/views/skates::base::/action.xml.builder
+05/02 00:53 (19500) [INFO] :: RENDERING : path_to_a_file
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810ba244 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810ba244 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810b77b0 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810b77b0 @name=Object> as connection handler
+05/02 00:53 (19500) [ERROR] :: CONNECTION ERROR : RuntimeError => RuntimeError
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810b4074 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO 123.123.123.123:1234 with #<Spec::Mocks::Mock:0x810b4074 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810b0fb4 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810ae228 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810ab654 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a7e64 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a5f24 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a3fe4 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a20a4 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x810a0164 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812db190 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812d289c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812caee4 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812c1844 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTED
+05/02 00:53 (19500) [DEBUG] :: DISCONNECTED
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812b8208 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: PARSED : <stream:error/>
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812b0a94 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: PARSED : <message/>
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812ab738 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812a78f4 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x812a462c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x8129bb44 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: SENDING : hello world
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x8129800c @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81293da4 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: CONNECTING TO myhost.com:1234 with #<Spec::Mocks::Mock:0x81290988 @name=Object> as connection handler
+05/02 00:53 (19500) [DEBUG] :: RECEIVED : <hello>hello world!</hello>

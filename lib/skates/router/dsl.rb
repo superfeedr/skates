@@ -13,8 +13,8 @@ module Skates
       end
 
       # Match an xpath.
-      def xpath(path)
-        @routes << {"xpath" => path}
+      def xpath(path, namespaces = {})
+        @routes << {"xpath" => [path, namespaces]}
         self
       end
 
@@ -24,16 +24,6 @@ module Skates
         raise OutOfOrder unless route.is_a?(Route) # check that this is in the right order
         route.priority = n
         self
-      end
-
-      # Match a disco_info query.
-      def disco_info(node = nil)
-        disco_for(:info, node)
-      end
-
-      # Match a disco_items query.
-      def disco_items(node = nil)
-        disco_for(:items, node)
       end
 
       # Map a route to a specific controller and action.

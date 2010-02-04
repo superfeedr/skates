@@ -23,8 +23,8 @@ describe Skates::Route do
   describe ".accepts?" do
     it "should check the stanza with Xpath" do
       mock_stanza = mock(Object)
-      route = Skates::Route.new("controller" => "bar", "action" => "bar", "xpath" => "//message")
-      mock_stanza.should_receive(:xpath).with(route.xpath, instance_of(Skates::XpathHelper)).and_return([])
+      route = Skates::Route.new("controller" => "bar", "action" => "bar", "xpath" => ["//message", {}])
+      mock_stanza.should_receive(:xpath).with("//message", {}).and_return([])
       route.accepts?(mock_stanza)
     end
   end

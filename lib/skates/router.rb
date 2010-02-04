@@ -93,7 +93,7 @@ module Skates
     ##
     # Checks that the route matches the stanzas and calls the the action on the controller.
     def accepts?(stanza)
-      stanza.xpath(@xpath, XpathHelper.new).empty? ? false : self
+      stanza.xpath(*@xpath).empty? ? false : self
     end
     
   end
