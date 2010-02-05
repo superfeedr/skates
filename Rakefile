@@ -31,7 +31,6 @@ begin
                   "lib/skates/generator.rb", 
                   "lib/skates/xmpp_connection.rb", 
                   "lib/skates/xmpp_parser.rb", 
-                  "lib/skates/xpath_helper.rb", 
                   "LICENSE", 
                   "Rakefile", 
                   "README.rdoc", 

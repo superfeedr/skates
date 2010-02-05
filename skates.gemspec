@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{skates}
-  s.version = "0.2.12"
+  s.version = "0.2.13"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["julien Genestoux"]
-  s.date = %q{2010-02-03}
+  s.date = %q{2010-02-05}
   s.default_executable = %q{skates}
   s.email = %q{julien.genestoux@gmail.com}
   s.executables = ["skates"]
@@ -35,7 +35,6 @@ Gem::Specification.new do |s|
      "lib/skates/runner.rb",
      "lib/skates/xmpp_connection.rb",
      "lib/skates/xmpp_parser.rb",
-     "lib/skates/xpath_helper.rb",
      "templates/skates/app/controllers/controller.rb",
      "templates/skates/app/stanzas/stanza.rb",
      "templates/skates/app/views/view.rb",
@@ -70,7 +69,6 @@ Gem::Specification.new do |s|
      "spec/lib/skates/runner_spec.rb",
      "spec/lib/skates/xmpp_connection_spec.rb",
      "spec/lib/skates/xmpp_parser_spec.rb",
-     "spec/lib/skates/xpath_helper_spec.rb",
      "spec/spec_helper.rb",
      "test/skates_test.rb",
      "test/test_helper.rb"
