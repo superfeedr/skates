@@ -121,15 +121,15 @@ module Skates
 
         when :wait_for_auth_mechanisms
           if stanza.name == "stream:features"
-            if stanza.at("starttls") # we shall start tls
+            if stanza.children.first.name == "starttls"
               doc = Nokogiri::XML::Document.new
               starttls = Nokogiri::XML::Node.new("starttls", doc)
               doc.add_child(starttls)
               starttls["xmlns"] = "urn:ietf:params:xml:ns:xmpp-tls"
               send_xml(starttls.to_s)
               @state = :wait_for_proceed
-            elsif stanza.at("mechanisms") # tls is ok
-              if stanza.at("mechanisms").children.map() { |m| m.text }.include? "PLAIN"
+            elsif stanza.children.first.name == "mechanisms" 
+              if stanza.children.first.children.map() { |m| m.text }.include? "PLAIN"
                 doc = Nokogiri::XML::Document.new
                 auth = Nokogiri::XML::Node.new("auth", doc)
                 doc.add_child(auth)
@@ -158,7 +158,7 @@ module Skates
 
         when :wait_for_bind
           if stanza.name == "stream:features"
-            if stanza.at("bind")
+            if stanza.children.first.name == "bind"
               doc = Nokogiri::XML::Document.new
               # Let's build the binding_iq
               @binding_iq_id = Integer(rand(10000000))
