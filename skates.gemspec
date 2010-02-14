@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{skates}
-  s.version = "0.2.14"
+  s.version = "0.2.15"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["julien Genestoux"]
@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/julien51/skates}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "superfeedr-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv"]
+  s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "superfeedr-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv", "utf8cleaner"]
   s.rubyforge_project = %q{skates}
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Skates is a framework to create EventMachine based XMPP External Components in Ruby.}

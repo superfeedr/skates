@@ -15,7 +15,7 @@ begin
     gem.add_dependency('nokogiri', ">= 1.4.1")
     gem.add_dependency('superfeedr-sax-machine', ">= 0.0.23")
     gem.add_dependency('templater')
-    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "superfeedr-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv"]
+    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "superfeedr-sax-machine", "templater", "optparse", "digest/sha1", "base64", "resolv", "utf8cleaner"]
     gem.executables = "skates"
     gem.files = [ "bin/skates", 
                   "lib/skates.rb", 

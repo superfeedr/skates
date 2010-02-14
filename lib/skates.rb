@@ -12,6 +12,7 @@ require 'base64'
 require 'resolv'
 require 'templater'
 require 'cgi'
+require 'utf8cleaner'
 
 require 'skates/ext/array.rb'
 require 'skates/xmpp_connection'

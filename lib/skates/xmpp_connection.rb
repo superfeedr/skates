@@ -167,12 +167,13 @@ module Skates
       Skates.logger.debug {
         "SENDING : " + string
       }
-      send_data string
+      send_data UTF8Cleaner.clean(string)
     end
 
     ## 
     # receive_data is called when data is received. It is then passed to the parser. 
     def receive_data(data)
+      data = UTF8Cleaner.clean(data)
       begin
         Skates.logger.debug {
           "RECEIVED : #{data}"
