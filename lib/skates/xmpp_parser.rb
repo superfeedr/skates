@@ -60,7 +60,7 @@ module Skates
     def clear_characters_buffer
       if @buffer && @elem
         @buffer.strip!
-        @elem.add_child(Nokogiri::XML::Text.new(Skates.decode_xml(@buffer), @doc)) unless @buffer.empty?
+        @elem.add_child(Nokogiri::XML::Text.new(@buffer, @doc)) unless @buffer.empty?
         @buffer = nil # empty the buffer
       end
     end

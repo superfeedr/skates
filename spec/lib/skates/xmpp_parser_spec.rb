@@ -55,6 +55,14 @@ describe Skates::XmppParser do
       @parser.characters(chars2)
       @parser.instance_variable_get("@buffer").should == chars + chars2
     end
+
+    it "should not parse text content as XML" do
+      stanza = "<message><body>&amp;#187;</body></message>"
+      @parser.push stanza
+      # Not "\273":
+      (@parser.elem / 'message/body')[0].content.should == '&#187;'
+      (@parser.elem / 'message/body').to_xml.should == "<body>&amp;#187;</body>"
+    end
   end
   
   describe ".start_element" do
