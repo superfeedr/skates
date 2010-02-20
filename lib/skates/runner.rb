@@ -4,6 +4,8 @@ module Skates
   # Runner is in charge of running the application.
   class Runner
     
+    PHI = ((1+Math.sqrt(5))/2.0)
+    
     ## 
     # Prepares the Application to run.
     def self.prepare(env)
@@ -26,6 +28,9 @@ module Skates
             
       # Caching views
       Skates.cache_views
+      
+      #Setting failed connection attemts
+      @failed_connections = 0
       
     end
     
@@ -93,6 +98,9 @@ module Skates
       connection_observers.each do |observer|
         Skates.router.execute_route(observer, "on_connected")
       end
+      
+      # Connected so reset failed connection attempts
+      @failed_connections = 0
     end
     
     ##
@@ -103,7 +111,18 @@ module Skates
         observer = conn_obs.new
         observer.on_disconnected if observer.respond_to?("on_disconnected")
       end
-      EventMachine.stop_event_loop
+      
+      # Increment failed connection attempts and calculate time to next re-connect
+      @failed_connections += 1
+      reconnect_in = fib(@failed_connections)
+      
+
+      EventMachine.add_timer( reconnect_in ) {reconnect}
+      
+	  Skates.logger.error {
+	   	"Disconnected - trying to reconnect in #{reconnect_in} seconds."
+	  }
+        
     end
     
     ##
@@ -122,6 +141,21 @@ module Skates
         }
       end
     end
+    
+    def self.reconnect
+
+		#Try to reconnect
+		case Skates.config["application_type"] 
+		    when "client"
+		      Skates::ClientConnection.connect(Skates.config, self) 
+			else # By default, we assume it's a component
+		      Skates::ComponentConnection.connect(Skates.config, self) 
+		end
+    end
+    
+	def self.fib(n)
+  		(Skates::Runner::PHI**n).round
+	end
     
   end
 end
