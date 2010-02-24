@@ -10,8 +10,7 @@ module Skates
     # Prepares the Application to run.
     def self.prepare(env)
       # Load the configuration
-      config_file = File.open('config/config.yaml')
-      Skates.config = YAML.load(config_file)[Skates.environment]
+      Skates.config = YAML.load_file(Skates.config_file)[Skates.environment]
       
       Skates.reopen_logs
       

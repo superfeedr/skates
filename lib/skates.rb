@@ -107,6 +107,18 @@ module Skates
   end
 
   ##
+  # Set the configuration file for this component.
+  def self.config_file=(file)
+		@@config_file = file
+  end
+
+  ##
+  # Return the configuration file for this component.
+  def self.config_file
+		@@config_file
+  end
+
+  ##
   # Set the configuration for this component.
   def self.config=(conf)
     @@config = conf

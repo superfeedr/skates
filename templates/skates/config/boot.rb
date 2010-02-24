@@ -8,6 +8,7 @@ require "rubygems"
 require "skates"
 require File.dirname(__FILE__) + "/dependencies"
 
+Skates.config_file = 'config/config.yaml'
 
 # Start the App
 Skates::Runner::run(SKATES_ENV || "development") do
