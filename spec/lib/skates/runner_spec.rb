@@ -2,13 +2,11 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/../../em_mock'
 
 describe Skates::Runner do 
-
   before(:all) do
     FileUtils.chdir("#{FileUtils.pwd}/templates/skates")  unless ("#{FileUtils.pwd}" =~ /\/templates\/skates/ )
   end
-
+  
   describe ".prepare" do
-
     before(:each) do
       @stub_config_file = File.open("config/config.yaml")
       @stub_config_content = File.read("config/config.yaml")
@@ -86,7 +84,6 @@ describe Skates::Runner do
   end
 
   describe ".run" do
-
     before(:each) do
       Skates::ClientConnection.stub!(:connect).and_return(true)
       Skates::ComponentConnection.stub!(:connect).and_return(true)
@@ -182,22 +179,47 @@ describe Skates::Runner do
   end
 
   describe ".on_disconnected" do
-    it "should stop the event loop" do
-      connection = mock(Object)
-      EventMachine.should_receive(:stop_event_loop)
-      Skates::Runner.on_disconnected()
-    end
-
     it "should call on_disconnected on the various observers" do
-      class MyObserver < Skates::Base::Controller
-        def on_disconnected
-        end
-      end
+      class MyObserver < Skates::Base::Controller; def on_disconnected; end; end
       my_observer = MyObserver.new
       Skates::Runner.add_connection_observer(MyObserver)
       MyObserver.should_receive(:new).and_return(my_observer)
       my_observer.should_receive(:on_disconnected)
       Skates::Runner.on_disconnected
+    end
+    
+    context "when the application should auto-reconnect" do
+      before(:each) do
+        Skates.config["auto-reconnect"] = true
+        EventMachine.stub!(:reactor_running?).and_return(false)
+        EventMachine.stub!(:add_timer).and_yield()
+        @delay = 15
+        Skates::Runner.stub!(:fib).and_return(@delay)
+      end
+      
+      it "should determine when is the best time to reconnect with fibonacci" do
+        Skates::Runner.should_receive(:fib).and_return(@delay)
+        Skates::Runner.on_disconnected()
+      end
+      
+      it "should try to reconnect at the determined time" do
+        EventMachine.stub!(:reactor_running?).and_return(true)
+        Skates::Runner.should_receive(:reconnect)
+        EventMachine.should_receive(:add_timer).with(@delay).and_yield()
+        Skates::Runner.on_disconnected()
+      end
+    end
+    
+    context "when the application should not auto-reconnect" do
+      before(:each) do
+        Skates.config["auto-reconnect"] = false
+      end
+      
+      it "should stop the event loop" do
+        connection = mock(Object)
+        EventMachine.should_receive(:stop_event_loop)
+        Skates::Runner.on_disconnected()
+      end
     end
   end
 

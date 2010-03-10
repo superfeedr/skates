@@ -10,15 +10,18 @@ development:
     jid: user@server.com
     password: password
     application_type: client
+    auto-reconnect: true
 
 test:
     jid: component.server.com
     password: password
     host: localhost
     port: 5278
+    auto-reconnect: true
         
 production:
     jid: component.server.com
     password: password
     host: localhost
     port: 5278
+    auto-reconnect: true
