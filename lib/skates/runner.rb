@@ -111,17 +111,19 @@ module Skates
         observer.on_disconnected if observer.respond_to?("on_disconnected")
       end
       
-      # Increment failed connection attempts and calculate time to next re-connect
-      @failed_connections += 1
-      reconnect_in = fib(@failed_connections)
+      if Skates.config["auto-reconnect"]
+        # Increment failed connection attempts and calculate time to next re-connect
+        @failed_connections += 1
+        reconnect_in = fib(@failed_connections)
       
-
-      EventMachine.add_timer( reconnect_in ) {reconnect}
+        EventMachine.add_timer( reconnect_in ) {reconnect} if EM.reactor_running?
       
-	  Skates.logger.error {
-	   	"Disconnected - trying to reconnect in #{reconnect_in} seconds."
-	  }
-        
+        Skates.logger.error {
+          "Disconnected - trying to reconnect in #{reconnect_in} seconds."
+        }
+      else
+        EM.stop_event_loop
+      end
     end
     
     ##
@@ -141,20 +143,22 @@ module Skates
       end
     end
     
+    ##
+    # Tries to reconnect
     def self.reconnect
-
-		#Try to reconnect
-		case Skates.config["application_type"] 
-		    when "client"
-		      Skates::ClientConnection.connect(Skates.config, self) 
-			else # By default, we assume it's a component
-		      Skates::ComponentConnection.connect(Skates.config, self) 
-		end
+      #Try to reconnect
+      case Skates.config["application_type"] 
+      when "client"
+        Skates::ClientConnection.connect(Skates.config, self) 
+      else # By default, we assume it's a component
+        Skates::ComponentConnection.connect(Skates.config, self) 
+      end
     end
     
-	def self.fib(n)
-  		(Skates::Runner::PHI**n).round
-	end
-    
+    ##
+    # Helper to calculate the fibonnacci number.
+    def self.fib(n)
+      (Skates::Runner::PHI**n).round
+    end
   end
 end
