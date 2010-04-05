@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{skates}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["julien Genestoux"]
-  s.date = %q{2010-03-10}
+  s.date = %q{2010-04-05}
   s.default_executable = %q{skates}
   s.email = %q{julien.genestoux@gmail.com}
   s.executables = ["skates"]
@@ -53,7 +53,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "templater", "optparse", "digest/sha1", "base64", "resolv", "utf8cleaner"]
   s.rubyforge_project = %q{skates}
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Skates is a framework to create EventMachine based XMPP External Components in Ruby.}
   s.test_files = [
     "spec/bin/skates_spec.rb",
