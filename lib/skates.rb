@@ -32,7 +32,9 @@ require 'skates/base/stanza'
 # This will generate some folders and files for your application. Please see README.rdoc for further instructions
 
 module Skates
-
+  
+  @@config_file = nil
+  
   def self.environment=(_env)
     @@env = _env
   end
@@ -108,13 +110,13 @@ module Skates
   ##
   # Set the configuration file for this component.
   def self.config_file=(file)
-		@@config_file = file
+    @@config_file = file
   end
 
   ##
   # Return the configuration file for this component.
   def self.config_file
-		@@config_file
+    @@config_file
   end
 
   ##

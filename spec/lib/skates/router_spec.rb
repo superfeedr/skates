@@ -59,31 +59,94 @@ describe Skates::StanzaRouter do
       end
     end
 
-    it "should check each routes to see if they match the stanza and take the first of the matching" do
-      @router.routes.each do |r|
-        r.should_receive(:accepts?).with(@xml)
-      end
-      @router.route(@xml)
-    end
-
-    describe "if one route is found" do 
+    context "when the before_route callback is defined" do
       before(:each) do
-        @accepting_route = mock(Skates::Route, :accepts? => true, :action => "action", :controller => "controller", :xpath => "xpath")
-        @router.routes << @accepting_route
+        @proc = Proc.new { |stanza|  
+        }
+        @router.before_route(&@proc)
       end
-
-      it "should call execute_route" do
-        @router.should_receive(:execute_route).with(@accepting_route.controller, @accepting_route.action, @xml)
+      
+      it "should call the callback" do
+        @proc.should_receive(:call).with(@xml)
         @router.route(@xml)
       end
+      
+      context "when the callback returns true" do
+        before(:each) do
+          @proc = Proc.new { |stanza| 
+            true 
+          }
+          @router.before_route(&@proc)
+        end
+        
+        it "should not even check if a route accepts this stanza" do
+          @router.routes.each do |r|
+            r.should_not_receive(:accepts?).with(@xml)
+          end
+          @router.route(@xml)
+        end
+      end
+      
+      context "when the callback returns false" do
+        before(:each) do
+          @proc = Proc.new { |stanza| 
+            false 
+          }
+          @router.before_route(&@proc)
+        end
+        
+        it "should check if a route accepts this stanza" do
+          @router.routes.each do |r|
+            r.should_receive(:accepts?).with(@xml)
+          end
+          @router.route(@xml)
+        end
+      end
+      
+      context "when the callback raises an error" do
+        before(:each) do
+          @proc = Proc.new { |stanza| 
+            raise 
+          }
+          @router.before_route(&@proc)
+        end
+        
+        it "should check if a route accepts this stanza" do
+          @router.routes.each do |r|
+            r.should_receive(:accepts?).with(@xml)
+          end
+          @router.route(@xml)
+        end
+      end
+      
     end
+    
+    context "when the before_route callback is not defined" do
+      it "should check each routes to see if they match the stanza and take the first of the matching" do
+        @router.routes.each do |r|
+          r.should_receive(:accepts?).with(@xml)
+        end
+        @router.route(@xml)
+      end
+    
+      context "if one route is found" do 
+        before(:each) do
+          @accepting_route = mock(Skates::Route, :accepts? => true, :action => "action", :controller => "controller", :xpath => "xpath")
+          @router.routes << @accepting_route
+        end
 
-    describe "if no route matches the stanza" do
-      it "should return false" do
-        @router.route(@xml).should be_false
+        it "should call execute_route" do
+          @router.should_receive(:execute_route).with(@accepting_route.controller, @accepting_route.action, @xml)
+          @router.route(@xml)
+        end
+      end
+
+      context "if no route matches the stanza" do
+        it "should return false" do
+          @router.route(@xml).should be_false
+        end
       end
     end
-
   end
 
   describe "execute_route" do

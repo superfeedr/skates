@@ -8,6 +8,10 @@ module Skates
     
     attr_reader :routes, :connection
     
+    def before_route(&block)
+      @before_route = block
+    end
+    
     def initialize
       @routes = []
     end
@@ -21,10 +25,28 @@ module Skates
     ##
     # Look for the first matching route and calls the corresponding action for the corresponding controller.
     # Sends the response on the XMPP stream/ 
+    # If the before_route callback is defined, it is called.
+    # If the callback returns true, then, the route is NOT executed.
+    # This callback is very useful when an application wants to redirect any stanza it receives before handling it to the routing mechanism.
     def route(xml_stanza) 
-      route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
-      return false unless route 
-      execute_route(route.controller, route.action, xml_stanza)
+      abort = if !@before_route.nil?
+        begin
+          @before_route.call(xml_stanza)
+        rescue
+          Skates.logger.info {
+            "Failed to execute before_route callback. Resuming Routing"
+          }
+          false
+        end
+      end
+      if !abort
+        route = routes.select{ |r| r.accepts?(xml_stanza) }.first 
+        return false unless route 
+        execute_route(route.controller, route.action, xml_stanza)
+      else
+        # The callback triggered abortion of teh routing mechanism.
+        return false
+      end
     end 
     
     ##

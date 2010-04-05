@@ -8,9 +8,9 @@ describe Skates::Runner do
   
   describe ".prepare" do
     before(:each) do
-      @stub_config_file = File.open("config/config.yaml")
-      @stub_config_content = File.read("config/config.yaml")
-      File.stub!(:open).with('config/config.yaml').and_return(@stub_config_file)
+      @config = {"production"=>{"port"=>5278, "auto-reconnect"=>true, "jid"=>"component.server.com", "host"=>"localhost", "password"=>"password"}, "development"=>{"auto-reconnect"=>true, "jid"=>"user@server.com", "application_type"=>"client", "password"=>"password"}, "test"=>{"port"=>5278, "auto-reconnect"=>true, "jid"=>"component.server.com", "host"=>"localhost", "password"=>"password"}}
+      Skates.config_file = "config/config.yaml"
+      YAML.stub(:load_file).and_return(@config)
       Skates::Runner.stub!(:require_directory).and_return(true)
     end
 
@@ -47,13 +47,13 @@ describe Skates::Runner do
     end
 
     it "should load the configuration file" do
-      File.should_receive(:open).with('config/config.yaml').and_return(@stub_config_file)
+      YAML.should_receive(:load_file).with('config/config.yaml').and_return(@config)
       Skates::Runner.prepare("test")
     end
 
     it "should assign the configuration" do
       Skates::Runner.prepare("test")
-      Skates.config.should == YAML.load(@stub_config_content)["test"]
+      Skates.config.should == {"port"=>5278, "jid"=>"component.server.com", "auto-reconnect"=>true, "host"=>"localhost", "password"=>"password"}
     end
 
     it "should cache the views" do
