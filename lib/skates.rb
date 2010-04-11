@@ -91,16 +91,16 @@ module Skates
   # In "development" environment, the log will be on stdout
   def self.reopen_logs
     # Open a new logger
-    logger = Log4r::Logger.new("Skates") 
+    logger = Log4r::Logger.new("") 
     logger.add(Log4r::Outputter.stdout) if Skates.environment == "development"
     log_file = Log4r::RollingFileOutputter.new("#{Skates.environment}", :filename => "log/#{Skates.environment}.log", :trunc => false)
     case Skates.environment
     when "production"
-      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m #{Skates.router.nil? ? "" : (Skates.router.connection.nil? ? "" : "(" + Skates.router.connection.jid + ")") }", :date_pattern => "%d/%m %H:%M")      
     when "development"
-      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m #{Skates.router.nil? ? "" : (Skates.router.connection.nil? ? "" : "(" + Skates.router.connection.jid + ")") }", :date_pattern => "%d/%m %H:%M")      
     else
-      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m", :date_pattern => "%d/%m %H:%M")      
+      log_file.formatter = Log4r::PatternFormatter.new(:pattern => "%d (#{Process.pid}) [%l] :: %m #{Skates.router.nil? ? "" : (Skates.router.connection.nil? ? "" : "(" + Skates.router.connection.jid + ")") }", :date_pattern => "%d/%m %H:%M")      
     end
     logger.add(log_file)
     # Set up the variable.
