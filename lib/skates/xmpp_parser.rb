@@ -32,7 +32,7 @@ module Skates
     # Adds characters to the current element (being parsed)
     def characters(string)
       @buffer ||= ""
-      @buffer += string 
+      @buffer << string 
     end
     
     ##
@@ -83,8 +83,6 @@ module Skates
       end 
     end 
     
-    private
-    
     ##
     # Adds namespaces and attributes. Nokogiri passes them as a array of [[ns_name, ns_url], [ns_name, ns_url]..., key, value, key, value]...
     def add_namespaces_and_attributes_to_current_node(attrs) 
@@ -110,8 +108,5 @@ module Skates
         @elem.add_namespace(nil, value)
       end
     end
-    
-    
-    
   end 
 end 

@@ -1,4 +1,7 @@
+require 'templater'
+
 require File.dirname(__FILE__) + "/../lib/skates"
+require File.dirname(__FILE__) + "/../lib/skates/generator"
 
 # #
 # Deactivate the logging

@@ -3,7 +3,7 @@ module Skates
     extend Templater::Manifold
     
     desc <<-DESC
-      Skates is a framework to generate XMPP Applications in Ruby."
+      Skates is a framework to generate XMPP Applications in Ruby.
     DESC
     
     ##

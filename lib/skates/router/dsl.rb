@@ -39,8 +39,8 @@ module Skates
       protected
       def disco_for(type, node = nil)
         str = "//iq[@type='get']/*[namespace(., 'query', 'http://jabber.org/protocol/disco##{type.to_s}')"
-        str += " and @node = '#{node}'" if node
-        str += "]"
+        str << " and @node = '#{node}'" if node
+        str << "]"
         xpath(str)
       end
     end

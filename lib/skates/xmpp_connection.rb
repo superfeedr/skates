@@ -149,26 +149,26 @@ module Skates
     ## 
     # Sends the Nokogiri::XML data (after converting to string) on the stream. Eventually it displays this data for debugging purposes.
     def send_xml(xml)
-    	begin
-		  if xml.is_a? Nokogiri::XML::NodeSet
-		    xml.each do |element|
-		      send_chunk(element.to_s)
-		    end
-		  else
-		    send_chunk(xml.to_s)
-		  end
-		rescue
-			Skates.logger.error {
-            	"SENDING FAILED: #{$!}"
-          	}
-		end
+      begin
+        if xml.is_a? Nokogiri::XML::NodeSet
+          xml.each do |element|
+            send_chunk(element.to_s)
+          end
+        else
+          send_chunk(xml.to_s)
+        end
+      rescue
+        Skates.logger.error {
+          "SENDING FAILED: #{$!}"
+        }
+      end
     end
-
+    
     private
-
-    def send_chunk(string)
+    
+    def send_chunk(string = "")
       raise NotConnected unless @connected
-      return if string.blank?
+      return if string == ""
       raise StanzaTooBig, "Stanza Too Big (#{string.length} vs. #{XmppConnection.max_stanza_size})\n #{string}" if string.length > XmppConnection.max_stanza_size
       Skates.logger.debug {
         "SENDING : " + string

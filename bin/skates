@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
  
 require 'rubygems'
+require 'templater'
 require 'skates'
+require 'skates/generator'
 
 Skates::Generator.run_cli(Dir.pwd, 'skates_app', "0.1", ARGV)
