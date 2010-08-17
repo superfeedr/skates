@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 
 describe Skates::Base::View do
-  describe ".initialize" do
+  describe :initialize do
     
     before(:each) do
-      @view = Skates::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @view = Skates::Base::View.new("/a/path/to/views/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
     end
     
     it "should assign @view_template to path" do
-      @view.view_template == "/a/path/to/a/view/file"
+      @view.view_template == "/a/path/to/views/file"
     end
     
     it "should assign any variable passed in hash" do
@@ -18,9 +18,9 @@ describe Skates::Base::View do
     end
   end
 
-  describe ".evaluate" do
+  describe :evaluate do
     before(:each) do
-      @view_template = "/a/path/to/a/view/file"
+      @view_template = "/a/path/to/views/file"
       @view = Skates::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @xml_string = <<-eoxml
         xml.message(:to => "you", :from => "me", :type => :chat) do
@@ -54,29 +54,38 @@ describe Skates::Base::View do
     end
     
     it "should be able to access context's variables" do
-      @view = Skates::Base::View.new("/a/path/to/a/view/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      @view = Skates::Base::View.new("/a/path/to/views/file", {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
       @view.instance_variable_get("@a").should == "a"
       @view.instance_variable_get("@b").should == 123
       @view.instance_variable_get("@c").should == {:e=>"123", :d=>"d"}
     end
   end
   
-  describe "render" do
+  describe :render do
     before(:each) do
-      @view_template = "/a/path/to/a/view/file"
+      @view_template = "/a/path/to/views/file"
       @view = Skates::Base::View.new(@view_template, {:a => "a", :b => 123, :c => {:d => "d", :e => "123"}})
+      
       @xml_string = <<-eoxml
         xml.message(:to => "you", :from => "me", :type => :chat) do |message|
           message.body("salut") 
           render(message, {:partial => "partial", :locals => {:subtitle => "bonjour monde"}})
+          render(message, {:partial => "../other_views/partial", :locals => {:subtitle => "bonjour monde", :name => "Joe"}})
        end
       eoxml
+      
       @partial_string = <<-eoxml
         xml.title("hello word")
         xml.subtitle(subtitle)
       eoxml
+
+      @partial_in_annother_controller_string = <<-eoxml
+        xml.name(name)
+      eoxml
+      
       Skates.views.stub!(:[]).with(@view_template).and_return(@xml_string)      
-      Skates.views.stub!(:[]).with("/a/path/to/a/view/partial.xml.builder").and_return(@partial_string)      
+      Skates.views.stub!(:[]).with("/a/path/to/views/partial.xml.builder").and_return(@partial_string)      
+      Skates.views.stub!(:[]).with("/a/path/to/other_views/partial.xml.builder").and_return(@partial_in_annother_controller_string) 
     end
     
     it "should render the partial in the right context" do
@@ -85,6 +94,10 @@ describe Skates::Base::View do
     
     it "should allocate the locals variables" do
       @view.evaluate.xpath("//message/subtitle").text.should == "bonjour monde"
+    end
+    
+    it "should cleanup the path so only canonical paths are used" do
+      @view.evaluate.xpath("//message/name").text.should == "Joe"
     end
     
   end

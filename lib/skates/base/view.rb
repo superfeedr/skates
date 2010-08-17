@@ -17,6 +17,7 @@ module Skates
       def render(xml, options = {})
         # First, we need to identify the partial file path, based on the @view_template path.
         partial_path = (@view_template.split("/")[0..-2] + options[:partial].split("/")).join("/").gsub(".xml.builder", "") + ".xml.builder"
+        partial_path = Pathname.new(partial_path).cleanpath.to_s
         raise ViewFileNotFound, "No such file #{partial_path}" unless Skates.views[partial_path] 
         saved_locals = @locals
         @locals = options[:locals]
