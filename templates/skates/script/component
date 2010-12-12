@@ -19,10 +19,14 @@ ARGV.options do |o|
   
   o.on("-e", "--environment=env", String,
        "The environment to run the application (you should have defined the argument into config/config.yaml)",
-       "Default: #{OPTIONS[:environment]}") { |OPTIONS[:environment]| }
+       "Default: #{OPTIONS[:environment]}") { |environment| 
+         OPTIONS[:environment] = environment
+        }
   o.on("-n", "--name=app_name", String,
        "Name of your application. The pid_file will be name after this.",
-       "Default: #{OPTIONS[:name]}") { |OPTIONS[:name]| }
+       "Default: #{OPTIONS[:name]}") { |name| 
+         OPTIONS[:name] = name
+        }
   
   o.separator ""
 
