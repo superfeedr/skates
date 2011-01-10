@@ -181,9 +181,9 @@ module Skates
     def receive_data(data)
       data = UTF8Cleaner.clean(data)
       begin
-        Skates.logger.debug {
-          "RECEIVED : #{data}"
-        }
+        # Skates.logger.debug {
+        #   "RECEIVED : #{data}"
+        # }
         @parser.push(data) 
       rescue
         Skates.logger.error {
