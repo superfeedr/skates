@@ -40,20 +40,27 @@ module Skates
           # Sort SRV records: lowest priority first, highest weight first
           srv.sort! { |a,b| (a.priority != b.priority) ? (a.priority <=> b.priority) : (b.weight <=> a.weight) }
           Skates.logger.debug {
-            "Found #{srv.count} SRV records for : #{host} : #{srv.inspect}"
+            "Found #{srv.count} SRV records for #{host}."
           }
-          # And now, for each record, let's try to connect.
-          srv.each { |record|
-            Skates.logger.debug {
-              "Trying connection with : #{record.target.to_s}:#{record.port}"
-            }
-            ip    = record.target.to_s
-            port  = Integer(record.port)
-            if block.call({"host" => ip, "port" => port}) 
-              found = true
-              break
+          # And now, for each record, let's try to connect. We add a bit of randomness, without touching the priority
+          srv.group_by { |record|  
+            record.priority
+          }.each do |priority, records|
+            records.sort_by { |record|  
+              rand()
+            }.each do |record|
+              if !found
+                Skates.logger.debug {
+                  "Trying connection with : #{record.target.to_s}:#{record.port}"
+                }
+                ip    = record.target.to_s
+                port  = Integer(record.port)
+                if !found and block.call({"host" => ip, "port" => port}) 
+                  found = true
+                end
+              end
             end
-          }
+          end
           if !found
             # We failover to solving A record with default port.
             Skates.logger.debug {
