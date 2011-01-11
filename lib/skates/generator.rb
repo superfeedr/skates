@@ -52,6 +52,10 @@ module Skates
       end
            
       # And now add the critical files
+      file :gemfile_file do |f|
+        f.source = "#{source_root}/Gemfile"
+        f.destination = "#{application_name}/Gemfile"
+      end
       file :boot_file do |f|
         f.source = "#{source_root}/config/boot.rb"
         f.destination = "#{application_name}/config/boot.rb"
@@ -72,7 +76,6 @@ module Skates
         f.source = "#{source_root}/script/component"
         f.destination = "#{application_name}/script/component"
       end
-      
     end
     
     ##

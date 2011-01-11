@@ -4,8 +4,7 @@
 # Change directory to the app's directory.
 Dir.chdir(File.dirname(__FILE__) + "/../") 
 
-require "rubygems"
-require "skates"
+Bundler.require(:default)
 require File.dirname(__FILE__) + "/dependencies"
 
 Skates.config_file = 'config/config.yaml'

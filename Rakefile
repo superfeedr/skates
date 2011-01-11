@@ -14,7 +14,7 @@ begin
     gem.add_dependency('log4r')
     gem.add_dependency('nokogiri', "= 1.4.2")
     gem.add_dependency('utf8cleaner')
-    gem.requirements = ["eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "optparse", "digest/sha1", "base64", "resolv", "utf8cleaner"]
+    gem.requirements = ["bundler", "eventmachine", "yaml", "fileutils", "log4r", "nokogiri", "optparse", "digest/sha1", "base64", "resolv", "utf8cleaner"]
     gem.executables = "skates"
     gem.files = [ "bin/skates", 
                   "lib/skates.rb", 
@@ -33,6 +33,7 @@ begin
                   "LICENSE", 
                   "Rakefile", 
                   "README.rdoc", 
+                  "templates/skates/Gemfile", 
                   "templates/skates/app/controllers/controller.rb", 
                   "templates/skates/app/views/view.rb", 
                   "templates/skates/app/stanzas/stanza.rb", 
