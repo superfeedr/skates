@@ -25,7 +25,7 @@ module Skates
     end
 
     ##
-    # Resolution for clients, based on SRV records
+    # Resolution for clients, based on SRV records, or A if no SRV is present. Also randomizes the servers if multiple with same priority are found.
     def self.resolve(host, &block)
       Resolv::DNS.open { |dns|
         # If ruby version is too old and SRV is unknown, this will raise a NameError
@@ -67,7 +67,9 @@ module Skates
               "RESOLVING: #{host} (A record)"
             }
             records = dns.getresources(host, Resolv::DNS::Resource::IN::A)
-            records.each do |record|
+            records.sort_by { |record|  
+              rand()
+            }.each do |record|
               ip = record.address.to_s
               if block.call({"host" => ip,  "port" => Integer(Skates.config["port"]) || 5222}) 
                 found = true
