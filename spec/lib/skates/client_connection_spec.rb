@@ -36,14 +36,14 @@ describe Skates::ClientConnection do
     
     it "should get resources assiated with _xmpp-client._tcp.host.tld}" do
       Resolv::DNS.should_receive(:open).and_yield(@mock_dns)
-      @mock_dns.should_receive(:getresources).with("_xmpp-client._tcp.server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
+      @mock_dns.should_receive(:getresources).with("server.tld", Resolv::DNS::Resource::IN::SRV).and_return(@srv)
       Skates::ClientConnection.resolve("server.tld") 
     end
     
     it "should call the block with the highest priority" do
       Skates::ClientConnection.resolve("xmpp.server.tld") do |params|
-        params["host"].should == "12.13.14.17"
-        params["port"].should == 8910
+        params["host"].should == "12.13.14.16"
+        params["port"].should == 4567
         true
       end 
     end

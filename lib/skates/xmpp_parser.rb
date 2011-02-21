@@ -43,10 +43,33 @@ module Skates
       clear_characters_buffer
       @doc ||= Nokogiri::XML::Document.new
       @elem ||= @doc # If we have no current element, then, we take the doc
-      namespace, qname = qname.split(":") if qname.match(/.*:.*/)
-      @elem = @elem.add_child(Nokogiri::XML::Element.new(qname, @doc))
+      @parent = @elem
       
-      add_namespaces_and_attributes_to_current_node(attributes, namespace)
+      # First thing first : identify namespaces, and attributes
+      namespaces, attributes = identify_namespaces_and_attributes(attributes)
+      
+      # Now, we may need to add a namespace!
+      namespace, qname = qname.split(":") if qname.match(/.*:.*/)
+      
+      @elem = Nokogiri::XML::Element.new(qname, @doc)
+      # Let's now add all namespaces
+      namespaces.each do |prefix, uri|
+        set_namespace(prefix, uri)
+      end
+      
+      # And all attributes
+      attributes.each do |name, value|
+        set_attribute(name, value)
+      end
+      
+      # And now addback the namespace if applicable
+      if prefix = ["xmlns", namespace].join(":") and uri = @parent.namespaces[prefix] 
+        @elem.namespace = @parent.namespace_definitions.select() {|ns|
+          ns.href == uri
+        }.first
+      end
+      
+      @parent.add_child(@elem) # Finally, add the element
       
       if @elem.name == "stream"
         # We activate the callback since this element  will never end.
@@ -85,32 +108,32 @@ module Skates
     end 
     
     ##
-    # Adds namespaces and attributes. Nokogiri passes them as a array of [[ns_name, ns_url], [ns_name, ns_url]..., key, value, key, value]...
-    def add_namespaces_and_attributes_to_current_node(attrs, default_namespace = nil) 
-      # Namespaces
-      attrs.select {|k| k.is_a? Array}.each do |pair|
-        if default_namespace && default_namespace == pair[0].split(":").last
-          set_namespace("xmlns", pair[1])
+    # Idenitifies namespaces and attributes
+    # Nokogiri passes them as a array of [[ns_name, ns_url], [ns_name, ns_url]..., key, value, key, value]...
+    def identify_namespaces_and_attributes(attrs)
+      namespaces = {}
+      attributes = {}
+
+      attrs.each do |pair|
+        if pair[0].match /xmlns/
+          # It's a namespace!
+          prefix = pair[0].split(":").last
+          prefix = nil if prefix == "xmlns"
+          namespaces[prefix] = pair[1] # Now assign the url. Easy.
         else
-          set_namespace(pair[0], pair[1])
+          # It's an attribute
+          attributes[pair[0]] = pair[1]
         end
       end
-      # Attributes
-      attrs.select {|k| k.is_a? String}.in_groups_of(2) do |pair|
-        set_normal_attribute(pair[0], pair[1])
-      end
+      [namespaces, attributes]
     end
-        
-    def set_normal_attribute(key, value)
+    
+    def set_attribute(key, value)
       @elem.set_attribute key, Skates.decode_xml(value)
     end
     
     def set_namespace(key, value)
-      if key.include? ':'
-        @elem.add_namespace(key.split(':').last, value)
-      else
-        @elem.add_namespace(nil, value)
-      end
+      @elem.add_namespace(key, value)
     end
   end 
 end 

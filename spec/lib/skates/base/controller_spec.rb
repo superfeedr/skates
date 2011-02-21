@@ -15,8 +15,8 @@ describe Skates::Base::Controller do
       stanza = mock(Object)
       c = Skates::Base::Controller.new(stanza)
       
-      c.instance_variables.should be_include "@stanza"
-      c.instance_variable_get("@stanza").should == stanza
+      c.instance_variables.should be_include :"@stanza"
+      c.instance_variable_get(:"@stanza").should == stanza
     end
     
     it "should not be rendered yet" do
@@ -140,7 +140,7 @@ describe Skates::Base::Controller do
       end
       @controller = MyController.new(@stanza)
       @controller.do_something
-      @controller.assigns.should == vars.merge("stanza" => @stanza)
+      @controller.assigns.should == vars.merge("stanza" => @stanza, "view" => nil)
     end
   end
   

@@ -1,3 +1,4 @@
+$: << "." # Adding the local directory to the path, so we can safely require models, controllers and views.
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Skates::XmppParser do
@@ -69,7 +70,7 @@ describe Skates::XmppParser do
     
     before(:each) do
       @new_elem_name = "new"
-      @new_elem_attributes = ["to", "you@yourserver.com/home", "xmlns", "http://ns.com"]
+      @new_elem_attributes = [["to", "you@yourserver.com/home"], ["xmlns", "http://ns.com"]]
     end
     
     it "should create a new doc if we don't have one" do
@@ -117,8 +118,7 @@ describe Skates::XmppParser do
     it "should add the right attributes and namespaces to the newly created element" do
       @parser.start_element(@new_elem_name, @new_elem_attributes)
       @parser.elem["to"].should == "you@yourserver.com/home"
-      # TODO : FIX NAMESPACES : @parser.elem.namespaces.should == {"xmlns"=>"http://ns.com"}
-      @parser.elem.namespaces.should == {}
+      @parser.elem.namespaces.should == {"xmlns"=>"http://ns.com"}
     end
     
     describe "when the new element is of name stream:stream" do
@@ -182,53 +182,6 @@ describe Skates::XmppParser do
     end
   end
   
-  describe ".add_namespaces_and_attributes_to_node" do
-    before(:each) do
-      @doc = Nokogiri::XML::Document.new
-      @parser.doc = @doc
-      @element = Nokogiri::XML::Element.new("element", @parser.doc)
-      @attrs = ["from", "me", "xmlns:atom", "http://www.w3.org/2005/Atom" ,"to", "you", "xmlns", "http://namespace.com"]
-      @parser.elem = @element
-    end
-    
-    it "should assign even elements to attributes value or namespaces urls" do
-      @parser.__send__(:add_namespaces_and_attributes_to_current_node, @attrs)
-      even = []
-      @attrs.size.times do |i|
-        even << @attrs[i*2]
-      end
-      even.compact!
-      @element.attributes.keys.each do |k|
-        even.should include(k)
-      end
-    end
-    
-    it "should assign odd elements to attributes names of namespaces prefixes" do
-      @parser.__send__(:add_namespaces_and_attributes_to_current_node, @attrs)
-      even = []
-      @attrs.size.times do |i|
-        even << @attrs[i*2+1]
-      end
-      even.compact!
-      @element.attributes.values.each do |v|
-        even.should include("#{v}")
-      end
-    end
-    
-    it "should add namespace for each attribute name that starts with xmlns" do
-      @parser.__send__(:add_namespaces_and_attributes_to_current_node, @attrs)
-      # TODO: FIX NAMESPACES @element.namespaces.values.should == ["http://www.w3.org/2005/Atom", "http://namespace.com"]
-      @element.namespaces.values.should == []
-    end
-    
-    it "should escape characters correctly" do
-      @attrs = ["url", "http://api.flickr.com/services/feeds/photos_public.gne?id=49724566@N00&amp;lang=en-us&amp;format=atom"]
-      @parser.__send__(:add_namespaces_and_attributes_to_current_node, @attrs)
-      @element["url"].should == "http://api.flickr.com/services/feeds/photos_public.gne?id=49724566@N00&lang=en-us&format=atom"
-    end
-    
-  end
-  
   describe "a communication with an XMPP Client" do
     
     before(:each) do
@@ -274,10 +227,243 @@ describe Skates::XmppParser do
         @parser.push(s)
       end
       
-      @stanzas.join("").should == "<stream:stream xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:component:accept\" from=\"plays.shakespeare.lit\" id=\"3BF96D32\"/><handshake/><message from=\"juliet@example.com\" to=\"romeo@example.net\" xml:lang=\"en\">\n  <body>Art thou not Romeo, and a Montague?</body>\n  <link href=\"http://sfbay.craigslist.org/search/sss?query=%2522mac+mini%2522+Intel+Core+Duo&amp;minAsk=min&amp;maxAsk=max&amp;format=rss&amp;format=rss\"/>\n</message>"
+      @stanzas.map(&:to_xml).join("").should == "<stream xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:component:accept\" from=\"plays.shakespeare.lit\" id=\"3BF96D32\"/><handshake/><message from=\"juliet@example.com\" to=\"romeo@example.net\" xml:lang=\"en\">\n  <body>Art thou not Romeo, and a Montague?</body>\n  <link href=\"http://sfbay.craigslist.org/search/sss?query=%2522mac+mini%2522+Intel+Core+Duo&amp;minAsk=min&amp;maxAsk=max&amp;format=rss&amp;format=rss\"/>\n</message>"
       @stanzas.last.at("link")["href"].should == "http://sfbay.craigslist.org/search/sss?query=%2522mac+mini%2522+Intel+Core+Duo&minAsk=min&maxAsk=max&format=rss&format=rss"
     end
     
+  end
+  
+  describe "when parsing a complex stanza" do
+    before(:each) do
+      @xml =<<-EOXML
+<iq id="pub-296" to="test-track.superfeedr.com" type="set">
+  <feed xmlns="http://superfeedr.com/xmpp-superfeedr-ext" id="368">
+    <url>http://superfeedr.com/dummy.xml</url>
+    <http_code>200</http_code>
+    <etag>"eb8dfc6fa342dc8326851907efe35cda"</etag>
+    <number_of_new_entries>10</number_of_new_entries>
+    <last_error_message>7462B in 1.036602s, 10/10 new entries</last_error_message>
+    <last_fetch>2011-02-21T14:34:52-05:00</last_fetch>
+    <next_fetch>2011-02-21T14:38:37-05:00</next_fetch>
+    <period>225</period>
+    <last_maintenance_at>2011-02-21T14:34:52-05:00</last_maintenance_at>
+    <entries_count>10</entries_count>
+    <perform_maintenance>true</perform_maintenance>
+    <title>The Dummy Time Feed</title>
+    <format>feed</format>
+    <link href="http://superfeedr.com" rel="alternate" type="text/html"/>
+    <link href="http://superfeedr.com/dummy.xml" rel="self" type="application/atom+xml"/>
+    <last_parse>2011-02-21T14:34:52-05:00</last_parse>
+    <headers>
+      <server>nginx/0.8.52</server>
+      <date>Mon, 21 Feb 2011 19:35:41 GMT</date>
+      <content_type>application/xml; charset=utf-8</content_type>
+      <connection>close</connection>
+      <status>200 OK</status>
+      <etag>"eb8dfc6fa342dc8326851907efe35cda"</etag>
+      <x_runtime>858</x_runtime>
+      <content_length>7462</content_length>
+      <set_cookie/>
+      <cache_control>private, max-age=0, must-revalidate</cache_control>
+    </headers>
+    <id>tag:superfeedr.com,2005:/hubbub/dummy</id>
+  </feed>
+  <pubsub xmlns="http://jabber.org/protocol/pubsub">
+    <publish node="368">
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298307758</id>
+          <published>2011-02-21T12:02:38-05:00</published>
+          <updated>2011-02-21T12:02:38-05:00</updated>
+          <title>17:02:38</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 17:02:38 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298307758" title="17:02:38" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298307618</id>
+          <published>2011-02-21T12:00:18-05:00</published>
+          <updated>2011-02-21T12:00:18-05:00</updated>
+          <title>17:00:18</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 17:00:18 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298307618" title="17:00:18" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298307454</id>
+          <published>2011-02-21T11:57:34-05:00</published>
+          <updated>2011-02-21T11:57:34-05:00</updated>
+          <title>16:57:34</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 16:57:34 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298307454" title="16:57:34" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298307099</id>
+          <published>2011-02-21T11:51:39-05:00</published>
+          <updated>2011-02-21T11:51:39-05:00</updated>
+          <title>16:51:39</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 16:51:39 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298307099" title="16:51:39" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298305317</id>
+          <published>2011-02-21T11:21:57-05:00</published>
+          <updated>2011-02-21T11:21:57-05:00</updated>
+          <title>16:21:57</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 16:21:57 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298305317" title="16:21:57" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298305151</id>
+          <published>2011-02-21T11:19:11-05:00</published>
+          <updated>2011-02-21T11:19:11-05:00</updated>
+          <title>16:19:11</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 16:19:11 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298305151" title="16:19:11" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298304372</id>
+          <published>2011-02-21T11:06:12-05:00</published>
+          <updated>2011-02-21T11:06:12-05:00</updated>
+          <title>16:06:12</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 16:06:12 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298304372" title="16:06:12" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298304371</id>
+          <published>2011-02-21T11:06:11-05:00</published>
+          <updated>2011-02-21T11:06:11-05:00</updated>
+          <title>16:06:11</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 16:06:11 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298304371" title="16:06:11" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298304085</id>
+          <published>2011-02-21T11:01:25-05:00</published>
+          <updated>2011-02-21T11:01:25-05:00</updated>
+          <title>16:01:25</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 16:01:25 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298304085" title="16:01:25" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="en-US">
+          <id>tag:superfeedr.com,2005:String/1298303653</id>
+          <published>2011-02-21T10:54:13-05:00</published>
+          <updated>2011-02-21T10:54:13-05:00</updated>
+          <title>15:54:13</title>
+          <summary type="text"/>
+          <content type="text">Monday February 21 15:54:13 UTC 2011 Somebody wanted to know what time it was.</content>
+          <geo:point>37.773721,-122.414957</geo:point>
+          <link href="http://superfeedr.com/?1298303653" title="15:54:13" rel="alternate" type="text/html"/>
+          <category term="tests"/>
+          <author>
+            <name>Superfeedr</name>
+            <uri>http://superfeedr.com/</uri>
+            <email>julien@superfeedr.com</email>
+          </author>
+        </entry>
+      </item>
+    </publish>
+  </pubsub>
+</iq>
+EOXML
+      
+      @proc = Proc.new { |stanza|  
+        stanza.to_xml.should == @xml.strip
+      }
+      @parser = Skates::XmppParser.new(@proc) 
+    end
+    
+    it "should parse correctly the namespaces and the attributes" do
+      @parser.push(@xml)
+    end
   end
   
 end
