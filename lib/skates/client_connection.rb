@@ -119,17 +119,17 @@ module Skates
           super # Can be dispatched
 
         when :wait_for_stream_authenticated
-          if stanza.name == "stream:stream" && stanza.attributes['id']
+          if stanza.name == "stream" && stanza.attributes['id']
             @state = :wait_for_bind
           end
 
         when :wait_for_stream
-          if stanza.name == "stream:stream" && stanza.attributes['id']
+          if stanza.name == "stream" && stanza.attributes['id']
             @state = :wait_for_auth_mechanisms
           end
 
         when :wait_for_auth_mechanisms
-          if stanza.name == "stream:features"
+          if stanza.name == "features"
             if stanza.children.first.name == "starttls"
               doc = Nokogiri::XML::Document.new
               starttls = Nokogiri::XML::Node.new("starttls", doc)
@@ -166,7 +166,7 @@ module Skates
           end
 
         when :wait_for_bind
-          if stanza.name == "stream:features"
+          if stanza.name == "features"
             if stanza.children.first.name == "bind"
               doc = Nokogiri::XML::Document.new
               # Let's build the binding_iq

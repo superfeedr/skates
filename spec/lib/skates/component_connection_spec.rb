@@ -47,7 +47,7 @@ describe Skates::ComponentConnection do
 
       describe "if the stanza is stream" do
         before(:each) do
-          @stanza = Nokogiri::XML::Node.new("stream:stream", @doc)
+          @stanza = Nokogiri::XML::Node.new("stream", @doc)
           @stanza["xmlns:stream"] = 'http://etherx.jabber.org/streams'
           @stanza["xmlns"] = 'jabber:component:accept'
           @stanza["from"] = 'plays.shakespeare.lit'
@@ -98,7 +98,7 @@ describe Skates::ComponentConnection do
 
       describe "if we receive a stream:error" do
         it "should raise an Authentication Error" do
-          lambda {@component.receive_stanza(Nokogiri::XML::Node.new("stream:error", @doc))}.should raise_error(Skates::AuthenticationError)
+          lambda {@component.receive_stanza(Nokogiri::XML::Node.new("error", @doc))}.should raise_error(Skates::AuthenticationError)
         end
       end
 
@@ -122,7 +122,7 @@ describe Skates::ComponentConnection do
     it "should build a handshake Element with the password and the id of the stanza" do
       @component.connection_completed
       doc = Nokogiri::XML::Document.new
-      stanza = Nokogiri::XML::Node.new("stream:stream", doc)
+      stanza = Nokogiri::XML::Node.new("stream", doc)
       stanza["xmlns:stream"] = 'http://etherx.jabber.org/streams'
       stanza["xmlns"] = 'jabber:component:accept'
       stanza["from"] = 'plays.shakespeare.lit'

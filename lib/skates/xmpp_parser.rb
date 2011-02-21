@@ -43,11 +43,12 @@ module Skates
       clear_characters_buffer
       @doc ||= Nokogiri::XML::Document.new
       @elem ||= @doc # If we have no current element, then, we take the doc
+      namespace, qname = qname.split(":") if qname.match(/.*:.*/)
       @elem = @elem.add_child(Nokogiri::XML::Element.new(qname, @doc))
       
-      add_namespaces_and_attributes_to_current_node(attributes)
+      add_namespaces_and_attributes_to_current_node(attributes, namespace)
       
-      if @elem.name == "stream:stream"
+      if @elem.name == "stream"
         # We activate the callback since this element  will never end.
         @callback.call(@elem)
         @doc = @elem = nil # Let's prepare for the next stanza
@@ -85,11 +86,14 @@ module Skates
     
     ##
     # Adds namespaces and attributes. Nokogiri passes them as a array of [[ns_name, ns_url], [ns_name, ns_url]..., key, value, key, value]...
-    def add_namespaces_and_attributes_to_current_node(attrs) 
+    def add_namespaces_and_attributes_to_current_node(attrs, default_namespace = nil) 
       # Namespaces
       attrs.select {|k| k.is_a? Array}.each do |pair|
-        set_namespace(pair[0], pair[1])
-        # set_normal_attribute(pair[0], pair[1])
+        if default_namespace && default_namespace == pair[0].split(":").last
+          set_namespace("xmlns", pair[1])
+        else
+          set_namespace(pair[0], pair[1])
+        end
       end
       # Attributes
       attrs.select {|k| k.is_a? String}.in_groups_of(2) do |pair|

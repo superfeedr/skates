@@ -43,7 +43,7 @@ module Skates
           super(stanza) # Can be dispatched
           
       when :wait_for_stream
-        if stanza.name == "stream:stream" && stanza.attributes['id']
+        if stanza.name == "stream" && stanza.attributes['id']
           # This means the XMPP session started!
           # We must send the handshake now.
           send_xml(handshake(stanza))
@@ -62,7 +62,7 @@ module Skates
             }
           end
           @state = :connected
-        elsif stanza.name == "stream:error"
+        elsif stanza.name == "error" 
           raise AuthenticationError
         else
           raise

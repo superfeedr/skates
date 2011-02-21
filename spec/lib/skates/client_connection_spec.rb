@@ -25,9 +25,9 @@ describe Skates::ClientConnection do
       @params.delete("host")
       @params.delete("port")
       @srv = [
-        mock(Resolv::DNS::Resource, :priority => 10, :target => "12.13.14.15", :port => 1234),
-        mock(Resolv::DNS::Resource, :priority => 3, :target => "12.13.14.16", :port => 4567),
-        mock(Resolv::DNS::Resource, :priority => 100, :target => "12.13.14.17", :port => 8910)
+        mock(Resolv::DNS::Resource, :priority => 10, :target => "12.13.14.15", :port => 1234, :address => "12.13.14.15"),
+        mock(Resolv::DNS::Resource, :priority => 3, :target => "12.13.14.16", :port => 4567, :address => "12.13.14.16"),
+        mock(Resolv::DNS::Resource, :priority => 100, :target => "12.13.14.17", :port => 8910, :address => "12.13.14.17")
         ]
       @mock_dns = mock(Object)
       Resolv::DNS.stub!(:open).and_yield(@mock_dns)
@@ -42,8 +42,8 @@ describe Skates::ClientConnection do
     
     it "should call the block with the highest priority" do
       Skates::ClientConnection.resolve("xmpp.server.tld") do |params|
-        params["host"].should == "12.13.14.16"
-        params["port"].should == 4567
+        params["host"].should == "12.13.14.17"
+        params["port"].should == 8910
         true
       end 
     end
@@ -84,10 +84,10 @@ describe Skates::ClientConnection do
     describe "when wait_for_stream_authenticated" do
       before(:each) do
         @client.instance_variable_set("@state", :wait_for_stream_authenticated)
-        @stanza = Nokogiri::XML::Node.new("stream:stream", @doc)
+        @stanza = Nokogiri::XML::Node.new("stream", @doc)
         @stanza["id"] = "123"
       end
-      it "should change state to wait_for_bind if the stanza is stream:stream with an id" do
+      it "should change state to wait_for_bind if the stanza is stream with an id" do
         @client.receive_stanza(@stanza)
         @client.instance_variable_get("@state").should == :wait_for_bind
       end
@@ -96,10 +96,10 @@ describe Skates::ClientConnection do
     describe "when wait_for_stream" do
       before(:each) do
         @client.instance_variable_set("@state", :wait_for_stream)
-        @stanza = Nokogiri::XML::Node.new("stream:stream", @doc)
+        @stanza = Nokogiri::XML::Node.new("stream", @doc)
         @stanza["id"] = "123"
       end
-      it "should change state to wait_for_auth_mechanisms if the stanza is stream:stream with an id" do
+      it "should change state to wait_for_auth_mechanisms if the stanza is stream with an id" do
         @client.receive_stanza(@stanza)
         @client.instance_variable_get("@state").should == :wait_for_auth_mechanisms
       end
@@ -110,9 +110,9 @@ describe Skates::ClientConnection do
         @client.instance_variable_set("@state", :wait_for_auth_mechanisms)
       end
       
-      describe "if the stanza is stream:features" do
+      describe "if the stanza is features" do
         before(:each) do
-          @stanza = Nokogiri::XML::Node.new("stream:features", @doc)
+          @stanza = Nokogiri::XML::Node.new("features", @doc)
           @stanza["id"] = "123"
         end
         
@@ -194,9 +194,9 @@ describe Skates::ClientConnection do
         @client.instance_variable_set("@state", :wait_for_bind)
       end
       
-      describe "if stanza is stream:features" do
+      describe "if stanza is features" do
         before(:each) do
-          @stanza = Nokogiri::XML::Node.new("stream:features", @doc)
+          @stanza = Nokogiri::XML::Node.new("features", @doc)
         end
         
         describe "if stanza has bind" do
