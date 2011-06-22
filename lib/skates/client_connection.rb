@@ -98,7 +98,7 @@ module Skates
       stream["version"] = "1.0"
       paste_content_here = Nokogiri::XML::Node.new("paste_content_here", doc)
       stream.add_child(paste_content_here)
-      doc.to_xml.split('<paste_content_here/>').first
+      doc.to_xml(:encoding => "UTF-8").split('<paste_content_here/>').first
     end
 
     ##

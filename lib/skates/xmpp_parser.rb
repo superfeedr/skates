@@ -41,7 +41,7 @@ module Skates
     # If no element is being parsed, then, we create a new document, to which we add this new element as root. (we create one document per stanza to avoid memory problems)
     def start_element(qname, attributes = [])
       clear_characters_buffer
-      @doc ||= Nokogiri::XML::Document.new
+      @doc  ||= Nokogiri::XML::Document.new
       @elem ||= @doc # If we have no current element, then, we take the doc
       @parent = @elem
       

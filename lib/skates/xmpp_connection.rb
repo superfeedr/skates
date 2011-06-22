@@ -122,7 +122,7 @@ module Skates
     # Called when a full stanza has been received and returns it to the central router to be sent to the corresponding controller.
     def receive_stanza(stanza)
       Skates.logger.debug {
-        "PARSED : #{stanza.to_xml}"
+        "PARSED : #{stanza.to_xml(:encoding => "UTF-8")}"
       }
       # If not handled by subclass (for authentication)
       case stanza.name
@@ -152,8 +152,10 @@ module Skates
       begin
         if xml.is_a? Nokogiri::XML::NodeSet
           xml.each do |element|
-            send_chunk(element.to_s)
+            send_chunk(element.to_xml(:encoding => "UTF-8"))
           end
+        elsif xml.is_a? Nokogiri::XML::Node
+          send_chunk(xml.to_xml(:encoding => "UTF-8"))
         else
           send_chunk(xml.to_s)
         end

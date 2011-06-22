@@ -1,3 +1,4 @@
+#encoding: UTF-8
 $: << "." # Adding the local directory to the path, so we can safely require models, controllers and views.
 require File.dirname(__FILE__) + '/../../spec_helper'
 
@@ -62,7 +63,7 @@ describe Skates::XmppParser do
       @parser.push stanza
       # Not "\273":
       (@parser.elem / 'message/body')[0].content.should == '&#187;'
-      (@parser.elem / 'message/body').to_xml.should == "<body>&amp;#187;</body>"
+      (@parser.elem / 'message/body').to_xml(:encoding => "UTF-8").should == "<body>&amp;#187;</body>"
     end
   end
   
@@ -456,7 +457,7 @@ describe Skates::XmppParser do
 EOXML
       
       @proc = Proc.new { |stanza|  
-        stanza.to_xml.should == @xml.strip
+        stanza.to_xml(:encoding => "UTF-8").should == @xml.strip
       }
       @parser = Skates::XmppParser.new(@proc) 
     end
@@ -464,6 +465,60 @@ EOXML
     it "should parse correctly the namespaces and the attributes" do
       @parser.push(@xml)
     end
+  end
+  
+  
+  describe "when parsing a complex stanza" do
+    before(:each) do
+      @xml =<<-EOXML
+<iq from="test-track.superfeedr.com" to="testparsr@superfeedr.com/dev" type="error" id="pub-385">
+  <feed xmlns="http://superfeedr.com/xmpp-superfeedr-ext" id="16835658">
+    <title>Le blog de Jobetudiant.net</title>
+    <subtitle>Blog officiel de Jobetudiant.net : vie du site, de l'entreprise, mais aussi vie Ètudiante et emploi!</subtitle>
+    <id>jobetudiant-net-blog-rss-php</id>
+  </feed>
+  <pubsub xmlns="http://jabber.org/protocol/pubsub">
+    <publish node="16835658">
+      <item>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:geo="http://www.georss.org/georss" xmlns:as="http://activitystrea.ms/spec/1.0/" xmlns:sf="http://superfeedr.com/xmpp-pubsub-ext" xml:lang="fr">
+          <id>appel-à-témoins-pour-émission-de-tv-sur-les-jobs-d-été-2011-04-29t07-39-29z</id>
+          <title>Appel à témoins pour émission de TV sur les jobs d'été</title>
+          <summary type="text">Je laisse la parole à Caroline, journaliste, qui recherche des étudiants pour une émission sur les jobs d'été à la rentrée.
+
+
+        Je recherche plusieurs profils d'étudiants à la recherche d'un travail d'été dont les motivations peuvent varier : volonté de financer ses études dans...</summary>
+          <content type="html">&lt;p&gt;Je laisse la parole à Caroline, journaliste, qui recherche des étudiants pour une émission sur les &lt;a href="http://www.jobetudiant.net/etudiant/jobs-d-ete.php" hreflang="fr"&gt;jobs d'été&lt;/a&gt; à la rentrée.&lt;/p&gt;
+
+
+        &lt;blockquote&gt;&lt;p&gt;Je recherche plusieurs profils d'étudiants à la recherche d'un travail d'été dont les motivations peuvent varier&amp;nbsp;: volonté de financer ses études dans l'année, de se confronter au monde du travail, de se financer une dépense spécifique du type permis de conduire ou achat de véhicule, des jeunes qui cherchent un boulot près de chez eux, d'autres qui sont prêts à se déplacer et à trouver un logement sur le lieu du travail, d'autres qui espèrent décrocher un cdi à la fin de l'été...&lt;/p&gt;
+        &lt;p&gt;
+        20 à 25 jours de tournages sont prévus qui s'étaleront sur plusieurs semaines jusqu'à fin juillet, l'émission étant en montage en aout pour diffusion à la rentrée.  Les premiers tournages peuvent commencer en mai, ce qui permettrait de filmer des tentatives de recherches d'emplois.&lt;/p&gt;
+        &lt;p&gt;
+        La durée du documentaire monté sera de 85 minutes, il sera construit autour de portraits croisés de 4 ou 5 jeunes de profils différents que je suivrai tout au long de ces semaines à raison de 4 ou 5 jours pour chacun répartis sur la durée des tournages.&lt;/p&gt;&lt;/blockquote&gt;
+
+
+        &lt;p&gt;Si vous êtes interessé, n'hésitez pas à contacter Caroline Olive, journaliste TV Presse pour "90mn enquêtes" au 06 87 66 61 13.&lt;/p&gt;</content>
+          <link rel="alternate" type="text/html" href="http://www.jobetudiant.net/blog/index.php?2011/04/29/573-appel-tmoins-pour-mission-de-tv-sur-les-jobs-d-t" title="Appel &#xE0; t&#xE9;moins pour &#xE9;mission de TV sur les jobs d'&#xE9;t&#xE9;"/>
+        </entry>
+      </item>
+    </publish>
+  </pubsub>
+  <error code="404" type="cancel">
+    <remote-server-not-found xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/>
+  </error>
+</iq>
+
+EOXML
+    end
+    
+    it "should parse correctly the namespaces and the attributes" do
+      @proc = Proc.new { |stanza|  
+        stanza.to_xml(:encoding => "UTF-8").should == @xml.strip
+      }
+      @parser = Skates::XmppParser.new(@proc) 
+      @parser.push(@xml)
+    end
+    
   end
   
 end

@@ -30,7 +30,7 @@ module Skates
       doc.add_child(stream)
       paste_content_here= Nokogiri::XML::Node.new("paste_content_here", doc)
       stream.add_child(paste_content_here)
-      start, stop = doc.to_xml.split('<paste_content_here/>')
+      start, stop = doc.to_xml(:encoding => "UTF-8").split('<paste_content_here/>')
       send_xml(start)
     end
 
