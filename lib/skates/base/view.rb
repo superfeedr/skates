@@ -40,7 +40,7 @@ module Skates
       def evaluate 
         return if @view_template == ""
         raise ViewFileNotFound, "No such file #{@view_template}" unless Skates.views[@view_template] 
-        builder = Nokogiri::XML::Builder.new 
+        builder = Nokogiri::XML::Builder.new(:encoding => 'UTF-8')
         builder.stream do |xml|
           eval(Skates.views[@view_template], binding, @view_template, 1)
         end

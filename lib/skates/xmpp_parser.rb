@@ -129,7 +129,7 @@ module Skates
     end
     
     def set_attribute(key, value)
-      @elem.set_attribute key, Skates.decode_xml(value)
+      @elem.set_attribute(key, Skates.decode_xml(value))
     end
     
     def set_namespace(key, value)

@@ -498,7 +498,7 @@ EOXML
 
 
         &lt;p&gt;Si vous êtes interessé, n'hésitez pas à contacter Caroline Olive, journaliste TV Presse pour "90mn enquêtes" au 06 87 66 61 13.&lt;/p&gt;</content>
-          <link rel="alternate" type="text/html" href="http://www.jobetudiant.net/blog/index.php?2011/04/29/573-appel-tmoins-pour-mission-de-tv-sur-les-jobs-d-t" title="Appel &#xE0; t&#xE9;moins pour &#xE9;mission de TV sur les jobs d'&#xE9;t&#xE9;"/>
+          <link rel="alternate" type="text/html" href="http://www.jobetudiant.net/blog/index.php?2011/04/29/573-appel-tmoins-pour-mission-de-tv-sur-les-jobs-d-t" title="Appel à témoins pour émission de TV sur les jobs d'été"/>
         </entry>
       </item>
     </publish>
