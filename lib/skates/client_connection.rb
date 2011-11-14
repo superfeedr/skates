@@ -170,7 +170,7 @@ module Skates
             if stanza.children.first.name == "bind"
               doc = Nokogiri::XML::Document.new
               # Let's build the binding_iq
-              @binding_iq_id = Socket.unpack_sockaddr_in(get_sockname).reverse.join(".").split(".").push(Process.pid).join("-")
+              @binding_iq_id = "#{Integer(rand(10000000))}"
               iq = Nokogiri::XML::Node.new("iq", doc)
               doc.add_child(iq)
               iq["type"] = "set"
