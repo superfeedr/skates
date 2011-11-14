@@ -12,6 +12,7 @@ require 'resolv'
 require 'cgi'
 require 'utf8cleaner'
 require 'pathname'
+require 'socket'
 
 require 'skates/ext/array.rb'
 require 'skates/xmpp_connection'
