@@ -174,7 +174,7 @@ module Skates
               iq = Nokogiri::XML::Node.new("iq", doc)
               doc.add_child(iq)
               iq["type"] = "set"
-              iq["id"] = binding_iq_id.to_s
+              iq["id"] = binding_iq_id
               bind = Nokogiri::XML::Node.new("bind", doc)
               bind["xmlns"] = "urn:ietf:params:xml:ns:xmpp-bind"
               iq.add_child(bind)
@@ -182,7 +182,7 @@ module Skates
               if jid.split("/").size == 2 
                 resource.content = (@jid.split("/").last)
               else
-                resource.content = "skates_client_#{binding_iq_id}"
+                resource.content = binding_iq_id
               end
               bind.add_child(resource)
               send_xml(iq.to_s)
@@ -191,7 +191,7 @@ module Skates
           end
 
         when :wait_for_confirmed_binding
-          if stanza.name == "iq" && stanza["type"] == "result" && Integer(stanza["id"]) ==  binding_iq_id
+          if stanza.name == "iq" && stanza["type"] == "result" && stanza["id"] ==  binding_iq_id
             if stanza.at("jid")
               @jid = stanza.at("jid").text
             end
